@@ -106,7 +106,13 @@ pub enum ExtraGameData {
         away_players: u64,
         home_players: u64
     },
-    BaseballData {},
+    BaseballData {
+        balls: u64,
+        outs: u64,
+        strikes: u64,
+        inning: u64,
+        is_inning_top: bool
+    },
     BasketballData {},
     FootballData {},
     GolfData {},
@@ -238,7 +244,7 @@ async fn fetch_extra(game: Game) -> Result<Game, Error>{
     }
 }
 
-async fn fetch_baseball(game: Game) -> Result<Game, Error> {
+async fn fetch_baseball(mut game: Game) -> Result<Game, Error> {
     println!("Fetching extra data for baseball game {:?}", game.game_id);
     let schedule_url = format!(
         "http://statsapi.mlb.com/api/v1.1/game/{}/feed/live", game.game_id
@@ -246,6 +252,56 @@ async fn fetch_baseball(game: Game) -> Result<Game, Error> {
 
     let resp = reqwest::get(schedule_url).await?.text().await?;
     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
+    let linescore = get_object(get_object(&json, "liveData")?, "linescore")?;
+    let teams = get_object(linescore, "teams")?;
+    let away = get_object(teams, "away")?;
+    let home= get_object(teams, "home")?;
+
+    game.away_score = get_u64(away, "goals").unwrap_or(0);
+    game.home_score = get_u64(home, "goals").unwrap_or(0);
+
+    let inning = get_u64(linescore, "currentInning").unwrap_or(0);
+    let is_inning_top = get_bool(linescore, "isInningTop").unwrap_or(false);
+
+    let state = get_str(get_object(get_object(&json, "gameData")?, "status")?, "abstractGameState")?;
+    if state == "Final" {
+        game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
+        game.status = Status::End;
+    } else if state == "Live" {
+        game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("").to_owned();
+        game.status = Status::Active;
+    } else if state == "Preview" {
+        game.ordinal = String::new();
+        game.status = Status::Pregame;
+    } else {
+        game.status = Status::Invalid;
+    }
+
+    let mut balls = 0;
+    let mut strikes = 0;
+    let mut outs = 0;
+    if game.status == Status::Active {
+        balls = get_u64(linescore, "balls")?;
+        outs = get_u64(linescore, "outs")?;
+        strikes= get_u64(linescore, "strikes")?;
+        if outs == 3 {
+            if inning >= 9 && ((is_inning_top && game.home_score > game.away_score) || (!is_inning_top && game.home_score != game.away_score)) {
+                game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
+                game.status = Status::End;
+            } else {
+                game.ordinal = format!("Middle {}", game.ordinal);
+                game.status = Status::Intermission;
+            }
+        }
+    }
+    game.extra = Some(ExtraGameData::BaseballData { 
+        balls,
+        outs,
+        strikes,
+        inning,
+        is_inning_top
+     });
+
     println!("Got extra data for baseball game {:?}", game.game_id);
     Ok(game)
 }

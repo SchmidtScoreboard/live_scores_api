@@ -8,6 +8,8 @@ edition = "2021"
 [dependencies]
 chrono = "0.4.19"
 futures = "0.3.21"
+itertools = "0.10.3"
+ordinal = "0.3.2"
 phf = { version = "0.10.1", features = ["macros"] }
 reqwest = "0.11.10"
 serde_json = "1.0.81"

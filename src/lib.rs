@@ -2,12 +2,15 @@ extern crate phf;
 
 mod team;
 
-use chrono::{DateTime, ParseError};
+use chrono::{DateTime, ParseError, NaiveDateTime};
 use futures::future::join_all;
 use std::collections::{HashMap, HashSet};
 use std::str::FromStr;
 use serde_json::{Map, Value};
-use team::Team;
+use team::{Team, HOCKEY_TEAMS, BASEBALL_TEAMS, FOOTBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS};
+use itertools::Itertools;
+use ordinal::Ordinal;
+
 
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Copy)]
 pub enum Level {
@@ -84,6 +87,20 @@ enum Status {
     Invalid,
 }
 
+impl Status {
+    fn from_espn(input: &str) -> Status {
+        match input {
+            "STATUS_IN_PROGRESS" => Status::Active,
+            "STATUS_FINAL" | "STATUS_PLAY_COMPLETE" => Status::End,
+            "STATUS_SCHEDULED" => Status::Pregame,
+            "STATUS_END_PERIOD" | "STATUS_HALFTIME" | "STATUS_DELAYED" => Status::Intermission,
+            "STATUS_POSTPONED" | "STATUS_CANCELED" => Status::Invalid,
+            _ => panic!("Unknown status {input}") 
+        }
+
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Game {
     game_id: u64,
@@ -111,7 +128,10 @@ pub enum ExtraGameData {
         outs: u64,
         strikes: u64,
         inning: u64,
-        is_inning_top: bool
+        is_inning_top: bool,
+        on_first: bool,
+        on_second: bool,
+        on_third: bool
     },
     BasketballData {},
     FootballData {},
@@ -142,20 +162,186 @@ pub async fn fetch_scores(
 }
 async fn fetch_sport(sport: SportType) -> Result<(SportType, Vec<Game>), Error> {
     match sport {
-        SportType::Baseball | SportType::Hockey => fetch_statsapi(&sport).await,
+        SportType::Hockey => fetch_statsapi(&sport).await,
         _ => fetch_espn(&sport).await,
     }
     .map(|vec| (sport, vec))
 }
 
 async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
-    Ok(Vec::new())
+    let url = get_espn_url(sport);
+    let resp = reqwest::get(url).await?.text().await?;
+    let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
+    println!("Got json for sport {:?}", sport);
+    let events = get_array(&json, "events")?;
+
+    if *sport == SportType::Golf {
+        println!("Doing golf stuff");
+        return process_golf(events);
+    }
+
+    let mut out_games = Vec::new();
+
+    for event in events {
+        let competition = get_array_from_value(event, "competitions")?.first().ok_or(format!("Missing competitions in {event}"))?;
+        let competitors = get_array_from_value(competition, "competitors")?;
+        let status_object = get_object_from_value(competition, "status")?;
+        let (home_team, away_team) = competitors.iter().collect_tuple().ok_or("Failed to unwrap home team and away team")?;
+        let espn_status = get_str(get_object(status_object, "type")?, "name")?;
+        let status = Status::from_espn(espn_status);
+        if status == Status::Invalid {
+            continue;
+        }
+
+
+        let time_str = get_str_from_value(competition, "date")?;
+        let time = NaiveDateTime::parse_from_str(time_str, "%Y-%m-%dT%H:%MZ")?;
+        let time : DateTime<chrono::Utc> = DateTime::from_utc(time, chrono::Utc);
+        let now = chrono::offset::Utc::now();
+
+        let delta_hours = now.signed_duration_since(time).num_hours().abs();
+        if delta_hours > 12 { // skip games > 12 hours ago or in the future
+            continue;
+        }
+
+        let period = get_u64(status_object, "period")?;
+        let mut ordinal = Ordinal(period).to_string();
+        if status == Status::Intermission {
+            ordinal += " INT";
+        }
+        if espn_status == "STATUS_HALFTIME" {
+            ordinal = "HALFTIME".to_owned();
+        }
+
+        let team_map = get_team_map(sport);
+        let home_id = get_u64(get_object_from_value(home_team, "team")?, "id")?;
+        let away_id = get_u64(get_object_from_value(away_team, "team")?, "id")?;
+        let home = match team_map.get(&home_id) {
+            Some(t) => t.clone(),
+            None => create_team(home_team)?
+        };
+        let away = match team_map.get(&away_id) {
+            Some(t) => t.clone(),
+            None => create_team(away_team)?
+        };
+
+        let game_id = get_u64_from_value(competition, "id")?;
+        let home_score = get_u64_from_value(home_team, "score")?;
+        let away_score= get_u64_from_value(away_team, "score")?;
+
+        out_games.push(Game {
+            game_id,
+            sport_id: *sport,
+            home_team: Some(home),
+            away_team: Some(away),
+            home_score,
+            away_score,
+            status,
+            ordinal,
+            start_time: time,
+            extra: None 
+        })
+
+     }
+    Ok(out_games)
+}
+
+fn get_display_name(raw: &str) -> String{
+    if raw.len() > 11 {
+        let mut words = raw.split(' ').collect_vec();
+        if let Some(last) = words.last_mut() {
+            if *last == "State" {
+                *last = "St";
+            }
+        }
+        if let Some(first) = words.first_mut() {
+            *first = match *first {
+                "North" => "N",
+                "South" => "S",
+                "West" => "W",
+                "East" => "E",
+                "Central" => "C",
+                _ => *first
+            }
+        }
+        words.join(" ")
+    } else {
+        raw.to_owned()
+    }
+}
+
+fn create_team(competitor: &Value) -> Result<Team, Error> {
+    let team = get_object_from_value(competitor, "team")?;
+    let id = get_u64(team, "id")?;
+    let location = get_str(team, "location")?.to_owned();
+    let name = get_str(team, "id")?.to_owned();
+    let abbreviation = get_str(team, "abbreviation")?.to_owned();
+    let display_name = get_display_name(&name);
+    let primary_color = get_str(team, "color")?.to_owned();
+    let secondary_color = get_str(team, "color").unwrap_or("000000").to_owned();
+    let out = Team {
+        id, 
+        location, 
+        name, 
+        display_name, 
+        abbreviation, 
+        primary_color, 
+        secondary_color };
+
+    println!("Creating unknown team: {:?}", out);
+    Ok(out)
+}
+
+fn process_extra(event: &Value, game: Game) -> Result<Game, Error> {
+    match game.sport_id {
+        SportType::Baseball => todo!(),
+        SportType::Football(_) => todo!(),
+        SportType::Basketball(_) => todo!(),
+        SportType::Hockey | SportType::Golf => unreachable!()
+    }
+}
+
+fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
+    let mut out_games = Vec::new();
+    Ok(out_games)
+}
+
+fn get_team_map(sport: &SportType) -> &phf::Map<u64, Team> {
+    match sport {
+        SportType::Hockey => &HOCKEY_TEAMS,
+        SportType::Baseball => &BASEBALL_TEAMS,
+        SportType::Football(level) => if *level == Level::College { &COLLEGE_TEAMS} else { &FOOTBALL_TEAMS}, 
+        SportType::Basketball(level) => if *level == Level::College { &COLLEGE_TEAMS } else { &BASKETBALL_TEAMS}, 
+        SportType::Golf => unreachable!()
+    }
+}
+
+fn get_espn_url(sport: &SportType) -> &'static str {
+    match sport {
+        SportType::Hockey => panic!("Not allowed to use ESPN for hockey"),
+        SportType::Baseball => "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
+        SportType::Football(level) => match level {
+            Level::Professional => "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+            Level::College => "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=80",
+        }
+        SportType::Basketball(level) => match level {
+            Level::Professional => "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+            Level::College => "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=50",
+        }
+        SportType::Golf=> "http://site.api.espn.com/apis/site/v2/sports/golf/leaderboard?league=pga",
+    }
 }
 fn get_object_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a Map<String, Value>, Error> {
     Ok(object.get(name).ok_or(format!("{name} not present {object}"))?.as_object().ok_or(format!("{name} is not an object"))?)
 }
 fn get_array_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a Vec<Value>, Error> {
     Ok(object.get(name).ok_or(format!("{name} not present {object}"))?.as_array().ok_or(format!("{name} is not an array"))?)
+}
+fn get_str_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a str, Error> {
+    Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_str().ok_or(format!("{name} is not a string"))?)
+}
+fn get_u64_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
+    Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_u64().ok_or(format!("{name} is not an integer"))?)
 }
 
 fn get_object<'a>(object: &'a Map<String, Value>, name: &'static str) -> Result<&'a Map<String, Value>, Error> {
@@ -175,15 +361,8 @@ fn get_bool(object: &Map<String, Value>, name: &'static str) -> Result<bool, Err
 }
 
 async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
-    let (sport_param, suffix, team_map) = match sport {
-        SportType::Hockey => ("web.nhl", "", &team::HOCKEY_TEAMS),
-        SportType::Baseball => ("mlb", "?sportId=1", &team::BASEBALL_TEAMS),
-        _ => panic!("Cannot use StatsAPI endpoint for this sport"),
-    };
-    let schedule_url = format!(
-        "http://statsapi.{}.com/api/v1/schedule{}",
-        sport_param, suffix
-    );
+    let team_map = &team::HOCKEY_TEAMS;
+    let schedule_url = "http://statsapi.web.nhl.com/api/v1/schedule";
 
     let resp = reqwest::get(schedule_url).await?.text().await?;
     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
@@ -238,73 +417,67 @@ async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
 
 async fn fetch_extra(game: Game) -> Result<Game, Error>{
     match game.sport_id {
-        SportType::Baseball => fetch_baseball(game).await,
         SportType::Hockey => fetch_hockey(game).await,
         _ => todo!()
     }
 }
 
-async fn fetch_baseball(mut game: Game) -> Result<Game, Error> {
-    println!("Fetching extra data for baseball game {:?}", game.game_id);
-    let schedule_url = format!(
-        "http://statsapi.mlb.com/api/v1.1/game/{}/feed/live", game.game_id
-    );
+// async fn process_baseball(mut game: Game) -> Result<Game, Error> {
 
-    let resp = reqwest::get(schedule_url).await?.text().await?;
-    let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
-    let linescore = get_object(get_object(&json, "liveData")?, "linescore")?;
-    let teams = get_object(linescore, "teams")?;
-    let away = get_object(teams, "away")?;
-    let home= get_object(teams, "home")?;
+//     let resp = reqwest::get(schedule_url).await?.text().await?;
+//     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
+//     let linescore = get_object(get_object(&json, "liveData")?, "linescore")?;
+//     let teams = get_object(linescore, "teams")?;
+//     let away = get_object(teams, "away")?;
+//     let home= get_object(teams, "home")?;
 
-    game.away_score = get_u64(away, "goals").unwrap_or(0);
-    game.home_score = get_u64(home, "goals").unwrap_or(0);
+//     game.away_score = get_u64(away, "goals").unwrap_or(0);
+//     game.home_score = get_u64(home, "goals").unwrap_or(0);
 
-    let inning = get_u64(linescore, "currentInning").unwrap_or(0);
-    let is_inning_top = get_bool(linescore, "isInningTop").unwrap_or(false);
+//     let inning = get_u64(linescore, "currentInning").unwrap_or(0);
+//     let is_inning_top = get_bool(linescore, "isInningTop").unwrap_or(false);
 
-    let state = get_str(get_object(get_object(&json, "gameData")?, "status")?, "abstractGameState")?;
-    if state == "Final" {
-        game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
-        game.status = Status::End;
-    } else if state == "Live" {
-        game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("").to_owned();
-        game.status = Status::Active;
-    } else if state == "Preview" {
-        game.ordinal = String::new();
-        game.status = Status::Pregame;
-    } else {
-        game.status = Status::Invalid;
-    }
+//     let state = get_str(get_object(get_object(&json, "gameData")?, "status")?, "abstractGameState")?;
+//     if state == "Final" {
+//         game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
+//         game.status = Status::End;
+//     } else if state == "Live" {
+//         game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("").to_owned();
+//         game.status = Status::Active;
+//     } else if state == "Preview" {
+//         game.ordinal = String::new();
+//         game.status = Status::Pregame;
+//     } else {
+//         game.status = Status::Invalid;
+//     }
 
-    let mut balls = 0;
-    let mut strikes = 0;
-    let mut outs = 0;
-    if game.status == Status::Active {
-        balls = get_u64(linescore, "balls")?;
-        outs = get_u64(linescore, "outs")?;
-        strikes= get_u64(linescore, "strikes")?;
-        if outs == 3 {
-            if inning >= 9 && ((is_inning_top && game.home_score > game.away_score) || (!is_inning_top && game.home_score != game.away_score)) {
-                game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
-                game.status = Status::End;
-            } else {
-                game.ordinal = format!("Middle {}", game.ordinal);
-                game.status = Status::Intermission;
-            }
-        }
-    }
-    game.extra = Some(ExtraGameData::BaseballData { 
-        balls,
-        outs,
-        strikes,
-        inning,
-        is_inning_top
-     });
+//     let mut balls = 0;
+//     let mut strikes = 0;
+//     let mut outs = 0;
+//     if game.status == Status::Active {
+//         balls = get_u64(linescore, "balls")?;
+//         outs = get_u64(linescore, "outs")?;
+//         strikes= get_u64(linescore, "strikes")?;
+//         if outs == 3 {
+//             if inning >= 9 && ((is_inning_top && game.home_score > game.away_score) || (!is_inning_top && game.home_score != game.away_score)) {
+//                 game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
+//                 game.status = Status::End;
+//             } else {
+//                 game.ordinal = format!("Middle {}", game.ordinal);
+//                 game.status = Status::Intermission;
+//             }
+//         }
+//     }
+//     game.extra = Some(ExtraGameData::BaseballData { 
+//         balls,
+//         outs,
+//         strikes,
+//         inning,
+//         is_inning_top
+//      });
 
-    println!("Got extra data for baseball game {:?}", game.game_id);
-    Ok(game)
-}
+//     Ok(game)
+// }
 
 async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
     println!("Fetching extra data for hockey game {:?}", game.game_id);

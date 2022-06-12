@@ -214,8 +214,8 @@ async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
         }
 
         let team_map = get_team_map(sport);
-        let home_id = get_u64(get_object_from_value(home_team, "team")?, "id")?;
-        let away_id = get_u64(get_object_from_value(away_team, "team")?, "id")?;
+        let home_id = get_u64_str(get_object_from_value(home_team, "team")?, "id")?;
+        let away_id = get_u64_str(get_object_from_value(away_team, "team")?, "id")?;
         let home = match team_map.get(&home_id) {
             Some(t) => t.clone(),
             None => create_team(home_team)?
@@ -225,9 +225,9 @@ async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
             None => create_team(away_team)?
         };
 
-        let game_id = get_u64_from_value(competition, "id")?;
-        let home_score = get_u64_from_value(home_team, "score")?;
-        let away_score= get_u64_from_value(away_team, "score")?;
+        let game_id = get_u64_str_from_value(competition, "id")?;
+        let home_score = get_u64_str_from_value(home_team, "score")?;
+        let away_score= get_u64_str_from_value(away_team, "score")?;
 
         out_games.push(Game {
             game_id,
@@ -274,19 +274,19 @@ fn create_team(competitor: &Value) -> Result<Team, Error> {
     let team = get_object_from_value(competitor, "team")?;
     let id = get_u64(team, "id")?;
     let location = get_str(team, "location")?.to_owned();
-    let name = get_str(team, "id")?.to_owned();
+    let name = get_str(team, "name")?.to_owned();
     let abbreviation = get_str(team, "abbreviation")?.to_owned();
     let display_name = get_display_name(&name);
     let primary_color = get_str(team, "color")?.to_owned();
     let secondary_color = get_str(team, "color").unwrap_or("000000").to_owned();
-    let out = Team {
+    let out = Team::new(
         id, 
         location, 
         name, 
         display_name, 
         abbreviation, 
         primary_color, 
-        secondary_color };
+        secondary_color);
 
     println!("Creating unknown team: {:?}", out);
     Ok(out)
@@ -343,6 +343,9 @@ fn get_str_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a s
 fn get_u64_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
     Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_u64().ok_or(format!("{name} is not an integer"))?)
 }
+fn get_u64_str_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
+    Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_str().ok_or(format!("{name} is not a string"))?.parse().map_err(|e| format!("Failed to parse {name}: '{e:?}'"))?)
+}
 
 fn get_object<'a>(object: &'a Map<String, Value>, name: &'static str) -> Result<&'a Map<String, Value>, Error> {
     Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_object().ok_or(format!("{name} is not an object"))?)
@@ -355,6 +358,9 @@ fn get_str<'a>(object: &'a Map<String, Value>, name: &'static str) -> Result<&'a
 }
 fn get_u64(object: &Map<String, Value>, name: &'static str) -> Result<u64, Error> {
     Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_u64().ok_or(format!("{name} is not an integer"))?)
+}
+fn get_u64_str(object: &Map<String, Value>, name: &'static str) -> Result<u64, Error> {
+    Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_str().ok_or(format!("{name} is not a string"))?.parse().map_err(|e| format!("Failed to parse {name}: '{e:?}'"))?)
 }
 fn get_bool(object: &Map<String, Value>, name: &'static str) -> Result<bool, Error> {
     Ok(object.get(name).ok_or(format!("{name} not present {object:?}"))?.as_bool().ok_or(format!("{name} is not a boolean"))?)

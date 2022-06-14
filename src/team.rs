@@ -1,7 +1,7 @@
 use phf::phf_map;
 use std::borrow::Cow;
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct Team {
     pub id: u64,
     pub location: Cow<'static, str>,

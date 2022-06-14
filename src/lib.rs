@@ -1,6 +1,7 @@
 extern crate phf;
 
 mod team;
+mod color;
 
 use chrono::{DateTime, NaiveDateTime, ParseError};
 use futures::future::join_all;
@@ -46,6 +47,7 @@ pub enum Error {
     ParseError(String),
     SerdeError(serde_json::Error),
     ChronoParseError(ParseError),
+    ParseIntError(std::num::ParseIntError),
 }
 
 impl From<reqwest::Error> for Error {
@@ -74,6 +76,11 @@ impl From<String> for Error {
 impl From<ParseError> for Error {
     fn from(pe: ParseError) -> Self {
         Self::ChronoParseError(pe)
+    }
+}
+impl From<std::num::ParseIntError> for Error {
+    fn from(pe: std::num::ParseIntError) -> Self {
+        Self::ParseIntError(pe)
     }
 }
 
@@ -143,7 +150,7 @@ pub enum ExtraGameData {
         time_remaining: String,
         ball_position: String,
         down_string: String,
-        possession: Possession
+        possession: Possession,
     },
     GolfData {},
 }
@@ -266,14 +273,11 @@ async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
     Ok(out_games)
 }
 
-fn get_extra_data(
-    competition: &Value,
-    game: &Game,
-) -> Result<ExtraGameData, Error> {
+fn get_extra_data(competition: &Value, game: &Game) -> Result<ExtraGameData, Error> {
     match game.sport_id {
         SportType::Baseball => get_baseball_data(competition),
         SportType::Football(_) => get_football_data(competition, game),
-        SportType::Basketball(_) => get_baseball_data(competition),
+        SportType::Basketball(_) => get_basketball_data(competition),
         SportType::Hockey | SportType::Golf => unreachable!(),
     }
 }
@@ -313,15 +317,17 @@ fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, 
         ""
     } else {
         get_str(status_object, "displayClock").unwrap_or_default()
-    }.to_owned();
+    }
+    .to_owned();
 
-    let ball_position = get_str(situation, "possessionText").unwrap_or_default().to_owned();
+    let ball_position = get_str(situation, "possessionText")
+        .unwrap_or_default()
+        .to_owned();
 
     let down_string = {
         let s = get_str(situation, "shortDownDistanceText").unwrap_or_default();
-        s.replace("&", "+");
-        s
-    }.to_owned();
+        s.replace('&', "+")
+    };
 
     let possession = if let Ok(possessing_team_id) = get_u64_str(situation, "possession") {
         if let (Some(home_team), Some(away_team)) = (&game.home_team, &game.away_team) {
@@ -336,7 +342,7 @@ fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, 
             Possession::None
         }
     } else {
-       Possession::None 
+        Possession::None
     };
 
     Ok(ExtraGameData::FootballData {
@@ -344,8 +350,7 @@ fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, 
         ball_position,
         down_string,
         possession,
-      })
-
+    })
 }
 fn get_basketball_data(_competition: &Value) -> Result<ExtraGameData, Error> {
     Ok(ExtraGameData::BasketballData {})
@@ -383,7 +388,9 @@ fn create_team(competitor: &Value) -> Result<Team, Error> {
     let abbreviation = get_str(team, "abbreviation")?.to_owned();
     let display_name = get_display_name(&name);
     let primary_color = get_str(team, "color")?.to_owned();
-    let secondary_color = get_str(team, "color").unwrap_or("000000").to_owned();
+    let secondary_color = get_str(team, "color").unwrap_or("000000");
+
+    let secondary_color = color::get_secondary_for_primary(&primary_color, secondary_color)?.to_owned();
     let out = Team::new(
         id,
         location,
@@ -698,24 +705,23 @@ async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
             .to_string();
     }
 
-    let mut status = Status::Invalid;
-    if period_time == "Final" {
-        status = Status::End;
+    let status = if period_time == "Final" {
+        Status::End
     } else if period_time == "END" {
         if period >= 3 && game.away_score != game.home_score {
-            status = Status::End;
+            Status::End
         } else {
-            status = Status::Intermission;
             game.ordinal += " INT";
+            Status::Intermission
         }
     } else if period_time == "20:00" && period > 1 {
-        status = Status::Intermission;
         game.ordinal += " INT";
+        Status::Intermission
     } else if period_time == "20:00" && period >= 1 {
-        status = Status::Active;
+        Status::Active
     } else {
-        status = Status::Pregame;
-    }
+        Status::Pregame
+    };
 
     game.status = status;
     game.extra = Some(ExtraGameData::HockeyData {

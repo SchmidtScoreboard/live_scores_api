@@ -33,8 +33,8 @@ pub fn get_luminance(color: &Color) -> f64 {
 }
 
 pub fn get_contrast(primary: &Color, secondary: &Color) -> f64 {
-    let primary_luminance = get_luminance(&primary);
-    let secondary_luminance = get_luminance(&secondary);
+    let primary_luminance = get_luminance(primary);
+    let secondary_luminance = get_luminance(secondary);
 
     let max = primary_luminance.max(secondary_luminance);
     let min = primary_luminance.min(secondary_luminance);

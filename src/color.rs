@@ -1,5 +1,3 @@
-use std::borrow::Cow;
-
 type Color = (u8, u8, u8);
 
 pub fn get_rgb_from_hex(color: &str) -> Result<Color, std::num::ParseIntError>{

@@ -1,12 +1,14 @@
 extern crate phf;
 
-mod team;
 mod color;
+mod team;
 
 use chrono::{DateTime, NaiveDateTime, ParseError};
 use futures::future::join_all;
 use itertools::Itertools;
+use lazy_static::lazy_static;
 use ordinal::Ordinal;
+use regex::Regex;
 use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
 use std::str::FromStr;
@@ -129,6 +131,79 @@ pub enum Possession {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+pub struct GolfPlayer {
+    display_name: String,
+    score: String,
+    position: u64,
+}
+
+impl GolfPlayer {
+    fn from_teamstroke(competitor: &Value) -> Result<GolfPlayer, Error> {
+        let stats = get_array_from_value(competitor, "statistics")?;
+        let score = if let Some(latest_stat) = stats.first() {
+            get_str_from_value(latest_stat, "displayValue")?
+        } else {
+            "E"
+        };
+        let mut names = vec![];
+        let roster = get_array_from_value(competitor, "roster")?;
+        for player in roster {
+            let last_name = &get_str(get_object_from_value(player, "athlete")?, "lastName")?[0..5];
+            names.push(last_name);
+        }
+        let display_name = names.iter().join("/").to_uppercase();
+        let position = get_u64(
+            get_object(get_object_from_value(competitor, "status")?, "position")?,
+            "id",
+        )?;
+        Ok(GolfPlayer {
+            display_name: display_name.clone(),
+            score: score.to_owned(),
+            position,
+        })
+    }
+    fn from_raw_data(line: &str, position: usize) -> Option<GolfPlayer> {
+        lazy_static! {
+            static ref RE: Regex =
+                Regex::new(r#".*\s([a-zA-z ]+)/([a-zA-z ]+)\s*([^\s]+)+"#).unwrap();
+        }
+        if let Some(cap) = RE.captures_iter(line).next() {
+            let player_a = &cap[0];
+            let player_b = &cap[1];
+            let score = cap[2].to_owned();
+            Some(GolfPlayer {
+                display_name: format!("{}/{}", &player_a[..5], &player_b[..5]),
+                score,
+                position: position as u64,
+            })
+        } else {
+            None
+        }
+    }
+
+    fn from_competitor(competitor: &Value) -> Result<GolfPlayer, Error> {
+        let stats = get_array_from_value(competitor, "statistics")?;
+        let score = if let Some(latest_stat) = stats.first() {
+            get_str_from_value(latest_stat, "displayValue")?
+        } else {
+            "E"
+        };
+        let name =
+            get_str(get_object_from_value(competitor, "athlete")?, "lastName")?.to_uppercase();
+        // TODO: check that last name works properly
+        let position = get_u64(
+            get_object(get_object_from_value(competitor, "status")?, "position")?,
+            "id",
+        )?;
+        Ok(GolfPlayer {
+            display_name: name,
+            position: position as u64,
+            score: score.to_owned(),
+        })
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum ExtraGameData {
     HockeyData {
         away_powerplay: bool,
@@ -152,7 +227,10 @@ pub enum ExtraGameData {
         down_string: String,
         possession: Possession,
     },
-    GolfData {},
+    GolfData {
+        players: Vec<GolfPlayer>,
+        name: String,
+    },
 }
 
 pub async fn fetch_all() -> Result<HashMap<SportType, Vec<Game>>, Error> {
@@ -390,7 +468,8 @@ fn create_team(competitor: &Value) -> Result<Team, Error> {
     let primary_color = get_str(team, "color")?.to_owned();
     let secondary_color = get_str(team, "color").unwrap_or("000000");
 
-    let secondary_color = color::get_secondary_for_primary(&primary_color, secondary_color)?.to_owned();
+    let secondary_color =
+        color::get_secondary_for_primary(&primary_color, secondary_color)?.to_owned();
     let out = Team::new(
         id,
         location,
@@ -405,17 +484,118 @@ fn create_team(competitor: &Value) -> Result<Team, Error> {
     Ok(out)
 }
 
-fn process_extra(event: &Value, game: Game) -> Result<Game, Error> {
-    match game.sport_id {
-        SportType::Baseball => todo!(),
-        SportType::Football(_) => todo!(),
-        SportType::Basketball(_) => todo!(),
-        SportType::Hockey | SportType::Golf => unreachable!(),
-    }
-}
-
 fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
     let mut out_games = Vec::new();
+
+    for event in events {
+        let competition = get_array_from_value(event, "competitions")?
+            .first()
+            .ok_or(format!("Missing competitions in {event}"))?;
+        let competitors = get_array_from_value(competition, "competitors")?;
+        let status_object = get_object_from_value(competition, "status")?;
+        let espn_status = get_str(get_object(status_object, "type")?, "name")?;
+        let mut status = Status::from_espn(espn_status);
+        if status == Status::Invalid {
+            continue;
+        }
+
+        let ordinal = get_str(status_object, "period")?;
+        let game_id = get_u64_str_from_value(competition, "id")?;
+
+        let mut earliest_tee_time = None;
+        for player in competitors {
+            let player_status = get_object_from_value(player, "status")?;
+            if let Ok(tee_time) = get_str(player_status, "teeTime") {
+                let time = NaiveDateTime::parse_from_str(tee_time, "%Y-%m-%dT%H:%MZ")?;
+                let time: DateTime<chrono::Utc> = DateTime::from_utc(time, chrono::Utc);
+                if earliest_tee_time.map_or(true, |earliest| time < earliest) {
+                    earliest_tee_time = Some(time);
+                }
+            }
+        }
+        let earliest_tee_time = if let Some(e) = earliest_tee_time {
+            e
+        } else {
+            continue;
+        };
+
+        let time_str = get_str_from_value(competition, "date")?;
+        let time = NaiveDateTime::parse_from_str(time_str, "%Y-%m-%dT%H:%MZ")?;
+        let time: DateTime<chrono::Utc> = DateTime::from_utc(time, chrono::Utc);
+        let now = chrono::offset::Utc::now();
+
+        let delta_hours = now.signed_duration_since(time).num_hours().abs();
+        if delta_hours > 18 && !matches!(status, Status::Active | Status::End) {
+            // skip events > 18 hours ago or in the future
+            continue;
+        }
+        let scoring_system = get_object_from_value(competition, "scoringSystem")?;
+        let scoring_system = get_str(scoring_system, "name")?;
+
+        if status == Status::Active && time > now {
+            // If tee time in the future, then this is after a day of play has ended
+            status = Status::End;
+        }
+
+        let top_5: Vec<GolfPlayer>;
+        if scoring_system == "Teamstroke" {
+            if let Ok(raw_data) = get_str_from_value(competition, "rawData") {
+                if status == Status::Active && raw_data.contains("COMPLETE") {
+                    status = Status::End;
+                }
+
+                top_5 = raw_data
+                    .split('\n')
+                    .enumerate()
+                    .filter_map(|(position, line)| GolfPlayer::from_raw_data(line, position))
+                    .take(5)
+                    .collect();
+            } else {
+                // No raw data
+                let competitors = get_array_from_value(competition, "competitors")?;
+                let mut candidates = vec![];
+                for competitor in competitors {
+                    candidates.push(GolfPlayer::from_teamstroke(competitor)?)
+                }
+                candidates.sort_by(|a, b| a.position.cmp(&b.position));
+                top_5 = candidates.into_iter().take(5).collect();
+            }
+        } else {
+            let competitors = get_array_from_value(competition, "competitors")?;
+            let mut candidates = vec![];
+            for competitor in competitors {
+                candidates.push(GolfPlayer::from_competitor(competitor)?)
+            }
+            candidates.sort_by(|a, b| a.position.cmp(&b.position));
+            top_5 = candidates.into_iter().take(5).collect();
+        }
+
+        let mut name = get_str_from_value(event, "shortName")?.to_uppercase();
+        let name_map: HashMap<String, String> = HashMap::new(); // TODO: new name
+        if let Some(new_name) = name_map.get(&name) {
+            name = new_name.to_string()
+        }
+
+        let dumb_words: HashSet<String> = HashSet::new();
+
+        let name = name.split(' ').filter(|word| {
+            !dumb_words.contains(*word) // TODO remove numbers
+        }).collect();
+
+        out_games.push(Game {
+           game_id,
+           sport_id: SportType::Golf,
+           home_team: None,
+           away_team: None,
+           home_score: 0,
+           away_score: 0,
+           status,
+           period: 0,
+           ordinal: ordinal.to_owned(),
+           start_time: earliest_tee_time,
+           extra: Some(ExtraGameData::GolfData { players: top_5, name})  
+        })
+    }
     Ok(out_games)
 }
 
@@ -573,17 +753,9 @@ async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
             if detailed_state == "Postponed" {
                 continue;
             } else {
-                let game_date = game
-                    .get("gameDate")
-                    .ok_or("No game date present")?
-                    .as_str()
-                    .ok_or("Date is not a string")?;
+                let game_date = get_str_from_value(game, "gameDate")?;
                 println!("Got dame date {game_date}");
-                let game_id = game
-                    .get("gamePk")
-                    .ok_or("No game id present")?
-                    .as_u64()
-                    .ok_or("Not an integer")?;
+                let game_id = get_u64_from_value(game, "gamePk")?;
 
                 let teams = get_object_from_value(game, "teams")?;
 
@@ -617,63 +789,6 @@ async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
     let results = join_all(out_games.into_iter().map(fetch_hockey)).await;
     results.into_iter().collect()
 }
-
-// async fn process_baseball(mut game: Game) -> Result<Game, Error> {
-
-//     let resp = reqwest::get(schedule_url).await?.text().await?;
-//     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
-//     let linescore = get_object(get_object(&json, "liveData")?, "linescore")?;
-//     let teams = get_object(linescore, "teams")?;
-//     let away = get_object(teams, "away")?;
-//     let home= get_object(teams, "home")?;
-
-//     game.away_score = get_u64(away, "goals").unwrap_or(0);
-//     game.home_score = get_u64(home, "goals").unwrap_or(0);
-
-//     let inning = get_u64(linescore, "currentInning").unwrap_or(0);
-//     let is_inning_top = get_bool(linescore, "isInningTop").unwrap_or(false);
-
-//     let state = get_str(get_object(get_object(&json, "gameData")?, "status")?, "abstractGameState")?;
-//     if state == "Final" {
-//         game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
-//         game.status = Status::End;
-//     } else if state == "Live" {
-//         game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("").to_owned();
-//         game.status = Status::Active;
-//     } else if state == "Preview" {
-//         game.ordinal = String::new();
-//         game.status = Status::Pregame;
-//     } else {
-//         game.status = Status::Invalid;
-//     }
-
-//     let mut balls = 0;
-//     let mut strikes = 0;
-//     let mut outs = 0;
-//     if game.status == Status::Active {
-//         balls = get_u64(linescore, "balls")?;
-//         outs = get_u64(linescore, "outs")?;
-//         strikes= get_u64(linescore, "strikes")?;
-//         if outs == 3 {
-//             if inning >= 9 && ((is_inning_top && game.home_score > game.away_score) || (!is_inning_top && game.home_score != game.away_score)) {
-//                 game.ordinal = get_str(linescore, "currentInningOrdinal").unwrap_or("FINAL").to_owned();
-//                 game.status = Status::End;
-//             } else {
-//                 game.ordinal = format!("Middle {}", game.ordinal);
-//                 game.status = Status::Intermission;
-//             }
-//         }
-//     }
-//     game.extra = Some(ExtraGameData::BaseballData {
-//         balls,
-//         outs,
-//         strikes,
-//         inning,
-//         is_inning_top
-//      });
-
-//     Ok(game)
-// }
 
 async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
     println!("Fetching extra data for hockey game {:?}", game.game_id);

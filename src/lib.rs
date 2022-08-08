@@ -29,20 +29,6 @@ pub enum SportType {
     Golf,
 }
 
-impl SportType {
-    fn to_id(&self) -> u8 {
-        match self {
-            SportType::Hockey => 0,
-            SportType::Baseball => 1,
-            SportType::Basketball(Level::College) => 2,
-            SportType::Basketball(Level::Professional) => 3,
-            SportType::Football(Level::College) => 4,
-            SportType::Football(Level::Professional) => 5,
-            SportType::Golf => 6,
-        }
-    }
-}
-
 #[derive(Debug)]
 pub enum Error {
     FetchError(reqwest::Error),
@@ -144,7 +130,7 @@ impl GolfPlayer {
             get_str_from_value(latest_stat, "displayValue")?
         } else {
             "E"
-        };
+        }.to_owned();
         let mut names = vec![];
         let roster = get_array_from_value(competitor, "roster")?;
         for player in roster {
@@ -157,8 +143,8 @@ impl GolfPlayer {
             "id",
         )?;
         Ok(GolfPlayer {
-            display_name: display_name.clone(),
-            score: score.to_owned(),
+            display_name,
+            score,
             position,
         })
     }
@@ -187,7 +173,7 @@ impl GolfPlayer {
             get_str_from_value(latest_stat, "displayValue")?
         } else {
             "E"
-        };
+        }.to_owned();
         let name =
             get_str(get_object_from_value(competitor, "athlete")?, "lastName")?.to_uppercase();
         // TODO: check that last name works properly
@@ -198,7 +184,7 @@ impl GolfPlayer {
         Ok(GolfPlayer {
             display_name: name,
             position: position as u64,
-            score: score.to_owned(),
+            score,
         })
     }
 }

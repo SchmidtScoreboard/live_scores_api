@@ -174,15 +174,31 @@ impl GolfPlayer {
         } else {
             "E"
         }.to_owned();
-        let name =
-            get_str(get_object_from_value(competitor, "athlete")?, "lastName")?.to_uppercase();
-        // TODO: check that last name works properly
+
+        lazy_static!(
+            static ref INVALID_NAMES: HashSet<&'static str> = {
+                let mut s = HashSet::new();
+                s.insert("JR.");
+                s.insert("JR");
+                s.insert("SR.");
+                s.insert("SR");
+                s.insert("II");
+                s.insert("III");
+                s.insert("IV");
+                s.insert("V");
+                s.insert("VI");
+                s
+            };
+        );
+
+        let full_name = get_str_from_value(competitor, "displayName")?.to_uppercase();
+        let last_name = full_name.split(' ').rev().find(|s| !INVALID_NAMES.contains(s)).unwrap();
         let position = get_u64(
             get_object(get_object_from_value(competitor, "status")?, "position")?,
             "id",
         )?;
         Ok(GolfPlayer {
-            display_name: name,
+            display_name: last_name.to_owned(),
             position: position as u64,
             score,
         })
@@ -374,7 +390,7 @@ fn get_baseball_data(competition: &Value) -> Result<ExtraGameData, Error> {
     })
 }
 fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, Error> {
-    let situation = get_object_from_value(competition, "situation")?;
+    let situation = get_object_from_value(competition, "situation");
     let status_object = get_object_from_value(competition, "status")?;
 
     let time_remaining = if game.status != Status::Active {
@@ -383,6 +399,8 @@ fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, 
         get_str(status_object, "displayClock").unwrap_or_default()
     }
     .to_owned();
+
+    if let Ok(situation) = situation {
 
     let ball_position = get_str(situation, "possessionText")
         .unwrap_or_default()
@@ -415,6 +433,14 @@ fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, 
         down_string,
         possession,
     })
+    } else {
+        Ok(ExtraGameData::FootballData {
+            time_remaining: "".to_owned(),
+            ball_position: "".to_owned(),
+            down_string: "".to_owned(),
+            possession: Possession::None,
+        })
+    }
 }
 fn get_basketball_data(_competition: &Value) -> Result<ExtraGameData, Error> {
     Ok(ExtraGameData::BasketballData {})
@@ -485,7 +511,7 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
             continue;
         }
 
-        let ordinal = get_str(status_object, "period")?;
+        let ordinal = format!("{}", get_u64(status_object, "period")?);
         let game_id = get_u64_str_from_value(competition, "id")?;
 
         let mut earliest_tee_time = None;
@@ -645,21 +671,21 @@ fn get_array_from_value<'a>(
 fn get_str_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a str, Error> {
     Ok(object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
+        .ok_or(format!("{name} not present {object}"))?
         .as_str()
         .ok_or(format!("{name} is not a string"))?)
 }
 fn get_u64_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
     Ok(object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
+        .ok_or(format!("{name} not present {object}"))?
         .as_u64()
         .ok_or(format!("{name} is not an integer"))?)
 }
 fn get_u64_str_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
     Ok(object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
+        .ok_or(format!("{name} not present {object}"))?
         .as_str()
         .ok_or(format!("{name} is not a string"))?
         .parse()

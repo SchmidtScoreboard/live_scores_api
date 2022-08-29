@@ -3,24 +3,26 @@ extern crate phf;
 mod color;
 mod team;
 
-use chrono::{DateTime, NaiveDateTime, ParseError};
+use chrono::{DateTime, NaiveDateTime, ParseError, serde::ts_seconds};
 use futures::future::join_all;
 use itertools::Itertools;
 use lazy_static::lazy_static;
 use ordinal::Ordinal;
 use regex::Regex;
 use serde_json::{Map, Value};
+use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
+
 use std::str::FromStr;
 use team::{Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS};
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Serialize, Deserialize)]
 pub enum Level {
     Professional,
     College,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Serialize, Deserialize)]
 pub enum SportType {
     Hockey,
     Baseball,
@@ -72,7 +74,7 @@ impl From<std::num::ParseIntError> for Error {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 enum Status {
     Pregame,
     Active,
@@ -94,7 +96,7 @@ impl Status {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Game {
     game_id: u64,
     sport_id: SportType,
@@ -105,18 +107,19 @@ pub struct Game {
     status: Status,
     period: u64,
     ordinal: String,
+    #[serde(with = "ts_seconds")]
     start_time: chrono::DateTime<chrono::Utc>,
     extra: Option<ExtraGameData>,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Serialize, Deserialize)]
 pub enum Possession {
     Home,
     Away,
     None,
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct GolfPlayer {
     display_name: String,
     score: String,
@@ -138,7 +141,7 @@ impl GolfPlayer {
             names.push(last_name);
         }
         let display_name = names.iter().join("/").to_uppercase();
-        let position = get_u64(
+        let position = get_u64_str(
             get_object(get_object_from_value(competitor, "status")?, "position")?,
             "id",
         )?;
@@ -191,9 +194,9 @@ impl GolfPlayer {
             };
         );
 
-        let full_name = get_str_from_value(competitor, "displayName")?.to_uppercase();
+        let full_name = get_str(get_object_from_value(competitor, "athlete")?, "displayName")?.to_uppercase();
         let last_name = full_name.split(' ').rev().find(|s| !INVALID_NAMES.contains(s)).unwrap();
-        let position = get_u64(
+        let position = get_u64_str(
             get_object(get_object_from_value(competitor, "status")?, "position")?,
             "id",
         )?;
@@ -205,7 +208,7 @@ impl GolfPlayer {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum ExtraGameData {
     HockeyData {
         away_powerplay: bool,
@@ -255,25 +258,29 @@ pub async fn fetch_scores(
     sports: HashSet<SportType>,
 ) -> Result<HashMap<SportType, Vec<Game>>, Error> {
     let results = join_all(sports.into_iter().map(fetch_sport)).await;
-    results.into_iter().collect()
+    let mut m = HashMap::new();
+    for (sport, result) in results {
+        let games = result?;
+        m.insert(sport, games);
+    }
+    Ok(m)
 }
-async fn fetch_sport(sport: SportType) -> Result<(SportType, Vec<Game>), Error> {
-    match sport {
+pub async fn fetch_sport(sport: SportType) -> (SportType, Result<Vec<Game>, Error>) {
+    (sport, match sport {
         SportType::Hockey => fetch_statsapi(&sport).await,
         _ => fetch_espn(&sport).await,
-    }
-    .map(|vec| (sport, vec))
+    })
 }
 
 async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
     let url = get_espn_url(sport);
     let resp = reqwest::get(url).await?.text().await?;
     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
-    println!("Got json for sport {:?}", sport);
+    tracing::info!("Got json for sport {:?} at url {url}", sport);
     let events = get_array(&json, "events")?;
 
     if *sport == SportType::Golf {
-        println!("Doing golf stuff");
+        tracing::debug!("Doing golf stuff");
         return process_golf(events);
     }
 
@@ -472,7 +479,13 @@ fn get_display_name(raw: &str) -> String {
 
 fn create_team(competitor: &Value) -> Result<Team, Error> {
     let team = get_object_from_value(competitor, "team")?;
-    let id = get_u64(team, "id")?;
+    let id = {
+        let int_id = get_u64(team, "id");
+        match int_id {
+            Ok(id) => id,
+            Err(_) => get_u64_str(team, "id")?
+        }
+    };
     let location = get_str(team, "location")?.to_owned();
     let name = get_str(team, "name")?.to_owned();
     let abbreviation = get_str(team, "abbreviation")?.to_owned();
@@ -492,7 +505,7 @@ fn create_team(competitor: &Value) -> Result<Team, Error> {
         secondary_color,
     );
 
-    println!("Creating unknown team: {:?}", out);
+    tracing::info!("Creating unknown team: {:?}", out);
     Ok(out)
 }
 
@@ -508,6 +521,7 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
         let espn_status = get_str(get_object(status_object, "type")?, "name")?;
         let mut status = Status::from_espn(espn_status);
         if status == Status::Invalid {
+            tracing::error!("Invalid status: {}", espn_status);
             continue;
         }
 
@@ -525,20 +539,21 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
                 }
             }
         }
-        let earliest_tee_time = if let Some(e) = earliest_tee_time {
+        let time = if let Some(e) = earliest_tee_time {
             e
         } else {
-            continue;
+            let time_str = get_str_from_value(competition, "date")?;
+            let time = NaiveDateTime::parse_from_str(time_str, "%Y-%m-%dT%H:%MZ")?;
+            DateTime::from_utc(time, chrono::Utc)
         };
 
-        let time_str = get_str_from_value(competition, "date")?;
-        let time = NaiveDateTime::parse_from_str(time_str, "%Y-%m-%dT%H:%MZ")?;
-        let time: DateTime<chrono::Utc> = DateTime::from_utc(time, chrono::Utc);
         let now = chrono::offset::Utc::now();
 
         let delta_hours = now.signed_duration_since(time).num_hours().abs();
-        if delta_hours > 18 && !matches!(status, Status::Active | Status::End) {
-            // skip events > 18 hours ago or in the future
+        tracing::info!("Now: {}, time: {}, delta_hours: {}", now, time, delta_hours);
+        if delta_hours > 24 && !matches!(status, Status::Active | Status::End) {
+            // skip events > 24 hours ago or in the future
+            tracing::info!("Skipping event {} because it is {} hours old, status is {:?}", game_id, delta_hours, status);
             continue;
         }
         let scoring_system = get_object_from_value(competition, "scoringSystem")?;
@@ -583,16 +598,43 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
         }
 
         let mut name = get_str_from_value(event, "shortName")?.to_uppercase();
-        let name_map: HashMap<String, String> = HashMap::new(); // TODO: new name
-        if let Some(new_name) = name_map.get(&name) {
+        tracing::info!("Raw name is {name}");
+        lazy_static!(
+            static ref NAME_MAP: HashMap<&'static str, &'static str> = {
+                let mut m = HashMap::new();
+                m.insert("SHRINERS CHILDREN'S OPEN", "SHRINERS OPEN");
+                m.insert("BUTTERFIELD BERMUDA CHAMPIONSHIP", "BERMUDA CHAMP");
+                m.insert("WORLD WIDE TECHNOLOGY CHAMPIONSHIP AT MAYAKOBA", "WWT CHAMP");
+                m.insert("FARMERS INSURANCE OPEN", "FARMERS OPEN");
+                m.insert("SONY OPEN IN HAWAII", "SONY OPEN");
+                m.insert("AT&T PEBBLE BEACH PRO-AM", "PEBBLE BEACH");
+                m.insert("WASTE MANAGEMENT PHOENIX OPEN", "WM PHOENIX");
+                m.insert("CORALES PUNTACANA CHAMPIONSHIP", "PUTACANA CHAMP");
+                m.insert("VALERO TEXAS OPEN", "VALERO OPEN");
+                m.insert("RBC CANADIAN OPEN", "RBC CANADIAN");
+                m.insert("GENESIS SCOTTISH OPEN", "SCOTTISH OPEN");
+                m
+            };
+        );
+        if let Some(new_name) = NAME_MAP.get(&name as &str) {
             name = new_name.to_string()
         }
 
-        let dumb_words: HashSet<String> = HashSet::new();
+        lazy_static!(
+            static ref DUMB_WORDS: HashSet<&'static str> = {
+                let mut s = HashSet::new();
+                s.insert("TOURNAMENT");
+                s.insert("CHAMPIONSHIP");
+                s.insert("CHALLENGE");
+                s.insert("CLASSIC");
+                s.insert("INVITATIONAL");
+                s
+            };
+        );
 
         let name = name.split(' ').filter(|word| {
-            !dumb_words.contains(*word) // TODO remove numbers
-        }).collect();
+            !DUMB_WORDS.contains(*word) // TODO remove numbers
+        }).join(" ");
 
         out_games.push(Game {
            game_id,
@@ -604,7 +646,7 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
            status,
            period: 0,
            ordinal: ordinal.to_owned(),
-           start_time: earliest_tee_time,
+           start_time: time,
            extra: Some(ExtraGameData::GolfData { players: top_5, name})  
         })
     }
@@ -652,95 +694,102 @@ fn get_object_from_value<'a>(
     object: &'a Value,
     name: &'static str,
 ) -> Result<&'a Map<String, Value>, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object}"))?
+        .ok_or(format!("{name} not present in {object}"))?;
+    let obj = value
         .as_object()
-        .ok_or(format!("{name} is not an object"))?)
+        .ok_or(format!("{name} is not an object {value}\nObject is {object}"))?;
+    Ok(obj)
 }
 fn get_array_from_value<'a>(
     object: &'a Value,
     name: &'static str,
 ) -> Result<&'a Vec<Value>, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object}"))?
-        .as_array()
-        .ok_or(format!("{name} is not an array"))?)
+        .ok_or(format!("{name} not present in {object}"))?;
+    let arr = value.as_array().ok_or(format!("{name} is not an array {value}\nObject is {object}"))?;
+    Ok(arr)
 }
 fn get_str_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a str, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object}"))?
+        .ok_or(format!("{name} not present in {object}"))?;
+    let str = value
         .as_str()
-        .ok_or(format!("{name} is not a string"))?)
+        .ok_or(format!("{name} is not a string {value:?}\nObject is {object}"))?;
+    Ok(str)
 }
 fn get_u64_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object}"))?
-        .as_u64()
-        .ok_or(format!("{name} is not an integer"))?)
+        .ok_or(format!("{name} not present in {object}"))?;
+    let num = value.as_u64().ok_or(format!("{name} is not an integer {value:?}\nObject is: {object}"))?;
+    Ok(num)
 }
+
 fn get_u64_str_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object}"))?
+        .ok_or(format!("{name} not present in {object}"))?;
+    let str = value
         .as_str()
-        .ok_or(format!("{name} is not a string"))?
-        .parse()
-        .map_err(|e| format!("Failed to parse {name}: '{e:?}'"))?)
+        .ok_or(format!("{name} is not a string {value:?}\nObject is: {object}"))?;
+    let num = str
+        .parse::<u64>()
+        .map_err(|_| format!("{name} is not an integer from string {str}\nObject is: {object}"))?;
+    Ok(num)
 }
 
 fn get_object<'a>(
     object: &'a Map<String, Value>,
     name: &'static str,
 ) -> Result<&'a Map<String, Value>, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
-        .as_object()
-        .ok_or(format!("{name} is not an object"))?)
+        .ok_or(format!("{name} not present in {object:?}"))?;
+    let obj = value.as_object().ok_or(format!("{name} is not an object {value}\nObject is {object:?}"))?;
+    Ok(obj)
 }
 fn get_array<'a>(
     object: &'a Map<String, Value>,
     name: &'static str,
 ) -> Result<&'a Vec<Value>, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
-        .as_array()
-        .ok_or(format!("{name} is not an array"))?)
+        .ok_or(format!("{name} not present in {object:?}"))?;
+    let arr = value.as_array().ok_or(format!("{name} is not an array {value}\nObject is {object:?}"))?;
+    Ok(arr)
 }
 fn get_str<'a>(object: &'a Map<String, Value>, name: &'static str) -> Result<&'a str, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
-        .as_str()
-        .ok_or(format!("{name} is not a string"))?)
+        .ok_or(format!("{name} not present in {object:?}"))?;
+    let str = value.as_str().ok_or(format!("{name} is not a string {value}\nObject is {object:?}"))?; 
+    Ok(str)
 }
 fn get_u64(object: &Map<String, Value>, name: &'static str) -> Result<u64, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
-        .as_u64()
-        .ok_or(format!("{name} is not an integer"))?)
+        .ok_or(format!("{name} not present in {object:?}"))?;
+    let num = value.as_u64().ok_or(format!("{name} is not an integer {value:?}\nObject is {object:?}"))?;
+    Ok(num)
 }
 fn get_u64_str(object: &Map<String, Value>, name: &'static str) -> Result<u64, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
-        .as_str()
-        .ok_or(format!("{name} is not a string"))?
-        .parse()
-        .map_err(|e| format!("Failed to parse {name}: '{e:?}'"))?)
+        .ok_or(format!("{name} not present in {object:?}"))?;
+    let str = value.as_str().ok_or(format!("{name} is not a string {value}\nObject is {object:?}"))?; 
+    let num = str.parse::<u64>().map_err(|_| format!("{name} is not an integer from string {str}\nObject is: {object:?}"))?;
+    Ok(num)
 }
 fn get_bool(object: &Map<String, Value>, name: &'static str) -> Result<bool, Error> {
-    Ok(object
+    let value = object
         .get(name)
-        .ok_or(format!("{name} not present {object:?}"))?
-        .as_bool()
-        .ok_or(format!("{name} is not a boolean"))?)
+        .ok_or(format!("{name} not present in {object:?}"))?;
+    let bool = value.as_bool().ok_or(format!("{name} is not a bool {value}\nObject is {object:?}"))?;
+    Ok(bool)
 }
 
 async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
@@ -749,7 +798,7 @@ async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
 
     let resp = reqwest::get(schedule_url).await?.text().await?;
     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
-    println!("Got json for sport {:?}", sport);
+    tracing::debug!("Got json for sport {:?}", sport);
 
     let dates = get_array(&json, "dates")?;
 
@@ -770,7 +819,6 @@ async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
                 let game_id = get_u64_from_value(game, "gamePk")?;
 
                 let teams = get_object_from_value(game, "teams")?;
-
                 let away_team_id = get_u64(get_object(get_object(teams, "away")?, "team")?, "id")?;
                 let home_team_id = get_u64(get_object(get_object(teams, "home")?, "team")?, "id")?;
 

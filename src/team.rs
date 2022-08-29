@@ -1,7 +1,8 @@
 use phf::phf_map;
 use std::borrow::Cow;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone, Eq, PartialEq, Default)]
+#[derive(Debug, Clone, Eq, PartialEq, Default, Serialize, Deserialize)]
 pub struct Team {
     pub id: u64,
     pub location: Cow<'static, str>,

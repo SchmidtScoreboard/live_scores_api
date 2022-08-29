@@ -20,18 +20,19 @@ fn process_args() -> HashSet<SportType> {
         };
         set.insert(sport_type);
     }
-    println!("Processed args, got {set:?}");
+    tracing::info!("Processed args, got {set:?}");
     set
 
 }
 
 #[tokio::main]
 async fn main() -> Result<(), live_sports::Error> {
+    tracing_subscriber::fmt::init();
     let sports = process_args();
     let scores = match sports.len() {
         0 => fetch_all().await?,
         _ => fetch_scores(sports.clone()).await?
     };
-    println!("Done fetching scores for {sports:?}\n{scores:?}");
+    tracing::info!("Done fetching scores for {sports:?}\n{scores:?}");
     Ok(())
 }

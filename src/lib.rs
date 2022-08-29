@@ -13,13 +13,6 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
 
-use axum::{
-    http::response::Parts,
-    body::Body,
-    response::{IntoResponse, Response},
-};
-
-use axum::http::StatusCode;
 use std::str::FromStr;
 use team::{Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS};
 
@@ -29,7 +22,7 @@ pub enum Level {
     College,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy)]
 pub enum SportType {
     Hockey,
     Baseball,
@@ -56,6 +49,16 @@ impl Serialize for SportType {
             },
             SportType::Golf => "golf",
         })
+    }
+}
+
+impl<'de> Deserialize<'de> for SportType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        s.parse().map_err(|e| serde::de::Error::custom(format!("{e:?}")))
     }
 }
 

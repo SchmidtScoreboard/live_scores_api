@@ -9,6 +9,7 @@ use axum::{
 use futures::future::join_all;
 use live_sports::{fetch_sport, Game, SportType};
 use parking_lot::Mutex;
+use serde::Deserialize;
 use std::net::SocketAddr;
 use std::{
     collections::{HashMap},
@@ -26,7 +27,9 @@ async fn main() {
     let cache = Arc::new(Mutex::new(Cache::new()));
 
     let app = Router::new()
-        .route("/sport/:sport_id", get(get_scores))
+        .route("/sport/:sport_id", get(get_sport))
+        .route("/all", get(get_all))
+        .route("/sports", get(get_sports))
         .layer(Extension(cache));
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     tracing::info!("Listening on {}", addr);
@@ -37,21 +40,44 @@ async fn main() {
         .unwrap();
 }
 
-// async fn get_scores(sports: HashSet<SportType>) -> Result<Json<Vec<Game>>, StatusCode> {
-
-async fn get_scores(state: Extension<Arc<Mutex<Cache>>>, Path(sport_id): Path<String> ) -> impl IntoResponse {
-    if sport_id == "all" {
-        get_scores_for_set(state, &SportType::all_vec()).await
-    } else {
-        let sport = sport_id.parse::<SportType>().map_err(|_| StatusCode::NOT_FOUND)?;
-        get_scores_for_set(state, std::slice::from_ref(&sport)).await
-    }
+#[derive(Debug, Clone, Deserialize)]
+struct SportsRequest {
+    sport_ids: Vec<SportType>,
 }
 
-async fn get_scores_for_set(
+async fn get_sports(state: Extension<Arc<Mutex<Cache>>>, Json(request): Json<SportsRequest>) -> impl IntoResponse {
+    tracing::info!("Getting sports {:?}", request.sport_ids);
+    get_scores_for_sports(state, &request.sport_ids).await.map(|games| {
+        Json(games)
+    })
+}
+
+async fn get_all(state: Extension<Arc<Mutex<Cache>>>) -> impl IntoResponse {
+    tracing::info!("Getting all sports");
+    get_scores_for_sports(state, &SportType::all_vec()).await.map(|games| {
+        Json(games)
+    })
+}
+
+async fn get_sport(state: Extension<Arc<Mutex<Cache>>>, Path(sport_id): Path<String> ) -> impl IntoResponse {
+    tracing::info!("Getting sport data for {}", sport_id);
+    let sport = sport_id.parse::<SportType>().map_err(|_| StatusCode::NOT_FOUND)?;
+    get_scores_for_sports(state, std::slice::from_ref(&sport)).await.map(|games| {
+
+        games.into_iter().find(|(s_id, _)| *s_id == sport).map(|(_ , g) | {
+            Ok(Json(g))
+        }).unwrap_or_else(|| {
+            Err(StatusCode::NOT_FOUND)
+        })
+    })
+}
+
+
+
+async fn get_scores_for_sports(
     Extension(state): Extension<Arc<Mutex<Cache>>>,
     sports: &[SportType],
-) -> Result<Json<HashMap<SportType, Vec<Game>>>, StatusCode> {
+) -> Result<HashMap<SportType, Vec<Game>>, StatusCode> {
     let mut results: HashMap<SportType, Vec<Game>> = HashMap::new();
     let mut futures = Vec::new();
 
@@ -93,5 +119,19 @@ async fn get_scores_for_set(
     if let Some(err) = maybe_err {
         return Err(err);
     }
-    Ok(Json(results))
+    Ok(results)
+}
+
+#[cfg(test)]
+mod test {
+    use live_sports::{SportType, Level};
+
+    #[test]
+    fn test_request() {
+        let request = "{\n    \"sport_ids\": [\n        \"basketball\",\n        \"hockey\"\n    ]\n}";
+        let parsed = serde_json::from_str::<super::SportsRequest>(request).unwrap();
+        let actual = vec![SportType::Basketball(Level::Professional), SportType::Hockey];
+        assert_eq!(parsed.sport_ids, actual);
+
+    }
 }

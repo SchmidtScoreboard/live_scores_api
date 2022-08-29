@@ -14,7 +14,7 @@ use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
 
 use std::str::FromStr;
-use team::{Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS};
+pub use team::{Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS};
 
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Serialize, Deserialize)]
 pub enum Level {
@@ -758,7 +758,7 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
     Ok(out_games)
 }
 
-fn get_team_map(sport: &SportType) -> &phf::Map<u64, Team> {
+pub fn get_team_map(sport: &SportType) -> &phf::Map<u64, Team> {
     match sport {
         SportType::Hockey => &HOCKEY_TEAMS,
         SportType::Baseball => &BASEBALL_TEAMS,

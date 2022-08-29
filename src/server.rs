@@ -7,7 +7,7 @@ use axum::{
 };
 
 use futures::future::join_all;
-use live_sports::{fetch_sport, Game, SportType};
+use live_sports::{fetch_sport, Game, SportType, get_team_map, Team};
 use parking_lot::Mutex;
 use serde::Deserialize;
 use std::net::SocketAddr;
@@ -16,6 +16,8 @@ use std::{
     sync::Arc,
     time::{Duration, Instant},
 };
+
+use itertools::Itertools;
 
 type Cache = HashMap<live_sports::SportType, (Instant, Option<Vec<Game>>)>;
 
@@ -30,6 +32,7 @@ async fn main() {
         .route("/sport/:sport_id", get(get_sport))
         .route("/all", get(get_all))
         .route("/sports", get(get_sports))
+        .route("/teams/:sport_id", get(get_teams))
         .layer(Extension(cache));
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     tracing::info!("Listening on {}", addr);
@@ -70,6 +73,14 @@ async fn get_sport(state: Extension<Arc<Mutex<Cache>>>, Path(sport_id): Path<Str
             Err(StatusCode::NOT_FOUND)
         })
     })
+}
+
+async fn get_teams(Path(sport_id): Path<String> ) -> Result<Json<Vec<Team>>, StatusCode> {
+    tracing::info!("Getting teams for {}", sport_id);
+    let sport = sport_id.parse::<SportType>().map_err(|_| StatusCode::NOT_FOUND)?;
+    let team_map = get_team_map(&sport);
+    let teams = team_map.into_iter().map(|(_, team)| { team.clone() }).collect_vec();
+    Ok(Json(teams))
 }
 
 

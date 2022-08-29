@@ -3,16 +3,23 @@ extern crate phf;
 mod color;
 mod team;
 
-use chrono::{DateTime, NaiveDateTime, ParseError, serde::ts_seconds};
+use chrono::{serde::ts_seconds, DateTime, NaiveDateTime, ParseError};
 use futures::future::join_all;
 use itertools::Itertools;
 use lazy_static::lazy_static;
 use ordinal::Ordinal;
 use regex::Regex;
-use serde_json::{Map, Value};
 use serde::{Deserialize, Serialize};
+use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
 
+use axum::{
+    http::response::Parts,
+    body::Body,
+    response::{IntoResponse, Response},
+};
+
+use axum::http::StatusCode;
 use std::str::FromStr;
 use team::{Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS};
 
@@ -22,7 +29,7 @@ pub enum Level {
     College,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Deserialize)]
 pub enum SportType {
     Hockey,
     Baseball,
@@ -31,14 +38,86 @@ pub enum SportType {
     Golf,
 }
 
+impl Serialize for SportType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(match self {
+            SportType::Hockey => "hockey",
+            SportType::Baseball => "baseball",
+            SportType::Football(level) => match level {
+                Level::Professional => "football",
+                Level::College => "college-football",
+            },
+            SportType::Basketball(level) => match level {
+                Level::Professional => "basketball",
+                Level::College => "college-basketball",
+            },
+            SportType::Golf => "golf",
+        })
+    }
+}
+
+impl FromStr for SportType {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "golf" => Ok(SportType::Golf),
+            "baseball" => Ok(SportType::Baseball),
+            "hockey" => Ok(SportType::Hockey),
+            "football" => Ok(SportType::Football(Level::Professional)),
+            "college-football" => Ok(SportType::Football(Level::College)),
+            "basketball" => Ok(SportType::Basketball(Level::Professional)),
+            "college-basketball" => Ok(SportType::Basketball(Level::College)),
+            _ => Err(Error::InvalidSportType(s.to_string())),
+        }
+    }
+}
+
+impl ToString for SportType {
+    fn to_string(&self) -> String {
+        match self {
+            SportType::Golf => "golf".to_string(),
+            SportType::Baseball => "baseball".to_string(),
+            SportType::Hockey => "hockey".to_string(),
+            SportType::Football(Level::Professional) => "football".to_string(),
+            SportType::Football(Level::College) => "college-football".to_string(),
+            SportType::Basketball(Level::Professional) => "basketball".to_string(),
+            SportType::Basketball(Level::College) => "college-basketball".to_string(),
+        }
+    }
+}
+
+impl SportType {
+    pub fn all() -> HashSet<SportType> {
+        let mut set = HashSet::new();
+        set.insert(SportType::Golf);
+        set.insert(SportType::Baseball);
+        set.insert(SportType::Hockey);
+        set.insert(SportType::Football(Level::Professional));
+        set.insert(SportType::Football(Level::College));
+        set.insert(SportType::Basketball(Level::Professional));
+        set.insert(SportType::Basketball(Level::College));
+        set
+    }
+
+    pub fn all_vec() -> Vec<SportType> {
+        SportType::all().into_iter().collect()
+    }
+}
+
 #[derive(Debug)]
 pub enum Error {
     FetchError(reqwest::Error),
     ParseError(String),
+    InvalidSportType(String),
     SerdeError(serde_json::Error),
     ChronoParseError(ParseError),
     ParseIntError(std::num::ParseIntError),
 }
+
 
 impl From<reqwest::Error> for Error {
     fn from(e: reqwest::Error) -> Self {
@@ -133,7 +212,8 @@ impl GolfPlayer {
             get_str_from_value(latest_stat, "displayValue")?
         } else {
             "E"
-        }.to_owned();
+        }
+        .to_owned();
         let mut names = vec![];
         let roster = get_array_from_value(competitor, "roster")?;
         for player in roster {
@@ -176,9 +256,10 @@ impl GolfPlayer {
             get_str_from_value(latest_stat, "displayValue")?
         } else {
             "E"
-        }.to_owned();
+        }
+        .to_owned();
 
-        lazy_static!(
+        lazy_static! {
             static ref INVALID_NAMES: HashSet<&'static str> = {
                 let mut s = HashSet::new();
                 s.insert("JR.");
@@ -192,10 +273,15 @@ impl GolfPlayer {
                 s.insert("VI");
                 s
             };
-        );
+        };
 
-        let full_name = get_str(get_object_from_value(competitor, "athlete")?, "displayName")?.to_uppercase();
-        let last_name = full_name.split(' ').rev().find(|s| !INVALID_NAMES.contains(s)).unwrap();
+        let full_name =
+            get_str(get_object_from_value(competitor, "athlete")?, "displayName")?.to_uppercase();
+        let last_name = full_name
+            .split(' ')
+            .rev()
+            .find(|s| !INVALID_NAMES.contains(s))
+            .unwrap();
         let position = get_u64_str(
             get_object(get_object_from_value(competitor, "status")?, "position")?,
             "id",
@@ -266,10 +352,13 @@ pub async fn fetch_scores(
     Ok(m)
 }
 pub async fn fetch_sport(sport: SportType) -> (SportType, Result<Vec<Game>, Error>) {
-    (sport, match sport {
-        SportType::Hockey => fetch_statsapi(&sport).await,
-        _ => fetch_espn(&sport).await,
-    })
+    (
+        sport,
+        match sport {
+            SportType::Hockey => fetch_statsapi(&sport).await,
+            _ => fetch_espn(&sport).await,
+        },
+    )
 }
 
 async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
@@ -408,38 +497,37 @@ fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, 
     .to_owned();
 
     if let Ok(situation) = situation {
+        let ball_position = get_str(situation, "possessionText")
+            .unwrap_or_default()
+            .to_owned();
 
-    let ball_position = get_str(situation, "possessionText")
-        .unwrap_or_default()
-        .to_owned();
+        let down_string = {
+            let s = get_str(situation, "shortDownDistanceText").unwrap_or_default();
+            s.replace('&', "+")
+        };
 
-    let down_string = {
-        let s = get_str(situation, "shortDownDistanceText").unwrap_or_default();
-        s.replace('&', "+")
-    };
-
-    let possession = if let Ok(possessing_team_id) = get_u64_str(situation, "possession") {
-        if let (Some(home_team), Some(away_team)) = (&game.home_team, &game.away_team) {
-            if home_team.id == possessing_team_id {
-                Possession::Home
-            } else if away_team.id == possessing_team_id {
-                Possession::Away
+        let possession = if let Ok(possessing_team_id) = get_u64_str(situation, "possession") {
+            if let (Some(home_team), Some(away_team)) = (&game.home_team, &game.away_team) {
+                if home_team.id == possessing_team_id {
+                    Possession::Home
+                } else if away_team.id == possessing_team_id {
+                    Possession::Away
+                } else {
+                    Possession::None
+                }
             } else {
                 Possession::None
             }
         } else {
             Possession::None
-        }
-    } else {
-        Possession::None
-    };
+        };
 
-    Ok(ExtraGameData::FootballData {
-        time_remaining,
-        ball_position,
-        down_string,
-        possession,
-    })
+        Ok(ExtraGameData::FootballData {
+            time_remaining,
+            ball_position,
+            down_string,
+            possession,
+        })
     } else {
         Ok(ExtraGameData::FootballData {
             time_remaining: "".to_owned(),
@@ -483,7 +571,7 @@ fn create_team(competitor: &Value) -> Result<Team, Error> {
         let int_id = get_u64(team, "id");
         match int_id {
             Ok(id) => id,
-            Err(_) => get_u64_str(team, "id")?
+            Err(_) => get_u64_str(team, "id")?,
         }
     };
     let location = get_str(team, "location")?.to_owned();
@@ -553,7 +641,12 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
         tracing::info!("Now: {}, time: {}, delta_hours: {}", now, time, delta_hours);
         if delta_hours > 24 && !matches!(status, Status::Active | Status::End) {
             // skip events > 24 hours ago or in the future
-            tracing::info!("Skipping event {} because it is {} hours old, status is {:?}", game_id, delta_hours, status);
+            tracing::info!(
+                "Skipping event {} because it is {} hours old, status is {:?}",
+                game_id,
+                delta_hours,
+                status
+            );
             continue;
         }
         let scoring_system = get_object_from_value(competition, "scoringSystem")?;
@@ -599,12 +692,15 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
 
         let mut name = get_str_from_value(event, "shortName")?.to_uppercase();
         tracing::info!("Raw name is {name}");
-        lazy_static!(
+        lazy_static! {
             static ref NAME_MAP: HashMap<&'static str, &'static str> = {
                 let mut m = HashMap::new();
                 m.insert("SHRINERS CHILDREN'S OPEN", "SHRINERS OPEN");
                 m.insert("BUTTERFIELD BERMUDA CHAMPIONSHIP", "BERMUDA CHAMP");
-                m.insert("WORLD WIDE TECHNOLOGY CHAMPIONSHIP AT MAYAKOBA", "WWT CHAMP");
+                m.insert(
+                    "WORLD WIDE TECHNOLOGY CHAMPIONSHIP AT MAYAKOBA",
+                    "WWT CHAMP",
+                );
                 m.insert("FARMERS INSURANCE OPEN", "FARMERS OPEN");
                 m.insert("SONY OPEN IN HAWAII", "SONY OPEN");
                 m.insert("AT&T PEBBLE BEACH PRO-AM", "PEBBLE BEACH");
@@ -615,12 +711,12 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
                 m.insert("GENESIS SCOTTISH OPEN", "SCOTTISH OPEN");
                 m
             };
-        );
+        };
         if let Some(new_name) = NAME_MAP.get(&name as &str) {
             name = new_name.to_string()
         }
 
-        lazy_static!(
+        lazy_static! {
             static ref DUMB_WORDS: HashSet<&'static str> = {
                 let mut s = HashSet::new();
                 s.insert("TOURNAMENT");
@@ -630,24 +726,30 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
                 s.insert("INVITATIONAL");
                 s
             };
-        );
+        };
 
-        let name = name.split(' ').filter(|word| {
-            !DUMB_WORDS.contains(*word) // TODO remove numbers
-        }).join(" ");
+        let name = name
+            .split(' ')
+            .filter(|word| {
+                !DUMB_WORDS.contains(*word) // TODO remove numbers
+            })
+            .join(" ");
 
         out_games.push(Game {
-           game_id,
-           sport_id: SportType::Golf,
-           home_team: None,
-           away_team: None,
-           home_score: 0,
-           away_score: 0,
-           status,
-           period: 0,
-           ordinal: ordinal.to_owned(),
-           start_time: time,
-           extra: Some(ExtraGameData::GolfData { players: top_5, name})  
+            game_id,
+            sport_id: SportType::Golf,
+            home_team: None,
+            away_team: None,
+            home_score: 0,
+            away_score: 0,
+            status,
+            period: 0,
+            ordinal: ordinal.to_owned(),
+            start_time: time,
+            extra: Some(ExtraGameData::GolfData {
+                players: top_5,
+                name,
+            }),
         })
     }
     Ok(out_games)
@@ -697,9 +799,9 @@ fn get_object_from_value<'a>(
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object}"))?;
-    let obj = value
-        .as_object()
-        .ok_or(format!("{name} is not an object {value}\nObject is {object}"))?;
+    let obj = value.as_object().ok_or(format!(
+        "{name} is not an object {value}\nObject is {object}"
+    ))?;
     Ok(obj)
 }
 fn get_array_from_value<'a>(
@@ -709,23 +811,27 @@ fn get_array_from_value<'a>(
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object}"))?;
-    let arr = value.as_array().ok_or(format!("{name} is not an array {value}\nObject is {object}"))?;
+    let arr = value.as_array().ok_or(format!(
+        "{name} is not an array {value}\nObject is {object}"
+    ))?;
     Ok(arr)
 }
 fn get_str_from_value<'a>(object: &'a Value, name: &'static str) -> Result<&'a str, Error> {
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object}"))?;
-    let str = value
-        .as_str()
-        .ok_or(format!("{name} is not a string {value:?}\nObject is {object}"))?;
+    let str = value.as_str().ok_or(format!(
+        "{name} is not a string {value:?}\nObject is {object}"
+    ))?;
     Ok(str)
 }
 fn get_u64_from_value(object: &Value, name: &'static str) -> Result<u64, Error> {
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object}"))?;
-    let num = value.as_u64().ok_or(format!("{name} is not an integer {value:?}\nObject is: {object}"))?;
+    let num = value.as_u64().ok_or(format!(
+        "{name} is not an integer {value:?}\nObject is: {object}"
+    ))?;
     Ok(num)
 }
 
@@ -733,9 +839,9 @@ fn get_u64_str_from_value(object: &Value, name: &'static str) -> Result<u64, Err
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object}"))?;
-    let str = value
-        .as_str()
-        .ok_or(format!("{name} is not a string {value:?}\nObject is: {object}"))?;
+    let str = value.as_str().ok_or(format!(
+        "{name} is not a string {value:?}\nObject is: {object}"
+    ))?;
     let num = str
         .parse::<u64>()
         .map_err(|_| format!("{name} is not an integer from string {str}\nObject is: {object}"))?;
@@ -749,7 +855,9 @@ fn get_object<'a>(
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object:?}"))?;
-    let obj = value.as_object().ok_or(format!("{name} is not an object {value}\nObject is {object:?}"))?;
+    let obj = value.as_object().ok_or(format!(
+        "{name} is not an object {value}\nObject is {object:?}"
+    ))?;
     Ok(obj)
 }
 fn get_array<'a>(
@@ -759,36 +867,48 @@ fn get_array<'a>(
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object:?}"))?;
-    let arr = value.as_array().ok_or(format!("{name} is not an array {value}\nObject is {object:?}"))?;
+    let arr = value.as_array().ok_or(format!(
+        "{name} is not an array {value}\nObject is {object:?}"
+    ))?;
     Ok(arr)
 }
 fn get_str<'a>(object: &'a Map<String, Value>, name: &'static str) -> Result<&'a str, Error> {
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object:?}"))?;
-    let str = value.as_str().ok_or(format!("{name} is not a string {value}\nObject is {object:?}"))?; 
+    let str = value.as_str().ok_or(format!(
+        "{name} is not a string {value}\nObject is {object:?}"
+    ))?;
     Ok(str)
 }
 fn get_u64(object: &Map<String, Value>, name: &'static str) -> Result<u64, Error> {
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object:?}"))?;
-    let num = value.as_u64().ok_or(format!("{name} is not an integer {value:?}\nObject is {object:?}"))?;
+    let num = value.as_u64().ok_or(format!(
+        "{name} is not an integer {value:?}\nObject is {object:?}"
+    ))?;
     Ok(num)
 }
 fn get_u64_str(object: &Map<String, Value>, name: &'static str) -> Result<u64, Error> {
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object:?}"))?;
-    let str = value.as_str().ok_or(format!("{name} is not a string {value}\nObject is {object:?}"))?; 
-    let num = str.parse::<u64>().map_err(|_| format!("{name} is not an integer from string {str}\nObject is: {object:?}"))?;
+    let str = value.as_str().ok_or(format!(
+        "{name} is not a string {value}\nObject is {object:?}"
+    ))?;
+    let num = str.parse::<u64>().map_err(|_| {
+        format!("{name} is not an integer from string {str}\nObject is: {object:?}")
+    })?;
     Ok(num)
 }
 fn get_bool(object: &Map<String, Value>, name: &'static str) -> Result<bool, Error> {
     let value = object
         .get(name)
         .ok_or(format!("{name} not present in {object:?}"))?;
-    let bool = value.as_bool().ok_or(format!("{name} is not a bool {value}\nObject is {object:?}"))?;
+    let bool = value.as_bool().ok_or(format!(
+        "{name} is not a bool {value}\nObject is {object:?}"
+    ))?;
     Ok(bool)
 }
 

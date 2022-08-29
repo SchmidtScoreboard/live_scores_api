@@ -1,24 +1,24 @@
-use live_sports::{fetch_all, SportType, Level, fetch_scores};
+use live_sports::{fetch_all, SportType, fetch_scores};
 use std::collections::HashSet;
 use std::env;
 
 fn process_args() -> HashSet<SportType> {
-    let args = env::args();
-    let flags = args.skip(1);
+    let mut args = env::args();
+    let arg0 = args.next().unwrap();
     let mut set = HashSet::new();
-    for flag in flags {
-        let sport_type = match flag.as_str() {
-            "golf" => SportType::Golf,
-            "baseball" => SportType::Baseball,
-            "hockey" => SportType::Hockey,
-            "football" => SportType::Football(Level::Professional),
-            "college-football" => SportType::Football(Level::College),
-            "basketball" => SportType::Basketball(Level::Professional),
-            "college-basketball" => SportType::Basketball(Level::College),
-            "all" => return HashSet::new(),
-            _ => panic!("Invalid flag: '{flag}'"),
-        };
-        set.insert(sport_type);
+    for arg in args {
+        if arg == "all" {
+            return SportType::all();
+        }
+        match arg.parse::<SportType>() {
+            Ok(sport) => { set.insert(sport); },
+            Err(_) => {
+                println!("Usage: {} [all] [sport]*", arg0);
+                println!("  all: fetch all sports");
+                println!("  sport: fetch only the specified sport(s)");
+                std::process::exit(0);
+            }
+        }
     }
     tracing::info!("Processed args, got {set:?}");
     set

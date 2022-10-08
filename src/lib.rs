@@ -991,8 +991,8 @@ async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
 
     let away_powerplay = get_bool(away, "powerPlay")?;
     let home_powerplay = get_bool(home, "powerPlay")?;
-    let away_players = get_u64(away, "numSkaters")?;
-    let home_players = get_u64(home, "numSkaters")?;
+    let away_players = get_u64(away, "numSkaters").unwrap_or(5);
+    let home_players = get_u64(home, "numSkaters").unwrap_or(5);
     let period = get_u64(&json, "currentPeriod")?;
     game.period = period;
 

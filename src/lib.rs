@@ -713,6 +713,7 @@ fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
                 m.insert("RBC CANADIAN OPEN", "RBC CANADIAN");
                 m.insert("GENESIS SCOTTISH OPEN", "SCOTTISH OPEN");
                 m.insert("THE CJ CUP IN SOUTH CAROLINA", "CJ CUP");
+                m.insert("CADENCE BANK HOUSTON OPEN", "HOUSTON OPEN");
                 m
             };
         };

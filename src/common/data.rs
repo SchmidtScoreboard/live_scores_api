@@ -1,17 +1,13 @@
-use chrono::{serde::ts_seconds, DateTime, NaiveDateTime, ParseError};
-use futures::future::join_all;
+use chrono::{serde::ts_seconds, ParseError};
 use itertools::Itertools;
 use lazy_static::lazy_static;
-use ordinal::Ordinal;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
-use serde_json::{Map, Value};
-use std::collections::{HashMap, HashSet};
+use serde_json::Value;
+use std::collections::HashSet;
 use std::str::FromStr;
 
-use crate::common::team::{
-    Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS,
-};
+use crate::common::team::Team;
 
 use crate::common::processors::{
     get_array_from_value, get_object, get_object_from_value, get_str, get_str_from_value,

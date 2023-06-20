@@ -14,7 +14,9 @@ use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
 
 use std::str::FromStr;
-pub use team::{Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS};
+pub use team::{
+    Team, BASEBALL_TEAMS, BASKETBALL_TEAMS, COLLEGE_TEAMS, FOOTBALL_TEAMS, HOCKEY_TEAMS,
+};
 
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Copy, Serialize, Deserialize)]
 pub enum Level {
@@ -58,7 +60,8 @@ impl<'de> Deserialize<'de> for SportType {
         D: serde::Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        s.parse().map_err(|e| serde::de::Error::custom(format!("{e:?}")))
+        s.parse()
+            .map_err(|e| serde::de::Error::custom(format!("{e:?}")))
     }
 }
 
@@ -120,7 +123,6 @@ pub enum Error {
     ChronoParseError(ParseError),
     ParseIntError(std::num::ParseIntError),
 }
-
 
 impl From<reqwest::Error> for Error {
     fn from(e: reqwest::Error) -> Self {
@@ -291,7 +293,7 @@ impl GolfPlayer {
         )?;
         Ok(GolfPlayer {
             display_name: last_name.to_owned(),
-            position: position as u64,
+            position,
             score,
         })
     }

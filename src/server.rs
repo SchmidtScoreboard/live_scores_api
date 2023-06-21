@@ -1,18 +1,13 @@
 use axum::extract::Path;
-use axum::{
-    http::StatusCode,
-    response::IntoResponse,
-    routing::get,
-    Extension, Json, Router,
-};
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Extension, Json, Router};
 
 use futures::future::join_all;
-use live_sports::{fetch_sport, Game, SportType, get_team_map, Team};
+use live_sports::{common::team::get_team_map, common::team::Team, fetch_sport, Game, SportType};
 use parking_lot::Mutex;
 use serde::Deserialize;
 use std::net::SocketAddr;
 use std::{
-    collections::{HashMap},
+    collections::HashMap,
     sync::Arc,
     time::{Duration, Instant},
 };
@@ -48,42 +43,54 @@ struct SportsRequest {
     sport_ids: Vec<SportType>,
 }
 
-async fn get_sports(state: Extension<Arc<Mutex<Cache>>>, Json(request): Json<SportsRequest>) -> impl IntoResponse {
+async fn get_sports(
+    state: Extension<Arc<Mutex<Cache>>>,
+    Json(request): Json<SportsRequest>,
+) -> impl IntoResponse {
     tracing::info!("Getting sports {:?}", request.sport_ids);
-    get_scores_for_sports(state, &request.sport_ids).await.map(|games| {
-        Json(games)
-    })
+    get_scores_for_sports(state, &request.sport_ids)
+        .await
+        .map(Json)
 }
 
 async fn get_all(state: Extension<Arc<Mutex<Cache>>>) -> impl IntoResponse {
     tracing::info!("Getting all sports");
-    get_scores_for_sports(state, &SportType::all_vec()).await.map(|games| {
-        Json(games)
-    })
+    get_scores_for_sports(state, &SportType::all_vec())
+        .await
+        .map(Json)
 }
 
-async fn get_sport(state: Extension<Arc<Mutex<Cache>>>, Path(sport_id): Path<String> ) -> impl IntoResponse {
+async fn get_sport(
+    state: Extension<Arc<Mutex<Cache>>>,
+    Path(sport_id): Path<String>,
+) -> impl IntoResponse {
     tracing::info!("Getting sport data for {}", sport_id);
-    let sport = sport_id.parse::<SportType>().map_err(|_| StatusCode::NOT_FOUND)?;
-    get_scores_for_sports(state, std::slice::from_ref(&sport)).await.map(|games| {
-
-        games.into_iter().find(|(s_id, _)| *s_id == sport).map(|(_ , g) | {
-            Ok(Json(g))
-        }).unwrap_or_else(|| {
-            Err(StatusCode::NOT_FOUND)
+    let sport = sport_id
+        .parse::<SportType>()
+        .map_err(|_| StatusCode::NOT_FOUND)?;
+    get_scores_for_sports(state, std::slice::from_ref(&sport))
+        .await
+        .map(|games| {
+            games
+                .into_iter()
+                .find(|(s_id, _)| *s_id == sport)
+                .map(|(_, g)| Ok(Json(g)))
+                .unwrap_or_else(|| Err(StatusCode::NOT_FOUND))
         })
-    })
 }
 
-async fn get_teams(Path(sport_id): Path<String> ) -> Result<Json<Vec<Team>>, StatusCode> {
+async fn get_teams(Path(sport_id): Path<String>) -> Result<Json<Vec<Team>>, StatusCode> {
     tracing::info!("Getting teams for {}", sport_id);
-    let sport = sport_id.parse::<SportType>().map_err(|_| StatusCode::NOT_FOUND)?;
+    let sport = sport_id
+        .parse::<SportType>()
+        .map_err(|_| StatusCode::NOT_FOUND)?;
     let team_map = get_team_map(&sport);
-    let teams = team_map.into_iter().map(|(_, team)| { team.clone() }).collect_vec();
+    let teams = team_map
+        .into_iter()
+        .map(|(_, team)| team.clone())
+        .collect_vec();
     Ok(Json(teams))
 }
-
-
 
 async fn get_scores_for_sports(
     Extension(state): Extension<Arc<Mutex<Cache>>>,
@@ -135,14 +142,17 @@ async fn get_scores_for_sports(
 
 #[cfg(test)]
 mod test {
-    use live_sports::{SportType, Level};
+    use live_sports::{Level, SportType};
 
     #[test]
     fn test_request() {
-        let request = "{\n    \"sport_ids\": [\n        \"basketball\",\n        \"hockey\"\n    ]\n}";
+        let request =
+            "{\n    \"sport_ids\": [\n        \"basketball\",\n        \"hockey\"\n    ]\n}";
         let parsed = serde_json::from_str::<super::SportsRequest>(request).unwrap();
-        let actual = vec![SportType::Basketball(Level::Professional), SportType::Hockey];
+        let actual = vec![
+            SportType::Basketball(Level::Professional),
+            SportType::Hockey,
+        ];
         assert_eq!(parsed.sport_ids, actual);
-
     }
 }

@@ -1,6 +1,90 @@
+use crate::common::data::{Error, Level, SportType};
+use crate::common::processors::{get_object_from_value, get_str, get_u64, get_u64_str};
+
+use crate::common::color;
+use itertools::Itertools;
 use phf::phf_map;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::borrow::Cow;
-use serde::{Serialize, Deserialize};
+
+pub fn get_team_map(sport: &SportType) -> &phf::Map<u64, Team> {
+    match sport {
+        SportType::Hockey => &HOCKEY_TEAMS,
+        SportType::Baseball => &BASEBALL_TEAMS,
+        SportType::Football(level) => {
+            if *level == Level::College {
+                &COLLEGE_TEAMS
+            } else {
+                &FOOTBALL_TEAMS
+            }
+        }
+        SportType::Basketball(level) => {
+            if *level == Level::College {
+                &COLLEGE_TEAMS
+            } else {
+                &BASKETBALL_TEAMS
+            }
+        }
+        SportType::Golf => unreachable!(),
+    }
+}
+
+pub fn create_team(competitor: &Value) -> Result<Team, Error> {
+    let team = get_object_from_value(competitor, "team")?;
+    let id = {
+        let int_id = get_u64(team, "id");
+        match int_id {
+            Ok(id) => id,
+            Err(_) => get_u64_str(team, "id")?,
+        }
+    };
+    let location = get_str(team, "location")?.to_owned();
+    let name = get_str(team, "name")?.to_owned();
+    let abbreviation = get_str(team, "abbreviation")?.to_owned();
+    let display_name = get_display_name(&name);
+    let primary_color = get_str(team, "color")?.to_owned();
+    let secondary_color = get_str(team, "color").unwrap_or("000000");
+
+    let secondary_color =
+        color::get_secondary_for_primary(&primary_color, secondary_color)?.to_owned();
+    let out = Team::new(
+        id,
+        location,
+        name,
+        display_name,
+        abbreviation,
+        primary_color,
+        secondary_color,
+    );
+
+    tracing::info!("Creating unknown team: {:?}", out);
+    Ok(out)
+}
+
+fn get_display_name(raw: &str) -> String {
+    if raw.len() > 11 {
+        let mut words = raw.split(' ').collect_vec();
+        if let Some(last) = words.last_mut() {
+            if *last == "State" {
+                *last = "St";
+            }
+        }
+        if let Some(first) = words.first_mut() {
+            *first = match *first {
+                "North" => "N",
+                "South" => "S",
+                "West" => "W",
+                "East" => "E",
+                "Central" => "C",
+                _ => *first,
+            }
+        }
+        words.join(" ")
+    } else {
+        raw.to_owned()
+    }
+}
 
 #[derive(Debug, Clone, Eq, PartialEq, Default, Serialize, Deserialize)]
 pub struct Team {
@@ -21,7 +105,7 @@ impl Team {
         display_name: &'static str,
         abbreviation: &'static str,
         primary_color: &'static str,
-        secondary_color: &'static str
+        secondary_color: &'static str,
     ) -> Team {
         Team {
             id,
@@ -34,14 +118,14 @@ impl Team {
         }
     }
 
-   pub fn new(
+    pub fn new(
         id: u64,
         location: String,
         name: String,
         display_name: String,
         abbreviation: String,
         primary_color: String,
-        secondary_color: String
+        secondary_color: String,
     ) -> Team {
         Team {
             id,

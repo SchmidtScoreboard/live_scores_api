@@ -19,3 +19,91 @@ message Sport {
     SportType type = 1;
     Level level = 2;
 }
+
+message Color {
+    uint32 r = 1;
+    uint32 g = 2;
+    uint32 b = 3;
+}
+
+message Team {
+    uint64 id = 1;
+    string location = 2;
+    string name = 3;
+    string display_name = 4;
+    string abbreviation = 5;
+    Color primary_color = 6;
+    Color secondary_color = 7;
+}
+
+message Game {
+    uint64 game_id = 1;
+    Sport sport = 2;
+
+    message TeamGameData {
+        Team home_team = 1;
+        Team away_team = 2;
+        uint64 home_score = 3;
+        uint64 away_score = 4;
+    }
+
+    TeamGameData team_game_data = 3;
+
+    enum Status {
+        PREGAME = 0;
+        ACTIVE = 1;
+        INTERMISSION = 2;
+        END = 3;
+        INVALID = 4;
+    }
+    Status status = 4;
+    uint64 period = 5;
+    string ordinal = 6;
+    uint64 start_time = 7;
+
+    message BasketballData {}
+
+    message BaseballData {
+        uint64 balls = 1;
+        uint64 outs = 2;
+        uint64 strikes = 3;
+        bool is_inning_top = 4;
+        bool on_first = 5;
+        bool on_second = 6;
+        bool on_third = 7;
+    }
+
+    message FootballData {
+        enum Possession {
+            HOME = 0;
+            AWAY = 1;
+            NONE = 2;
+        }
+        string time_remaining = 1;
+        string ball_position = 2;
+        string down_string = 3;
+        Possession possession = 4;
+    }
+
+    message HockeyData {
+        message HockeyTeamData {
+            bool powerplay = 1;
+            uint64 num_skaters = 2;
+        }
+        HockeyTeamData home_team = 1;
+        HockeyTeamData away_team = 2;
+    }
+
+    message GolfData {
+        string event_name = 1;
+
+        message GolfPlayer {
+            string name = 1;
+            string display_name = 2;
+            string score = 3;
+            uint64 position = 4;
+        }
+
+    }
+}
+

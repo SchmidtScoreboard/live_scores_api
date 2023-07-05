@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package common.types;
+
+message Sport {
+    enum Level {
+        PROFESSIONAL = 0;
+        COLLEGIATE = 1;
+    }
+
+    enum SportType {
+        FOOTBALL = 0; 
+        HOCKEY = 1;
+        BASKETBALL = 2;
+        BASEBALL = 3;
+        GOLF = 4;
+    }
+
+    SportType type = 1;
+    Level level = 2;
+}

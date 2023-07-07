@@ -23,10 +23,10 @@ tracing-subscriber = { version = "0.3.11", features = ["env-filter"] }
 parking_lot = "0.12.1"
 serde = { version = "1.0.144", features = ["derive"] }
 bytes = "0.4"
-prost = "0.5"
+prost = "0.11.9"
 
 [build-dependencies]
-prost-build = "0.5"
+prost-build = "0.11.9"
 
 
 [[bin]]

@@ -2,6 +2,7 @@ use axum::extract::Path;
 use axum::{http::StatusCode, response::IntoResponse, routing::get, Extension, Json, Router};
 
 use futures::future::join_all;
+use live_sports::all_sports;
 use live_sports::common::types::{Game, Sport};
 use live_sports::{common::team::get_team_map, common::team::Team, fetch_sport};
 use parking_lot::Mutex;
@@ -56,9 +57,7 @@ async fn get_sports(
 
 async fn get_all(state: Extension<Arc<Mutex<Cache>>>) -> impl IntoResponse {
     tracing::info!("Getting all sports");
-    get_scores_for_sports(state, &SportType::all_vec())
-        .await
-        .map(Json)
+    get_scores_for_sports(state, &all_sports()).await.map(Json)
 }
 
 async fn get_sport(
@@ -67,7 +66,7 @@ async fn get_sport(
 ) -> impl IntoResponse {
     tracing::info!("Getting sport data for {}", sport_id);
     let sport = sport_id
-        .parse::<SportType>()
+        .parse::<Sport>()
         .map_err(|_| StatusCode::NOT_FOUND)?;
     get_scores_for_sports(state, std::slice::from_ref(&sport))
         .await

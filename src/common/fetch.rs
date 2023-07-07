@@ -31,7 +31,6 @@ fn get_espn_url(sport: &Sport) -> &'static str {
         (SportType::Basketball, Level::Professional) => "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
         (SportType::Basketball, Level::Collegiate)=> "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=50",
         (SportType::Golf, _)=> "http://site.api.espn.com/apis/site/v2/sports/golf/leaderboard?league=pga",
-        (_, _) => panic!("Invalid state")
     }
 }
 
@@ -113,21 +112,20 @@ pub async fn fetch_espn(sport: &Sport) -> Result<Vec<Game>, Error> {
         let away_score = get_u64_str_from_value(away_team, "score")?;
 
         let out_game = {
-            let g = Game {
+            let mut g = Game {
                 game_id,
-                sport: Some(sport.clone()),
-                home_team: None,
-                away_team: None,
-                home_team_score: 0,
-                away_team_score: 0,
+                sport: Some(*sport),
+                home_team: Some(home),
+                away_team: Some(away),
+                home_team_score: home_score,
+                away_team_score: away_score,
                 period,
                 status: status.into(),
                 ordinal,
                 start_time: time.timestamp_nanos(),
                 sport_data: None,
             };
-            // TODO
-            // g.extra = Some(get_extra_data(competition, &g)?);
+            g.sport_data = Some(get_extra_data(competition, &g)?);
             g
         };
         out_games.push(out_game)
@@ -174,9 +172,9 @@ pub async fn fetch_statsapi(sport: &Sport) -> Result<Vec<Game>, Error> {
 
                 let g = Game {
                     game_id,
-                    sport: Some(sport.clone()),
-                    home_team: None,
-                    away_team: None,
+                    sport: Some(*sport),
+                    home_team: Some(home_team.clone()),
+                    away_team: Some(away_team.clone()),
                     home_team_score: 0,
                     away_team_score: 0,
                     period: 0,

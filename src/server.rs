@@ -3,8 +3,8 @@ use axum::{http::StatusCode, response::IntoResponse, routing::get, Extension, Js
 
 use futures::future::join_all;
 use live_sports::all_sports;
-use live_sports::common::types::{Game, Sport};
-use live_sports::{common::team::get_team_map, common::team::Team, fetch_sport};
+use live_sports::common::types::{Game, Sport, Team};
+use live_sports::{common::team::get_team_map, fetch_sport};
 use parking_lot::Mutex;
 use serde::Deserialize;
 use std::net::SocketAddr;

@@ -1,5 +1,6 @@
 use crate::common::data::Error;
 use crate::common::processors::{get_bool, get_object, get_str, get_u64};
+use crate::common::types::game::hockey_data::HockeyTeamData;
 use crate::common::types::game::Status;
 use crate::common::types::game::{HockeyData, SportData};
 use crate::common::types::Game;
@@ -56,8 +57,14 @@ pub async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
 
     game.status = status.into();
     game.sport_data = Some(SportData::HockeyData(HockeyData {
-        home_team: None, // TODO correct this
-        away_team: None,
+        home_team: Some(HockeyTeamData {
+            powerplay: home_powerplay,
+            num_skaters: home_players,
+        }),
+        away_team: Some(HockeyTeamData {
+            powerplay: away_powerplay,
+            num_skaters: away_players,
+        }),
     }));
 
     println!("Got extra data for hockey game {:?}", game.game_id);

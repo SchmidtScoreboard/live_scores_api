@@ -85,10 +85,7 @@ async fn get_teams(Path(sport_id): Path<String>) -> Result<Json<Vec<Team>>, Stat
         .parse::<Sport>()
         .map_err(|_| StatusCode::NOT_FOUND)?;
     let team_map = get_team_map(&sport);
-    let teams = team_map
-        .into_iter()
-        .map(|(_, team)| team.clone())
-        .collect_vec();
+    let teams = team_map.iter().map(|(_, team)| team.clone()).collect_vec();
     Ok(Json(teams))
 }
 

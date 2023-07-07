@@ -1,4 +1,5 @@
-extern crate phf;
+#[macro_use]
+extern crate maplit;
 
 pub mod common;
 mod sport;

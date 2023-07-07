@@ -9,7 +9,7 @@ Team {
 		green: 32
 		blue: 91
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -26,7 +26,7 @@ Team {
 		green: 38
 		blue: 51
 	}
-	secondary_color: {
+	secondary_color {
 		red: 226
 		green: 214
 		blue: 181
@@ -43,7 +43,7 @@ Team {
 		green: 38
 		blue: 84
 	}
-	secondary_color: {
+	secondary_color {
 		red: 252
 		green: 181
 		blue: 20
@@ -60,7 +60,7 @@ Team {
 		green: 30
 		blue: 66
 	}
-	secondary_color: {
+	secondary_color {
 		red: 162
 		green: 170
 		blue: 173
@@ -77,7 +77,7 @@ Team {
 		green: 16
 		blue: 46
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -94,7 +94,7 @@ Team {
 		green: 17
 		blue: 38
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -111,7 +111,7 @@ Team {
 		green: 32
 		blue: 91
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -128,7 +128,7 @@ Team {
 		green: 17
 		blue: 38
 	}
-	secondary_color: {
+	secondary_color {
 		red: 243
 		green: 188
 		blue: 82
@@ -145,7 +145,7 @@ Team {
 		green: 71
 		blue: 52
 	}
-	secondary_color: {
+	secondary_color {
 		red: 166
 		green: 25
 		blue: 46
@@ -162,7 +162,7 @@ Team {
 		green: 98
 		blue: 114
 	}
-	secondary_color: {
+	secondary_color {
 		red: 229
 		green: 114
 		blue: 0
@@ -179,7 +179,7 @@ Team {
 		green: 51
 		blue: 160
 	}
-	secondary_color: {
+	secondary_color {
 		red: 200
 		green: 16
 		blue: 46
@@ -196,7 +196,7 @@ Team {
 		green: 30
 		blue: 66
 	}
-	secondary_color: {
+	secondary_color {
 		red: 185
 		green: 151
 		blue: 91
@@ -213,7 +213,7 @@ Team {
 		green: 170
 		blue: 173
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -230,7 +230,7 @@ Team {
 		green: 184
 		blue: 28
 	}
-	secondary_color: {
+	secondary_color {
 		red: 4
 		green: 30
 		blue: 66
@@ -247,7 +247,7 @@ Team {
 		green: 27
 		blue: 27
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -264,7 +264,7 @@ Team {
 		green: 189
 		blue: 54
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -281,7 +281,7 @@ Team {
 		green: 99
 		blue: 65
 	}
-	secondary_color: {
+	secondary_color {
 		red: 162
 		green: 170
 		blue: 173
@@ -298,7 +298,7 @@ Team {
 		green: 132
 		blue: 61
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -315,7 +315,7 @@ Team {
 		green: 0
 		blue: 0
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -332,7 +332,7 @@ Team {
 		green: 70
 		blue: 22
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -349,7 +349,7 @@ Team {
 		green: 16
 		blue: 46
 	}
-	secondary_color: {
+	secondary_color {
 		red: 198
 		green: 146
 		blue: 20
@@ -366,7 +366,7 @@ Team {
 		green: 231
 		blue: 27
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -383,7 +383,7 @@ Team {
 		green: 76
 		blue: 2
 	}
-	secondary_color: {
+	secondary_color {
 		red: 4
 		green: 30
 		blue: 66
@@ -400,7 +400,7 @@ Team {
 		green: 47
 		blue: 135
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 184
 		blue: 28
@@ -417,7 +417,7 @@ Team {
 		green: 181
 		blue: 20
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -434,7 +434,7 @@ Team {
 		green: 113
 		blue: 168
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -451,7 +451,7 @@ Team {
 		green: 25
 		blue: 46
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 30
 		blue: 98
@@ -468,7 +468,7 @@ Team {
 		green: 17
 		blue: 189
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -485,7 +485,7 @@ Team {
 		green: 184
 		blue: 28
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -502,7 +502,7 @@ Team {
 		green: 151
 		blue: 90
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -519,7 +519,7 @@ Team {
 		green: 22
 		blue: 40
 	}
-	secondary_color: {
+	secondary_color {
 		red: 153
 		green: 217
 		blue: 217
@@ -536,7 +536,7 @@ Team {
 		green: 48
 		blue: 135
 	}
-	secondary_color: {
+	secondary_color {
 		red: 252
 		green: 76
 		blue: 2
@@ -553,7 +553,7 @@ Team {
 		green: 97
 		blue: 146
 	}
-	secondary_color: {
+	secondary_color {
 		red: 217
 		green: 69
 		blue: 116
@@ -570,7 +570,7 @@ Team {
 		green: 30
 		blue: 66
 	}
-	secondary_color: {
+	secondary_color {
 		red: 200
 		green: 16
 		blue: 46
@@ -587,7 +587,7 @@ Team {
 		green: 30
 		blue: 66
 	}
-	secondary_color: {
+	secondary_color {
 		red: 200
 		green: 16
 		blue: 46
@@ -604,7 +604,7 @@ Team {
 		green: 152
 		blue: 90
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255
@@ -621,7 +621,7 @@ Team {
 		green: 16
 		blue: 46
 	}
-	secondary_color: {
+	secondary_color {
 		red: 0
 		green: 0
 		blue: 0
@@ -638,7 +638,7 @@ Team {
 		green: 23
 		blue: 23
 	}
-	secondary_color: {
+	secondary_color {
 		red: 255
 		green: 255
 		blue: 255

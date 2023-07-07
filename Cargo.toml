@@ -32,3 +32,7 @@ prost-build = "0.5"
 [[bin]]
 name = "server"
 path = "src/server.rs"
+
+[[bin]]
+name = "team_writer"
+path = "src/team_writer.rs"

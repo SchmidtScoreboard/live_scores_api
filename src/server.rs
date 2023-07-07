@@ -2,7 +2,8 @@ use axum::extract::Path;
 use axum::{http::StatusCode, response::IntoResponse, routing::get, Extension, Json, Router};
 
 use futures::future::join_all;
-use live_sports::{common::team::get_team_map, common::team::Team, fetch_sport, Game, SportType};
+use live_sports::common::types::{Game, Sport};
+use live_sports::{common::team::get_team_map, common::team::Team, fetch_sport};
 use parking_lot::Mutex;
 use serde::Deserialize;
 use std::net::SocketAddr;
@@ -14,7 +15,7 @@ use std::{
 
 use itertools::Itertools;
 
-type Cache = HashMap<live_sports::SportType, (Instant, Option<Vec<Game>>)>;
+type Cache = HashMap<Sport, (Instant, Option<Vec<Game>>)>;
 
 #[tokio::main]
 async fn main() {
@@ -40,7 +41,7 @@ async fn main() {
 
 #[derive(Debug, Clone, Deserialize)]
 struct SportsRequest {
-    sport_ids: Vec<SportType>,
+    sport_ids: Vec<Sport>,
 }
 
 async fn get_sports(
@@ -82,7 +83,7 @@ async fn get_sport(
 async fn get_teams(Path(sport_id): Path<String>) -> Result<Json<Vec<Team>>, StatusCode> {
     tracing::info!("Getting teams for {}", sport_id);
     let sport = sport_id
-        .parse::<SportType>()
+        .parse::<Sport>()
         .map_err(|_| StatusCode::NOT_FOUND)?;
     let team_map = get_team_map(&sport);
     let teams = team_map
@@ -94,9 +95,9 @@ async fn get_teams(Path(sport_id): Path<String>) -> Result<Json<Vec<Team>>, Stat
 
 async fn get_scores_for_sports(
     Extension(state): Extension<Arc<Mutex<Cache>>>,
-    sports: &[SportType],
-) -> Result<HashMap<SportType, Vec<Game>>, StatusCode> {
-    let mut results: HashMap<SportType, Vec<Game>> = HashMap::new();
+    sports: &[Sport],
+) -> Result<HashMap<Sport, Vec<Game>>, StatusCode> {
+    let mut results: HashMap<Sport, Vec<Game>> = HashMap::new();
     let mut futures = Vec::new();
 
     {
@@ -142,6 +143,7 @@ async fn get_scores_for_sports(
 
 #[cfg(test)]
 mod test {
+    use live_sports::new_sport;
     use live_sports::{Level, SportType};
 
     #[test]
@@ -150,8 +152,8 @@ mod test {
             "{\n    \"sport_ids\": [\n        \"basketball\",\n        \"hockey\"\n    ]\n}";
         let parsed = serde_json::from_str::<super::SportsRequest>(request).unwrap();
         let actual = vec![
-            SportType::Basketball(Level::Professional),
-            SportType::Hockey,
+            new_sport(SportType::Basketball, Level::Professional),
+            new_sport(SportType::Hockey, Level::Professional),
         ];
         assert_eq!(parsed.sport_ids, actual);
     }

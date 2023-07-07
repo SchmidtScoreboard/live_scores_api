@@ -16,7 +16,7 @@ message Sport {
         GOLF = 4;
     }
 
-    SportType type = 1;
+    SportType sport_type = 1;
     Level level = 2;
 }
 
@@ -40,14 +40,12 @@ message Game {
     uint64 game_id = 1;
     Sport sport = 2;
 
-    message TeamGameData {
-        Team home_team = 1;
-        Team away_team = 2;
-        uint64 home_score = 3;
-        uint64 away_score = 4;
-    }
+    Team home_team = 3;
+    Team away_team = 4;
+    uint64 home_team_score = 5;
+    uint64 away_team_score = 6;
 
-    TeamGameData team_game_data = 3;
+
 
     enum Status {
         PREGAME = 0;
@@ -56,10 +54,10 @@ message Game {
         END = 3;
         INVALID = 4;
     }
-    Status status = 4;
-    uint64 period = 5;
-    string ordinal = 6;
-    uint64 start_time = 7;
+    Status status = 7;
+    uint64 period = 8;
+    string ordinal = 9;
+    int64 start_time = 10;
 
     message BasketballData {}
 
@@ -104,6 +102,15 @@ message Game {
             uint64 position = 4;
         }
 
+        repeated GolfPlayer players = 2;
+    }
+
+    oneof sport_data {
+        BasketballData basketball_data = 11;
+        BaseballData baseball_data = 12;
+        FootballData football_data = 13;
+        HockeyData hockey_data = 14;
+        GolfData golf_data = 15;
     }
 }
 

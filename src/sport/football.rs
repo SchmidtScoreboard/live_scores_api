@@ -1,14 +1,17 @@
 use serde_json::Value;
 
-use crate::common::data::{Error, ExtraGameData, Game, Possession, Status};
+use crate::common::data::Error;
 
 use crate::common::processors::{get_object_from_value, get_str, get_u64_str};
+use crate::common::types::game::football_data::Possession;
+use crate::common::types::game::{FootballData, SportData, Status};
+use crate::common::types::Game;
 
-pub fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameData, Error> {
+pub fn get_football_data(competition: &Value, game: &Game) -> Result<SportData, Error> {
     let situation = get_object_from_value(competition, "situation");
     let status_object = get_object_from_value(competition, "status")?;
 
-    let time_remaining = if game.status != Status::Active {
+    let time_remaining = if game.status() != Status::Active {
         ""
     } else {
         get_str(status_object, "displayClock").unwrap_or_default()
@@ -41,18 +44,18 @@ pub fn get_football_data(competition: &Value, game: &Game) -> Result<ExtraGameDa
             Possession::None
         };
 
-        Ok(ExtraGameData::FootballData {
+        Ok(SportData::FootballData(FootballData {
             time_remaining,
             ball_position,
             down_string,
-            possession,
-        })
+            possession: possession.into(),
+        }))
     } else {
-        Ok(ExtraGameData::FootballData {
+        Ok(SportData::FootballData(FootballData {
             time_remaining: "".to_owned(),
             ball_position: "".to_owned(),
             down_string: "".to_owned(),
-            possession: Possession::None,
-        })
+            possession: Possession::None.into(),
+        }))
     }
 }

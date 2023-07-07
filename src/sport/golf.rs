@@ -1,15 +1,121 @@
 use chrono::{DateTime, NaiveDateTime};
 use itertools::Itertools;
 use lazy_static::lazy_static;
+use regex::Regex;
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
-use crate::common::data::{Error, ExtraGameData, Game, GolfPlayer, SportType, Status};
+use crate::common::data::Error;
+use crate::common::types::game::golf_data::GolfPlayer;
+use crate::common::types::game::{GolfData, SportData, Status};
+use crate::common::types::Game;
 
 use crate::common::processors::{
     get_array_from_value, get_object, get_object_from_value, get_str, get_str_from_value, get_u64,
-    get_u64_str_from_value,
+    get_u64_str, get_u64_str_from_value,
 };
+
+pub fn from_teamstroke(competitor: &Value) -> Result<GolfPlayer, Error> {
+    let stats = get_array_from_value(competitor, "statistics")?;
+    let score = if let Some(latest_stat) = stats.first() {
+        get_str_from_value(latest_stat, "displayValue")?
+    } else {
+        "E"
+    }
+    .to_owned();
+    let mut names = vec![];
+    let roster = get_array_from_value(competitor, "roster")?;
+    for player in roster {
+        let last_name = &get_str(get_object_from_value(player, "athlete")?, "lastName")?[0..5];
+        names.push(last_name);
+    }
+    let display_name = names.iter().join("/").to_uppercase();
+    let position = get_u64_str(
+        get_object(get_object_from_value(competitor, "status")?, "position")?,
+        "id",
+    )?;
+    Ok(GolfPlayer {
+        name: display_name.clone(),
+        display_name,
+        score,
+        position,
+    })
+}
+pub fn from_raw_data(line: &str, position: usize) -> Option<GolfPlayer> {
+    lazy_static! {
+        static ref RE: Regex = Regex::new(r#".*\s([a-zA-z ]+)/([a-zA-z ]+)\s*([^\s]+)+"#).unwrap();
+    }
+    if let Some(cap) = RE.captures_iter(line).next() {
+        let player_a = &cap[0];
+        let player_b = &cap[1];
+        let score = cap[2].to_owned();
+        let display_name = format!("{}/{}", &player_a[..5], &player_b[..5]);
+        Some(GolfPlayer {
+            name: display_name.clone(),
+            display_name,
+            score,
+            position: position as u64,
+        })
+    } else {
+        None
+    }
+}
+
+pub fn from_competitor(competitor: &Value) -> Result<GolfPlayer, Error> {
+    let stats = get_array_from_value(competitor, "statistics")?;
+    let score = if let Some(latest_stat) = stats.first() {
+        get_str_from_value(latest_stat, "displayValue")?
+    } else {
+        "E"
+    }
+    .to_owned();
+
+    lazy_static! {
+        static ref INVALID_NAMES: HashSet<&'static str> = {
+            let mut s = HashSet::new();
+            s.insert("JR.");
+            s.insert("JR");
+            s.insert("SR.");
+            s.insert("SR");
+            s.insert("II");
+            s.insert("III");
+            s.insert("IV");
+            s.insert("V");
+            s.insert("VI");
+            s
+        };
+    };
+
+    let full_name =
+        get_str(get_object_from_value(competitor, "athlete")?, "displayName")?.to_uppercase();
+    let last_name = full_name
+        .split(' ')
+        .rev()
+        .find(|s| !INVALID_NAMES.contains(s))
+        .unwrap()
+        .to_owned();
+    let position = get_u64_str(
+        get_object(get_object_from_value(competitor, "status")?, "position")?,
+        "id",
+    )?;
+    Ok(GolfPlayer {
+        name: full_name,
+        display_name: last_name,
+        position,
+        score,
+    })
+}
+
+pub fn from_espn(input: &str) -> Status {
+    match input {
+        "STATUS_IN_PROGRESS" => Status::Active,
+        "STATUS_FINAL" | "STATUS_PLAY_COMPLETE" => Status::End,
+        "STATUS_SCHEDULED" => Status::Pregame,
+        "STATUS_END_PERIOD" | "STATUS_HALFTIME" | "STATUS_DELAYED" => Status::Intermission,
+        "STATUS_POSTPONED" | "STATUS_CANCELED" => Status::Invalid,
+        _ => panic!("Unknown status {input}"),
+    }
+}
 
 pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
     let mut out_games = Vec::new();
@@ -21,7 +127,7 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
         let competitors = get_array_from_value(competition, "competitors")?;
         let status_object = get_object_from_value(competition, "status")?;
         let espn_status = get_str(get_object(status_object, "type")?, "name")?;
-        let mut status = Status::from_espn(espn_status);
+        let mut status = from_espn(espn_status);
         if status == Status::Invalid {
             tracing::error!("Invalid status: {}", espn_status);
             continue;
@@ -81,7 +187,7 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
                 top_5 = raw_data
                     .split('\n')
                     .enumerate()
-                    .filter_map(|(position, line)| GolfPlayer::from_raw_data(line, position))
+                    .filter_map(|(position, line)| from_raw_data(line, position))
                     .take(5)
                     .collect();
             } else {
@@ -89,7 +195,7 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
                 let competitors = get_array_from_value(competition, "competitors")?;
                 let mut candidates = vec![];
                 for competitor in competitors {
-                    candidates.push(GolfPlayer::from_teamstroke(competitor)?)
+                    candidates.push(from_teamstroke(competitor)?)
                 }
                 candidates.sort_by(|a, b| a.position.cmp(&b.position));
                 top_5 = candidates.into_iter().take(5).collect();
@@ -98,7 +204,7 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
             let competitors = get_array_from_value(competition, "competitors")?;
             let mut candidates = vec![];
             for competitor in competitors {
-                candidates.push(GolfPlayer::from_competitor(competitor)?)
+                candidates.push(from_competitor(competitor)?)
             }
             candidates.sort_by(|a, b| a.position.cmp(&b.position));
             top_5 = candidates.into_iter().take(5).collect();
@@ -153,19 +259,19 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
 
         out_games.push(Game {
             game_id,
-            sport_id: SportType::Golf,
+            sport: None, // TODO fix
             home_team: None,
             away_team: None,
-            home_score: 0,
-            away_score: 0,
-            status,
+            home_team_score: 0,
+            away_team_score: 0,
+            status: status.into(),
             period: 0,
             ordinal: ordinal.to_owned(),
-            start_time: time,
-            extra: Some(ExtraGameData::GolfData {
+            start_time: time.timestamp_nanos(),
+            sport_data: Some(SportData::GolfData(GolfData {
+                event_name: name,
                 players: top_5,
-                name,
-            }),
+            })),
         })
     }
     Ok(out_games)

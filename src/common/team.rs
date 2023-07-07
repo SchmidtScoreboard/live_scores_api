@@ -1,5 +1,7 @@
-use crate::common::data::{Error, Level, SportType};
+use crate::common::data::Error;
 use crate::common::processors::{get_object_from_value, get_str, get_u64, get_u64_str};
+use crate::common::types::sport::{Level, SportType};
+use crate::common::types::Sport;
 
 use crate::common::color;
 use itertools::Itertools;
@@ -8,25 +10,14 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::borrow::Cow;
 
-pub fn get_team_map(sport: &SportType) -> &phf::Map<u64, Team> {
-    match sport {
-        SportType::Hockey => &HOCKEY_TEAMS,
-        SportType::Baseball => &BASEBALL_TEAMS,
-        SportType::Football(level) => {
-            if *level == Level::College {
-                &COLLEGE_TEAMS
-            } else {
-                &FOOTBALL_TEAMS
-            }
-        }
-        SportType::Basketball(level) => {
-            if *level == Level::College {
-                &COLLEGE_TEAMS
-            } else {
-                &BASKETBALL_TEAMS
-            }
-        }
-        SportType::Golf => unreachable!(),
+pub fn get_team_map(sport: &Sport) -> &phf::Map<u64, Team> {
+    match (sport.sport_type(), sport.level()) {
+        (SportType::Hockey, _) => &HOCKEY_TEAMS,
+        (SportType::Baseball, _) => &BASEBALL_TEAMS,
+        (_, Level::Collegiate) => &COLLEGE_TEAMS,
+        (SportType::Football, Level::Professional) => &FOOTBALL_TEAMS,
+        (SportType::Basketball, Level::Professional) => &BASKETBALL_TEAMS,
+        (_, _) => panic!("unreachable"),
     }
 }
 

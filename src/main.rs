@@ -1,16 +1,16 @@
-use live_sports::{fetch_all, fetch_scores, SportType};
+use live_sports::{all_sports, fetch_all, fetch_scores, Sport};
 use std::collections::HashSet;
 use std::env;
 
-fn process_args() -> HashSet<SportType> {
+fn process_args() -> HashSet<Sport> {
     let mut args = env::args();
     let arg0 = args.next().unwrap();
     let mut set = HashSet::new();
     for arg in args {
         if arg == "all" {
-            return SportType::all();
+            return all_sports().into_iter().collect();
         }
-        match arg.parse::<SportType>() {
+        match arg.parse::<Sport>() {
             Ok(sport) => {
                 set.insert(sport);
             }
@@ -35,5 +35,6 @@ async fn main() -> Result<(), live_sports::Error> {
         _ => fetch_scores(sports.clone()).await?,
     };
     tracing::info!("Done fetching scores for {sports:?}\n{scores:?}");
+
     Ok(())
 }

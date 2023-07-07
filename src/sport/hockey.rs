@@ -1,5 +1,8 @@
-use crate::common::data::{Error, ExtraGameData, Game, Status};
+use crate::common::data::Error;
 use crate::common::processors::{get_bool, get_object, get_str, get_u64};
+use crate::common::types::game::Status;
+use crate::common::types::game::{HockeyData, SportData};
+use crate::common::types::Game;
 
 pub async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
     println!("Fetching extra data for hockey game {:?}", game.game_id);
@@ -14,8 +17,10 @@ pub async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
     let away = get_object(teams, "away")?;
     let home = get_object(teams, "home")?;
 
-    game.away_score = get_u64(away, "goals").unwrap_or(0);
-    game.home_score = get_u64(home, "goals").unwrap_or(0);
+    let away_score = get_u64(away, "goals").unwrap_or(0);
+    let home_score = get_u64(home, "goals").unwrap_or(0);
+    game.home_team_score = home_score;
+    game.away_team_score = away_score;
 
     let away_powerplay = get_bool(away, "powerPlay")?;
     let home_powerplay = get_bool(home, "powerPlay")?;
@@ -34,7 +39,7 @@ pub async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
     let status = if period_time == "Final" {
         Status::End
     } else if period_time == "END" {
-        if period >= 3 && game.away_score != game.home_score {
+        if period >= 3 && away_score != home_score {
             Status::End
         } else {
             game.ordinal += " INT";
@@ -49,13 +54,11 @@ pub async fn fetch_hockey(mut game: Game) -> Result<Game, Error> {
         Status::Pregame
     };
 
-    game.status = status;
-    game.extra = Some(ExtraGameData::HockeyData {
-        away_powerplay,
-        home_powerplay,
-        away_players,
-        home_players,
-    });
+    game.status = status.into();
+    game.sport_data = Some(SportData::HockeyData(HockeyData {
+        home_team: None, // TODO correct this
+        away_team: None,
+    }));
 
     println!("Got extra data for hockey game {:?}", game.game_id);
     Ok(game)

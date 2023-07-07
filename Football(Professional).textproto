@@ -1,0 +1,544 @@
+Team { 
+	id: 30
+	location: "Jacksonville"
+	name: "Jaguars"
+	display_name: "Jaguars"
+	abbreviation: "JAX"
+	primary_color {
+		red: 0
+		green: 131
+		blue: 156
+	}
+	secondary_color: {
+		red: 0
+		green: 0
+		blue: 0
+	}
+}
+Team { 
+	id: 23
+	location: "Pittsburgh"
+	name: "Steelers"
+	display_name: "Steelers"
+	abbreviation: "PIT"
+	primary_color {
+		red: 0
+		green: 0
+		blue: 0
+	}
+	secondary_color: {
+		red: 255
+		green: 182
+		blue: 18
+	}
+}
+Team { 
+	id: 28
+	location: "Washington"
+	name: "Washington"
+	display_name: "Washington"
+	abbreviation: "WSH"
+	primary_color {
+		red: 101
+		green: 4
+		blue: 21
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 12
+	location: "Kansas City"
+	name: "Chiefs"
+	display_name: "Chiefs"
+	abbreviation: "KC"
+	primary_color {
+		red: 190
+		green: 20
+		blue: 21
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 6
+	location: "Dallas"
+	name: "Cowboys"
+	display_name: "Cowboys"
+	abbreviation: "DAL"
+	primary_color {
+		red: 0
+		green: 46
+		blue: 77
+	}
+	secondary_color: {
+		red: 176
+		green: 183
+		blue: 188
+	}
+}
+Team { 
+	id: 27
+	location: "Tampa Bay"
+	name: "Buccaneers"
+	display_name: "Buccaneers"
+	abbreviation: "TB"
+	primary_color {
+		red: 168
+		green: 13
+		blue: 8
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 15
+	location: "Miami"
+	name: "Dolphins"
+	display_name: "Dolphins"
+	abbreviation: "MIA"
+	primary_color {
+		red: 0
+		green: 107
+		blue: 121
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 10
+	location: "Tennessee"
+	name: "Titans"
+	display_name: "Titans"
+	abbreviation: "TEN"
+	primary_color {
+		red: 47
+		green: 149
+		blue: 221
+	}
+	secondary_color: {
+		red: 0
+		green: 0
+		blue: 0
+	}
+}
+Team { 
+	id: 29
+	location: "Carolina"
+	name: "Panthers"
+	display_name: "Panthers"
+	abbreviation: "CAR"
+	primary_color {
+		red: 33
+		green: 119
+		blue: 176
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 25
+	location: "San Francisco"
+	name: "49ers"
+	display_name: "49ers"
+	abbreviation: "SF"
+	primary_color {
+		red: 152
+		green: 19
+		blue: 36
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 18
+	location: "New Orleans"
+	name: "Saints"
+	display_name: "Saints"
+	abbreviation: "NO"
+	primary_color {
+		red: 2
+		green: 2
+		blue: 2
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 34
+	location: "Houston"
+	name: "Texans"
+	display_name: "Texans"
+	abbreviation: "HOU"
+	primary_color {
+		red: 0
+		green: 19
+		blue: 63
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 19
+	location: "New York"
+	name: "Giants"
+	display_name: "Giants"
+	abbreviation: "NYG"
+	primary_color {
+		red: 5
+		green: 37
+		blue: 112
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 20
+	location: "New York"
+	name: "Jets"
+	display_name: "Jets"
+	abbreviation: "NYJ"
+	primary_color {
+		red: 23
+		green: 64
+		blue: 50
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 13
+	location: "Las Vegas"
+	name: "Raiders"
+	display_name: "Raiders"
+	abbreviation: "LV"
+	primary_color {
+		red: 0
+		green: 0
+		blue: 0
+	}
+	secondary_color: {
+		red: 165
+		green: 172
+		blue: 175
+	}
+}
+Team { 
+	id: 33
+	location: "Baltimore"
+	name: "Ravens"
+	display_name: "Ravens"
+	abbreviation: "BAL"
+	primary_color {
+		red: 43
+		green: 2
+		blue: 91
+	}
+	secondary_color: {
+		red: 158
+		green: 124
+		blue: 12
+	}
+}
+Team { 
+	id: 17
+	location: "New England"
+	name: "Patriots"
+	display_name: "Patriots"
+	abbreviation: "NE"
+	primary_color {
+		red: 2
+		green: 36
+		blue: 74
+	}
+	secondary_color: {
+		red: 176
+		green: 183
+		blue: 188
+	}
+}
+Team { 
+	id: 11
+	location: "Indianapolis"
+	name: "Colts"
+	display_name: "Colts"
+	abbreviation: "IND"
+	primary_color {
+		red: 0
+		green: 65
+		blue: 126
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 8
+	location: "Detroit"
+	name: "Lions"
+	display_name: "Lions"
+	abbreviation: "DET"
+	primary_color {
+		red: 3
+		green: 92
+		blue: 152
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 22
+	location: "Arizona"
+	name: "Cardinals"
+	display_name: "Cardinals"
+	abbreviation: "ARI"
+	primary_color {
+		red: 164
+		green: 2
+		blue: 39
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 16
+	location: "Minnesota"
+	name: "Vikings"
+	display_name: "Vikings"
+	abbreviation: "MIN"
+	primary_color {
+		red: 36
+		green: 10
+		blue: 103
+	}
+	secondary_color: {
+		red: 255
+		green: 198
+		blue: 47
+	}
+}
+Team { 
+	id: 4
+	location: "Cincinnati"
+	name: "Bengals"
+	display_name: "Bengals"
+	abbreviation: "CIN"
+	primary_color {
+		red: 255
+		green: 39
+		blue: 0
+	}
+	secondary_color: {
+		red: 0
+		green: 0
+		blue: 0
+	}
+}
+Team { 
+	id: 2
+	location: "Buffalo"
+	name: "Bills"
+	display_name: "Bills"
+	abbreviation: "BUF"
+	primary_color {
+		red: 4
+		green: 64
+		blue: 127
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 26
+	location: "Seattle"
+	name: "Seahawks"
+	display_name: "Seahawks"
+	abbreviation: "SEA"
+	primary_color {
+		red: 34
+		green: 73
+		blue: 112
+	}
+	secondary_color: {
+		red: 105
+		green: 190
+		blue: 40
+	}
+}
+Team { 
+	id: 9
+	location: "Green Bay"
+	name: "Packers"
+	display_name: "Packers"
+	abbreviation: "GB"
+	primary_color {
+		red: 32
+		green: 78
+		blue: 50
+	}
+	secondary_color: {
+		red: 255
+		green: 182
+		blue: 18
+	}
+}
+Team { 
+	id: 7
+	location: "Denver"
+	name: "Broncos"
+	display_name: "Broncos"
+	abbreviation: "DEN"
+	primary_color {
+		red: 0
+		green: 46
+		blue: 77
+	}
+	secondary_color: {
+		red: 251
+		green: 79
+		blue: 20
+	}
+}
+Team { 
+	id: 5
+	location: "Cleveland"
+	name: "Browns"
+	display_name: "Browns"
+	abbreviation: "CLE"
+	primary_color {
+		red: 76
+		green: 35
+		blue: 14
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 3
+	location: "Chicago"
+	name: "Bears"
+	display_name: "Bears"
+	abbreviation: "CHI"
+	primary_color {
+		red: 11
+		green: 22
+		blue: 42
+	}
+	secondary_color: {
+		red: 200
+		green: 56
+		blue: 3
+	}
+}
+Team { 
+	id: 24
+	location: "Los Angeles"
+	name: "Chargers"
+	display_name: "Chargers"
+	abbreviation: "LAC"
+	primary_color {
+		red: 4
+		green: 36
+		blue: 83
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 21
+	location: "Philadelphia"
+	name: "Eagles"
+	display_name: "Eagles"
+	abbreviation: "PHI"
+	primary_color {
+		red: 6
+		green: 66
+		blue: 77
+	}
+	secondary_color: {
+		red: 165
+		green: 172
+		blue: 175
+	}
+}
+Team { 
+	id: 1
+	location: "Atlanta"
+	name: "Falcons"
+	display_name: "Falcons"
+	abbreviation: "ATL"
+	primary_color {
+		red: 0
+		green: 0
+		blue: 0
+	}
+	secondary_color: {
+		red: 255
+		green: 255
+		blue: 255
+	}
+}
+Team { 
+	id: 14
+	location: "Los Angeles"
+	name: "Rams"
+	display_name: "Rams"
+	abbreviation: "LAR"
+	primary_color {
+		red: 0
+		green: 41
+		blue: 91
+	}
+	secondary_color: {
+		red: 179
+		green: 153
+		blue: 93
+	}
+}

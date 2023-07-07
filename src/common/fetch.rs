@@ -7,7 +7,9 @@ use std::str::FromStr;
 
 use crate::common::team::{create_team, get_team_map};
 
-use crate::common::data::{Error, ExtraGameData, Game, Level, SportType, Status};
+use crate::common::data::Error;
+use crate::common::types::game::SportData;
+use crate::common::types::{game::Status, sport::Level, sport::SportType, Game, Sport};
 
 use crate::common::processors::{
     get_array, get_array_from_value, get_object, get_object_from_value, get_str,
@@ -19,30 +21,39 @@ use crate::sport::basketball::get_basketball_data;
 use crate::sport::football::get_football_data;
 use crate::sport::golf::process_golf;
 use crate::sport::hockey::fetch_hockey;
-fn get_espn_url(sport: &SportType) -> &'static str {
-    match sport {
-        SportType::Hockey => panic!("Not allowed to use ESPN for hockey"),
-        SportType::Baseball => "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
-        SportType::Football(level) => match level {
-            Level::Professional => "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
-            Level::College => "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=80",
-        }
-        SportType::Basketball(level) => match level {
-            Level::Professional => "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
-            Level::College => "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=50",
-        }
-        SportType::Golf=> "http://site.api.espn.com/apis/site/v2/sports/golf/leaderboard?league=pga",
+
+fn get_espn_url(sport: &Sport) -> &'static str {
+    match (sport.sport_type(), sport.level()) {
+        (SportType::Hockey, _) => panic!("Not allowed to use ESPN for hockey"),
+        (SportType::Baseball, _) => "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
+        (SportType::Football, Level::Professional) => "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+        (SportType::Football, Level::Collegiate) => "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=80",
+        (SportType::Basketball, Level::Professional) => "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+        (SportType::Basketball, Level::Collegiate)=> "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=50",
+        (SportType::Golf, _)=> "http://site.api.espn.com/apis/site/v2/sports/golf/leaderboard?league=pga",
+        (_, _) => panic!("Invalid state")
     }
 }
 
-pub async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
+pub fn from_espn(input: &str) -> Status {
+    match input {
+        "STATUS_IN_PROGRESS" => Status::Active,
+        "STATUS_FINAL" | "STATUS_PLAY_COMPLETE" => Status::End,
+        "STATUS_SCHEDULED" => Status::Pregame,
+        "STATUS_END_PERIOD" | "STATUS_HALFTIME" | "STATUS_DELAYED" => Status::Intermission,
+        "STATUS_POSTPONED" | "STATUS_CANCELED" => Status::Invalid,
+        _ => panic!("Unknown status {input}"),
+    }
+}
+
+pub async fn fetch_espn(sport: &Sport) -> Result<Vec<Game>, Error> {
     let url = get_espn_url(sport);
     let resp = reqwest::get(url).await?.text().await?;
     let json: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&resp)?;
     tracing::info!("Got json for sport {:?} at url {url}", sport);
     let events = get_array(&json, "events")?;
 
-    if *sport == SportType::Golf {
+    if sport.sport_type() == SportType::Golf {
         tracing::debug!("Doing golf stuff");
         return process_golf(events);
     }
@@ -60,7 +71,7 @@ pub async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
             .collect_tuple()
             .ok_or("Failed to unwrap home team and away team")?;
         let espn_status = get_str(get_object(status_object, "type")?, "name")?;
-        let status = Status::from_espn(espn_status);
+        let status = from_espn(espn_status);
         if status == Status::Invalid {
             continue;
         }
@@ -102,20 +113,21 @@ pub async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
         let away_score = get_u64_str_from_value(away_team, "score")?;
 
         let out_game = {
-            let mut g = Game {
+            let g = Game {
                 game_id,
-                sport_id: *sport,
-                home_team: Some(home),
-                away_team: Some(away),
-                home_score,
-                away_score,
+                sport: Some(sport.clone()),
+                home_team: None,
+                away_team: None,
+                home_team_score: 0,
+                away_team_score: 0,
                 period,
-                status,
+                status: status.into(),
                 ordinal,
-                start_time: time,
-                extra: None,
+                start_time: time.timestamp_nanos(),
+                sport_data: None,
             };
-            g.extra = Some(get_extra_data(competition, &g)?);
+            // TODO
+            // g.extra = Some(get_extra_data(competition, &g)?);
             g
         };
         out_games.push(out_game)
@@ -123,7 +135,7 @@ pub async fn fetch_espn(sport: &SportType) -> Result<Vec<Game>, Error> {
     Ok(out_games)
 }
 
-pub async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
+pub async fn fetch_statsapi(sport: &Sport) -> Result<Vec<Game>, Error> {
     let team_map = get_team_map(sport);
     let schedule_url = "http://statsapi.web.nhl.com/api/v1/schedule";
 
@@ -162,16 +174,16 @@ pub async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
 
                 let g = Game {
                     game_id,
-                    sport_id: *sport,
-                    home_team: Some(home_team.clone()),
-                    away_team: Some(away_team.clone()),
-                    home_score: 0,
-                    away_score: 0,
-                    status: Status::Active, // To be corrected later
+                    sport: Some(sport.clone()),
+                    home_team: None,
+                    away_team: None,
+                    home_team_score: 0,
+                    away_team_score: 0,
                     period: 0,
+                    status: Status::Active.into(), // Will be corrected later
                     ordinal: String::new(),
-                    start_time: DateTime::from_str(game_date)?,
-                    extra: None,
+                    start_time: DateTime::<chrono::Utc>::from_str(game_date)?.timestamp_nanos(),
+                    sport_data: None,
                 };
                 out_games.push(g);
             }
@@ -181,11 +193,11 @@ pub async fn fetch_statsapi(sport: &SportType) -> Result<Vec<Game>, Error> {
     results.into_iter().collect()
 }
 
-fn get_extra_data(competition: &Value, game: &Game) -> Result<ExtraGameData, Error> {
-    match game.sport_id {
+fn get_extra_data(competition: &Value, game: &Game) -> Result<SportData, Error> {
+    match game.sport.unwrap().sport_type() {
         SportType::Baseball => get_baseball_data(competition),
-        SportType::Football(_) => get_football_data(competition, game),
-        SportType::Basketball(_) => get_basketball_data(competition),
+        SportType::Football => get_football_data(competition, game),
+        SportType::Basketball => get_basketball_data(competition),
         SportType::Hockey | SportType::Golf => unreachable!(),
     }
 }

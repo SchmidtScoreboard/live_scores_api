@@ -1,12 +1,13 @@
 use serde_json::Value;
 
-use crate::common::data::{Error, ExtraGameData};
+use crate::common::data::Error;
 
 use crate::common::processors::{
     get_bool, get_object, get_object_from_value, get_str, get_u64_str,
 };
+use crate::common::types::game::{BaseballData, SportData};
 
-pub fn get_baseball_data(competition: &Value) -> Result<ExtraGameData, Error> {
+pub fn get_baseball_data(competition: &Value) -> Result<SportData, Error> {
     let situation = get_object_from_value(competition, "situation");
 
     let (mut balls, mut strikes, mut outs) = (0, 0, 0);
@@ -23,7 +24,7 @@ pub fn get_baseball_data(competition: &Value) -> Result<ExtraGameData, Error> {
 
     let status_object = get_object_from_value(competition, "status")?;
     let is_inning_top = get_str(get_object(status_object, "type")?, "shortDetail")?.contains("Top");
-    Ok(ExtraGameData::BaseballData {
+    Ok(SportData::BaseballData(BaseballData {
         balls,
         outs,
         strikes,
@@ -31,5 +32,5 @@ pub fn get_baseball_data(competition: &Value) -> Result<ExtraGameData, Error> {
         on_first,
         on_second,
         on_third,
-    })
+    }))
 }

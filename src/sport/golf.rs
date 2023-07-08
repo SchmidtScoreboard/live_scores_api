@@ -6,6 +6,7 @@ use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
 use crate::common::data::Error;
+use crate::common::proto_helpers::from_espn;
 use crate::common::types::game::golf_data::GolfPlayer;
 use crate::common::types::game::{GolfData, SportData, Status};
 use crate::common::types::Game;
@@ -107,17 +108,6 @@ pub fn from_competitor(competitor: &Value) -> Result<GolfPlayer, Error> {
     })
 }
 
-pub fn from_espn(input: &str) -> Status {
-    match input {
-        "STATUS_IN_PROGRESS" => Status::Active,
-        "STATUS_FINAL" | "STATUS_PLAY_COMPLETE" => Status::End,
-        "STATUS_SCHEDULED" => Status::Pregame,
-        "STATUS_END_PERIOD" | "STATUS_HALFTIME" | "STATUS_DELAYED" => Status::Intermission,
-        "STATUS_POSTPONED" | "STATUS_CANCELED" => Status::Invalid,
-        _ => panic!("Unknown status {input}"),
-    }
-}
-
 pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
     let mut out_games = Vec::new();
 
@@ -212,7 +202,6 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
         }
 
         let mut name = get_str_from_value(event, "shortName")?.to_uppercase();
-        tracing::info!("Raw name is {name}");
         lazy_static! {
             static ref NAME_MAP: HashMap<&'static str, &'static str> = {
                 let mut m = HashMap::new();

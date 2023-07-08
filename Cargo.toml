@@ -13,7 +13,7 @@ lazy_static = "1.4.0"
 ordinal = "0.3.2"
 phf = { version ="0.10.1", features = ["macros"] }
 regex = "1.5.6"
-reqwest = "0.11.10"
+reqwest = {version = "0.11.10", features = ["rustls"]}
 serde_json = "1.0.81"
 tokio = { version = "1.18.2", features = ["full"] }
 thiserror = "1.0.32"
@@ -29,8 +29,3 @@ maplit = "1.0.2"
 
 [build-dependencies]
 prost-build = "0.11.9"
-
-
-[[bin]]
-name = "team_writer"
-path = "src/team_writer.rs"

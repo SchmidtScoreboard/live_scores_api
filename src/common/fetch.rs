@@ -8,6 +8,7 @@ use std::str::FromStr;
 use crate::common::team::{create_team, get_team_map};
 
 use crate::common::data::Error;
+use crate::common::proto_helpers::from_espn;
 use crate::common::types::game::SportData;
 use crate::common::types::{game::Status, sport::Level, sport::SportType, Game, Sport};
 
@@ -31,17 +32,6 @@ fn get_espn_url(sport: &Sport) -> &'static str {
         (SportType::Basketball, Level::Professional) => "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
         (SportType::Basketball, Level::Collegiate)=> "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=50",
         (SportType::Golf, _)=> "http://site.api.espn.com/apis/site/v2/sports/golf/leaderboard?league=pga",
-    }
-}
-
-pub fn from_espn(input: &str) -> Status {
-    match input {
-        "STATUS_IN_PROGRESS" => Status::Active,
-        "STATUS_FINAL" | "STATUS_PLAY_COMPLETE" => Status::End,
-        "STATUS_SCHEDULED" => Status::Pregame,
-        "STATUS_END_PERIOD" | "STATUS_HALFTIME" | "STATUS_DELAYED" => Status::Intermission,
-        "STATUS_POSTPONED" | "STATUS_CANCELED" => Status::Invalid,
-        _ => panic!("Unknown status {input}"),
     }
 }
 

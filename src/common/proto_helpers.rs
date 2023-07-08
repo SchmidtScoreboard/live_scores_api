@@ -1,6 +1,7 @@
 use std::str::FromStr;
 
 use crate::common::data::Error;
+use crate::common::types::game::Status;
 use crate::common::types::sport::{Level, SportType};
 use crate::common::types::Sport;
 
@@ -23,6 +24,21 @@ pub fn all_sports() -> Vec<Sport> {
     ]
 }
 
+impl ToString for Sport {
+    fn to_string(&self) -> String {
+        match (self.sport_type(), self.level()) {
+            (SportType::Hockey, Level::Professional) => "hockey".to_string(),
+            (SportType::Baseball, Level::Professional) => "baseball".to_string(),
+            (SportType::Golf, Level::Professional) => "golf".to_string(),
+            (SportType::Basketball, Level::Professional) => "basketball".to_string(),
+            (SportType::Basketball, Level::Collegiate) => "college-basketball".to_string(),
+            (SportType::Football, Level::Professional) => "football".to_string(),
+            (SportType::Football, Level::Collegiate) => "college-football".to_string(),
+            _ => "".to_string(),
+        }
+    }
+}
+
 impl FromStr for Sport {
     type Err = Error;
 
@@ -37,5 +53,16 @@ impl FromStr for Sport {
             "college-basketball" => Ok(new_sport(SportType::Basketball, Level::Collegiate)),
             _ => Err(Error::InvalidSportType(s.to_string())),
         }
+    }
+}
+
+pub fn from_espn(input: &str) -> Status {
+    match input {
+        "STATUS_IN_PROGRESS" => Status::Active,
+        "STATUS_FINAL" | "STATUS_PLAY_COMPLETE" => Status::End,
+        "STATUS_SCHEDULED" | "STATUS_RAIN_DELAY" => Status::Pregame,
+        "STATUS_END_PERIOD" | "STATUS_HALFTIME" | "STATUS_DELAYED" => Status::Intermission,
+        "STATUS_POSTPONED" | "STATUS_CANCELED" => Status::Invalid,
+        _ => panic!("Unknown status {input}"),
     }
 }

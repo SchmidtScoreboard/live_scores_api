@@ -1,0 +1,4167 @@
+[
+  {
+    "id": 2066,
+    "location": "Binghamton",
+    "name": "Bearcats",
+    "display_name": "Binghamton",
+    "abbreviation": "BING",
+    "primary_color": {
+      "r": 0,
+      "g": 97,
+      "b": 74
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 356,
+    "location": "Illinois",
+    "name": "Fighting Illini",
+    "display_name": "Illinois",
+    "abbreviation": "ILL",
+    "primary_color": {
+      "r": 247,
+      "g": 115,
+      "b": 41
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 12,
+    "location": "Arizona",
+    "name": "Wildcats",
+    "display_name": "Arizona",
+    "abbreviation": "ARIZ",
+    "primary_color": {
+      "r": 0,
+      "g": 36,
+      "b": 73
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2572,
+    "location": "Southern Miss",
+    "name": "S Miss",
+    "display_name": "G Eagles",
+    "abbreviation": "USM",
+    "primary_color": {
+      "r": 255,
+      "g": 170,
+      "b": 60
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2172,
+    "location": "Denver",
+    "name": "Pioneers",
+    "display_name": "Denver",
+    "abbreviation": "DEN",
+    "primary_color": {
+      "r": 156,
+      "g": 20,
+      "b": 61
+    },
+    "secondary_color": {
+      "r": 214,
+      "g": 186,
+      "b": 116
+    }
+  },
+  {
+    "id": 309,
+    "location": "Louisiana",
+    "name": "Ragin' Cajuns",
+    "display_name": "Louisiana",
+    "abbreviation": "ULL",
+    "primary_color": {
+      "r": 206,
+      "g": 40,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 350,
+    "location": "UNC Wilmington",
+    "name": "Seahawks",
+    "display_name": "UNC Wilm",
+    "abbreviation": "UNCW",
+    "primary_color": {
+      "r": 29,
+      "g": 47,
+      "b": 104
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2352,
+    "location": "Loyola (MD)",
+    "name": "Greyhounds",
+    "display_name": "Loyola (MD)",
+    "abbreviation": "L-MD",
+    "primary_color": {
+      "r": 118,
+      "g": 167,
+      "b": 160
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 57,
+    "location": "Florida",
+    "name": "Gators",
+    "display_name": "Florida",
+    "abbreviation": "FLA",
+    "primary_color": {
+      "r": 0,
+      "g": 33,
+      "b": 165
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2349,
+    "location": "UMass Lowell",
+    "name": "River Hawks",
+    "display_name": "UMass L",
+    "abbreviation": "UML",
+    "primary_color": {
+      "r": 0,
+      "g": 82,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 189,
+    "location": "Bowling Green",
+    "name": "Falcons",
+    "display_name": "Bowling G",
+    "abbreviation": "BGSU",
+    "primary_color": {
+      "r": 43,
+      "g": 16,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2132,
+    "location": "Cincinnati",
+    "name": "Bearcats",
+    "display_name": "Cincinnati",
+    "abbreviation": "CIN",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 113,
+      "g": 112,
+      "b": 115
+    }
+  },
+  {
+    "id": 282,
+    "location": "Indiana State",
+    "name": "Sycamores",
+    "display_name": "Indiana St",
+    "abbreviation": "INST",
+    "primary_color": {
+      "r": 0,
+      "g": 102,
+      "b": 154
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 202,
+    "location": "Tulsa",
+    "name": "Golden Hurricane",
+    "display_name": "Tulsa",
+    "abbreviation": "TLSA",
+    "primary_color": {
+      "r": 0,
+      "g": 67,
+      "b": 113
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 325,
+    "location": "Cleveland State",
+    "name": "Vikings",
+    "display_name": "C St",
+    "abbreviation": "CLEV",
+    "primary_color": {
+      "r": 0,
+      "g": 102,
+      "b": 51
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2005,
+    "location": "Air Force",
+    "name": "Falcons",
+    "display_name": "Air Force",
+    "abbreviation": "AFA",
+    "primary_color": {
+      "r": 0,
+      "g": 74,
+      "b": 123
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 269,
+    "location": "Marquette",
+    "name": "Golden Eagles",
+    "display_name": "Marquette",
+    "abbreviation": "MARQ",
+    "primary_color": {
+      "r": 8,
+      "g": 57,
+      "b": 99
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 44,
+    "location": "American",
+    "name": "Eagles",
+    "display_name": "American",
+    "abbreviation": "AMER",
+    "primary_color": {
+      "r": 196,
+      "g": 17,
+      "b": 48
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 161,
+    "location": "Fairleigh Dickinson",
+    "name": "Knights",
+    "display_name": "Fair Dick",
+    "abbreviation": "FDU",
+    "primary_color": {
+      "r": 0,
+      "g": 68,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2244,
+    "location": "George Mason",
+    "name": "Patriots",
+    "display_name": "George M",
+    "abbreviation": "GMU",
+    "primary_color": {
+      "r": 1,
+      "g": 102,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 236,
+      "g": 176,
+      "b": 16
+    }
+  },
+  {
+    "id": 2193,
+    "location": "East Tennessee State",
+    "name": "Buccaneers",
+    "display_name": "ETSU",
+    "abbreviation": "ETSU",
+    "primary_color": {
+      "r": 0,
+      "g": 45,
+      "b": 97
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 196,
+      "b": 35
+    }
+  },
+  {
+    "id": 324,
+    "location": "Coastal Carolina",
+    "name": "Chanticleers",
+    "display_name": "C. Carolina",
+    "abbreviation": "CCAR",
+    "primary_color": {
+      "r": 0,
+      "g": 112,
+      "b": 115
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 290,
+    "location": "Georgia Southern",
+    "name": "Eagles",
+    "display_name": "GA Southern",
+    "abbreviation": "GASO",
+    "primary_color": {
+      "r": 0,
+      "g": 55,
+      "b": 117
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 108,
+    "location": "Harvard",
+    "name": "Crimson",
+    "display_name": "Harvard",
+    "abbreviation": "HARV",
+    "primary_color": {
+      "r": 153,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 219,
+      "g": 219,
+      "b": 219
+    }
+  },
+  {
+    "id": 2198,
+    "location": "Eastern Kentucky",
+    "name": "Colonels",
+    "display_name": "E Kentucky",
+    "abbreviation": "EKU",
+    "primary_color": {
+      "r": 102,
+      "g": 8,
+      "b": 25
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 2636,
+    "location": "UTSA",
+    "name": "Roadrunners",
+    "display_name": "Texas SA",
+    "abbreviation": "UTSA",
+    "primary_color": {
+      "r": 0,
+      "g": 42,
+      "b": 92
+    },
+    "secondary_color": {
+      "r": 244,
+      "g": 115,
+      "b": 33
+    }
+  },
+  {
+    "id": 71,
+    "location": "Bradley",
+    "name": "Braves",
+    "display_name": "Bradley",
+    "abbreviation": "BRAD",
+    "primary_color": {
+      "r": 183,
+      "g": 0,
+      "b": 2
+    },
+    "secondary_color": {
+      "r": 192,
+      "g": 192,
+      "b": 192
+    }
+  },
+  {
+    "id": 2239,
+    "location": "CSU Fullerton",
+    "name": "Titans",
+    "display_name": "Fullerton",
+    "abbreviation": "CSUF",
+    "primary_color": {
+      "r": 16,
+      "g": 33,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2181,
+    "location": "Drake",
+    "name": "Bulldogs",
+    "display_name": "Drake",
+    "abbreviation": "DRKE",
+    "primary_color": {
+      "r": 0,
+      "g": 68,
+      "b": 119
+    },
+    "secondary_color": {
+      "r": 192,
+      "g": 192,
+      "b": 192
+    }
+  },
+  {
+    "id": 139,
+    "location": "Saint Louis",
+    "name": "Billikens",
+    "display_name": "Saint Louis",
+    "abbreviation": "SLU",
+    "primary_color": {
+      "r": 0,
+      "g": 83,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 2154,
+    "location": "Coppin St",
+    "name": "Eagles",
+    "display_name": "Coppin St",
+    "abbreviation": "COPP",
+    "primary_color": {
+      "r": 46,
+      "g": 49,
+      "b": 146
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 210,
+      "b": 4
+    }
+  },
+  {
+    "id": 2229,
+    "location": "Florida Int'l",
+    "name": "Panthers",
+    "display_name": "FIU",
+    "abbreviation": "FIU",
+    "primary_color": {
+      "r": 9,
+      "g": 23,
+      "b": 49
+    },
+    "secondary_color": {
+      "r": 197,
+      "g": 150,
+      "b": 12
+    }
+  },
+  {
+    "id": 195,
+    "location": "Ohio",
+    "name": "Bobcats",
+    "display_name": "Ohio",
+    "abbreviation": "OHIO",
+    "primary_color": {
+      "r": 41,
+      "g": 90,
+      "b": 41
+    },
+    "secondary_color": {
+      "r": 228,
+      "g": 187,
+      "b": 133
+    }
+  },
+  {
+    "id": 2097,
+    "location": "Campbell",
+    "name": "Fighting Camels",
+    "display_name": "Campbell",
+    "abbreviation": "CAM",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 292,
+    "location": "UT Rio Grande Valley",
+    "name": "Vaqueros",
+    "display_name": "UT RG",
+    "abbreviation": "UTRGV",
+    "primary_color": {
+      "r": 220,
+      "g": 96,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2210,
+    "location": "Elon",
+    "name": "Phoenix",
+    "display_name": "Elon",
+    "abbreviation": "ELON",
+    "primary_color": {
+      "r": 2,
+      "g": 3,
+      "b": 3
+    },
+    "secondary_color": {
+      "r": 181,
+      "g": 154,
+      "b": 87
+    }
+  },
+  {
+    "id": 2083,
+    "location": "Bucknell",
+    "name": "Bison",
+    "display_name": "Bucknell",
+    "abbreviation": "BUCK",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 96
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 242,
+    "location": "Rice",
+    "name": "Owls",
+    "display_name": "Rice",
+    "abbreviation": "RICE",
+    "primary_color": {
+      "r": 0,
+      "g": 61,
+      "b": 125
+    },
+    "secondary_color": {
+      "r": 209,
+      "g": 213,
+      "b": 216
+    }
+  },
+  {
+    "id": 2294,
+    "location": "Iowa",
+    "name": "Hawkeyes",
+    "display_name": "Iowa",
+    "abbreviation": "IOWA",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 225,
+      "b": 0
+    }
+  },
+  {
+    "id": 197,
+    "location": "Oklahoma State",
+    "name": "Cowboys",
+    "display_name": "Oklahoma St",
+    "abbreviation": "OKST",
+    "primary_color": {
+      "r": 255,
+      "g": 101,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 47,
+    "location": "Howard",
+    "name": "Bison",
+    "display_name": "Howard",
+    "abbreviation": "HOW",
+    "primary_color": {
+      "r": 158,
+      "g": 11,
+      "b": 14
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 52,
+    "location": "Florida State",
+    "name": "Seminoles",
+    "display_name": "Florida St",
+    "abbreviation": "FSU",
+    "primary_color": {
+      "r": 120,
+      "g": 47,
+      "b": 64
+    },
+    "secondary_color": {
+      "r": 206,
+      "g": 184,
+      "b": 136
+    }
+  },
+  {
+    "id": 2275,
+    "location": "Hofstra",
+    "name": "Pride",
+    "display_name": "Hofstra",
+    "abbreviation": "HOF",
+    "primary_color": {
+      "r": 0,
+      "g": 51,
+      "b": 124
+    },
+    "secondary_color": {
+      "r": 246,
+      "g": 201,
+      "b": 52
+    }
+  },
+  {
+    "id": 257,
+    "location": "Richmond",
+    "name": "Spiders",
+    "display_name": "Richmond",
+    "abbreviation": "RICH",
+    "primary_color": {
+      "r": 158,
+      "g": 7,
+      "b": 18
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 231,
+    "location": "Furman",
+    "name": "Paladins",
+    "display_name": "Furman",
+    "abbreviation": "FUR",
+    "primary_color": {
+      "r": 74,
+      "g": 33,
+      "b": 132
+    },
+    "secondary_color": {
+      "r": 144,
+      "g": 144,
+      "b": 144
+    }
+  },
+  {
+    "id": 21,
+    "location": "San Diego State",
+    "name": "Aztecs",
+    "display_name": "San D St",
+    "abbreviation": "SDSU",
+    "primary_color": {
+      "r": 191,
+      "g": 44,
+      "b": 55
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2296,
+    "location": "Jackson State",
+    "name": "Tigers",
+    "display_name": "Jackson St",
+    "abbreviation": "JKST",
+    "primary_color": {
+      "r": 18,
+      "g": 50,
+      "b": 151
+    },
+    "secondary_color": {
+      "r": 181,
+      "g": 183,
+      "b": 186
+    }
+  },
+  {
+    "id": 238,
+    "location": "Vanderbilt",
+    "name": "Commodores",
+    "display_name": "Vanderbilt",
+    "abbreviation": "VAN",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2320,
+    "location": "Lamar",
+    "name": "Cardinals",
+    "display_name": "Lamar",
+    "abbreviation": "LAM",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 111,
+    "location": "Northeastern",
+    "name": "Huskies",
+    "display_name": "NE",
+    "abbreviation": "NE",
+    "primary_color": {
+      "r": 204,
+      "g": 0,
+      "b": 1
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2305,
+    "location": "Kansas",
+    "name": "Jayhawks",
+    "display_name": "Kansas",
+    "abbreviation": "KU",
+    "primary_color": {
+      "r": 0,
+      "g": 34,
+      "b": 180
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 48,
+    "location": "Delaware",
+    "name": "Blue Hens",
+    "display_name": "Delaware",
+    "abbreviation": "DEL",
+    "primary_color": {
+      "r": 3,
+      "g": 53,
+      "b": 148
+    },
+    "secondary_color": {
+      "r": 232,
+      "g": 206,
+      "b": 49
+    }
+  },
+  {
+    "id": 70,
+    "location": "Idaho",
+    "name": "Vandals",
+    "display_name": "Idaho",
+    "abbreviation": "IDHO",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 140,
+      "g": 110,
+      "b": 74
+    }
+  },
+  {
+    "id": 2169,
+    "location": "Delaware St",
+    "name": "Hornets",
+    "display_name": "Delaware St",
+    "abbreviation": "DSU",
+    "primary_color": {
+      "r": 255,
+      "g": 54,
+      "b": 48
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2010,
+    "location": "Alabama A&M",
+    "name": "Bulldogs",
+    "display_name": "Alabama A&M",
+    "abbreviation": "AAMU",
+    "primary_color": {
+      "r": 121,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2029,
+    "location": "Arkansas-Pine Bluff",
+    "name": "Golden Lions",
+    "display_name": "Ark-Pine",
+    "abbreviation": "UAPB",
+    "primary_color": {
+      "r": 224,
+      "g": 170,
+      "b": 15
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2184,
+    "location": "Duquesne",
+    "name": "Dukes",
+    "display_name": "Duquesne",
+    "abbreviation": "DUQ",
+    "primary_color": {
+      "r": 0,
+      "g": 45,
+      "b": 98
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2261,
+    "location": "Hampton",
+    "name": "Pirates",
+    "display_name": "Hampton",
+    "abbreviation": "HAMP",
+    "primary_color": {
+      "r": 0,
+      "g": 103,
+      "b": 172
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 107,
+    "location": "Holy Cross",
+    "name": "Crusaders",
+    "display_name": "Holy Cross",
+    "abbreviation": "HC",
+    "primary_color": {
+      "r": 10,
+      "g": 10,
+      "b": 10
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 77,
+    "location": "Northwestern",
+    "name": "Wildcats",
+    "display_name": "N Western",
+    "abbreviation": "NW",
+    "primary_color": {
+      "r": 55,
+      "g": 34,
+      "b": 134
+    },
+    "secondary_color": {
+      "r": 214,
+      "g": 202,
+      "b": 193
+    }
+  },
+  {
+    "id": 250,
+    "location": "UT Arlington",
+    "name": "Mavericks",
+    "display_name": "UT A",
+    "abbreviation": "UTA",
+    "primary_color": {
+      "r": 0,
+      "g": 75,
+      "b": 124
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 99,
+    "location": "LSU",
+    "name": "Tigers",
+    "display_name": "LSU",
+    "abbreviation": "LSU",
+    "primary_color": {
+      "r": 43,
+      "g": 13,
+      "b": 87
+    },
+    "secondary_color": {
+      "r": 253,
+      "g": 208,
+      "b": 35
+    }
+  },
+  {
+    "id": 2006,
+    "location": "Akron",
+    "name": "Zips",
+    "display_name": "Akron",
+    "abbreviation": "AKR",
+    "primary_color": {
+      "r": 0,
+      "g": 40,
+      "b": 94
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2086,
+    "location": "Butler",
+    "name": "Bulldogs",
+    "display_name": "Butler",
+    "abbreviation": "BUT",
+    "primary_color": {
+      "r": 13,
+      "g": 19,
+      "b": 97
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 163,
+      "b": 224
+    }
+  },
+  {
+    "id": 311,
+    "location": "Maine",
+    "name": "Black Bears",
+    "display_name": "Maine",
+    "abbreviation": "ME",
+    "primary_color": {
+      "r": 18,
+      "g": 125,
+      "b": 190
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 235,
+    "location": "Memphis",
+    "name": "Tigers",
+    "display_name": "Memphis",
+    "abbreviation": "MEM",
+    "primary_color": {
+      "r": 0,
+      "g": 36,
+      "b": 71
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 58,
+    "location": "South Florida",
+    "name": "Bulls",
+    "display_name": "S Florida",
+    "abbreviation": "USF",
+    "primary_color": {
+      "r": 0,
+      "g": 74,
+      "b": 54
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 339,
+    "location": "Evansville",
+    "name": "Purple Aces",
+    "display_name": "Evansville",
+    "abbreviation": "EVAN",
+    "primary_color": {
+      "r": 102,
+      "g": 51,
+      "b": 153
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 251,
+    "location": "Texas",
+    "name": "Longhorns",
+    "display_name": "Texas",
+    "abbreviation": "TEX",
+    "primary_color": {
+      "r": 238,
+      "g": 117,
+      "b": 36
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 82,
+    "location": "UIC",
+    "name": "Flames",
+    "display_name": "UIC",
+    "abbreviation": "UIC",
+    "primary_color": {
+      "r": 35,
+      "g": 64,
+      "b": 119
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 326,
+    "location": "Texas State",
+    "name": "Bobcats",
+    "display_name": "Texas State",
+    "abbreviation": "TXST",
+    "primary_color": {
+      "r": 78,
+      "g": 23,
+      "b": 25
+    },
+    "secondary_color": {
+      "r": 180,
+      "g": 151,
+      "b": 90
+    }
+  },
+  {
+    "id": 116,
+    "location": "Mount St. Mary's",
+    "name": "Mountaineers",
+    "display_name": "Mt St Mary",
+    "abbreviation": "MSM",
+    "primary_color": {
+      "r": 0,
+      "g": 85,
+      "b": 150
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 270,
+    "location": "Milwaukee",
+    "name": "Panthers",
+    "display_name": "Milwaukee",
+    "abbreviation": "MILW",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 194,
+      "b": 14
+    }
+  },
+  {
+    "id": 2241,
+    "location": "Gardner-Webb",
+    "name": "Bulldogs",
+    "display_name": "Gardner W",
+    "abbreviation": "GWEB",
+    "primary_color": {
+      "r": 193,
+      "g": 37,
+      "b": 53
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 166,
+    "location": "New Mexico State",
+    "name": "Aggies",
+    "display_name": "New Mex St",
+    "abbreviation": "NMSU",
+    "primary_color": {
+      "r": 137,
+      "g": 18,
+      "b": 22
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 198,
+    "location": "Oral Roberts",
+    "name": "Golden Eagles",
+    "display_name": "Oral R",
+    "abbreviation": "ORU",
+    "primary_color": {
+      "r": 0,
+      "g": 41,
+      "b": 85
+    },
+    "secondary_color": {
+      "r": 204,
+      "g": 180,
+      "b": 140
+    }
+  },
+  {
+    "id": 328,
+    "location": "Utah State",
+    "name": "Aggies",
+    "display_name": "Utah State",
+    "abbreviation": "USU",
+    "primary_color": {
+      "r": 0,
+      "g": 50,
+      "b": 99
+    },
+    "secondary_color": {
+      "r": 148,
+      "g": 156,
+      "b": 161
+    }
+  },
+  {
+    "id": 305,
+    "location": "DePaul",
+    "name": "Blue Demons",
+    "display_name": "DePaul",
+    "abbreviation": "DEP",
+    "primary_color": {
+      "r": 45,
+      "g": 100,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 248,
+    "location": "Houston",
+    "name": "Cougars",
+    "display_name": "Houston",
+    "abbreviation": "HOU",
+    "primary_color": {
+      "r": 201,
+      "g": 8,
+      "b": 34
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 27,
+    "location": "UC Riverside",
+    "name": "Highlanders",
+    "display_name": "UC River",
+    "abbreviation": "UCR",
+    "primary_color": {
+      "r": 20,
+      "g": 35,
+      "b": 79
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 279,
+    "location": "Pacific",
+    "name": "Tigers",
+    "display_name": "Pacific",
+    "abbreviation": "PAC",
+    "primary_color": {
+      "r": 244,
+      "g": 120,
+      "b": 32
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2127,
+    "location": "Charleston Southern",
+    "name": "Buccaneers",
+    "display_name": "Charleston S",
+    "abbreviation": "CHSO",
+    "primary_color": {
+      "r": 46,
+      "g": 49,
+      "b": 146
+    },
+    "secondary_color": {
+      "r": 222,
+      "g": 208,
+      "b": 144
+    }
+  },
+  {
+    "id": 41,
+    "location": "UConn",
+    "name": "Huskies",
+    "display_name": "UConn",
+    "abbreviation": "CONN",
+    "primary_color": {
+      "r": 0,
+      "g": 29,
+      "b": 64
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 300,
+    "location": "UC Irvine",
+    "name": "Anteaters",
+    "display_name": "UC Irvine",
+    "abbreviation": "UCI",
+    "primary_color": {
+      "r": 0,
+      "g": 43,
+      "b": 92
+    },
+    "secondary_color": {
+      "r": 254,
+      "g": 197,
+      "b": 46
+    }
+  },
+  {
+    "id": 2016,
+    "location": "Alcorn State",
+    "name": "Braves",
+    "display_name": "Alcorn St",
+    "abbreviation": "ALCN",
+    "primary_color": {
+      "r": 75,
+      "g": 0,
+      "b": 88
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 314,
+    "location": "Iona",
+    "name": "Gaels",
+    "display_name": "Iona",
+    "abbreviation": "IONA",
+    "primary_color": {
+      "r": 140,
+      "g": 0,
+      "b": 26
+    },
+    "secondary_color": {
+      "r": 246,
+      "g": 167,
+      "b": 4
+    }
+  },
+  {
+    "id": 264,
+    "location": "Washington",
+    "name": "Huskies",
+    "display_name": "Washington",
+    "abbreviation": "WASH",
+    "primary_color": {
+      "r": 43,
+      "g": 47,
+      "b": 100
+    },
+    "secondary_color": {
+      "r": 232,
+      "g": 227,
+      "b": 211
+    }
+  },
+  {
+    "id": 38,
+    "location": "Colorado",
+    "name": "Buffaloes",
+    "display_name": "Colorado",
+    "abbreviation": "COLO",
+    "primary_color": {
+      "r": 209,
+      "g": 197,
+      "b": 126
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 275,
+    "location": "Wisconsin",
+    "name": "Badgers",
+    "display_name": "Wisconsin",
+    "abbreviation": "WISC",
+    "primary_color": {
+      "r": 160,
+      "g": 0,
+      "b": 2
+    },
+    "secondary_color": {
+      "r": 247,
+      "g": 247,
+      "b": 247
+    }
+  },
+  {
+    "id": 55,
+    "location": "Jacksonville State",
+    "name": "Gamecocks",
+    "display_name": "Jack St",
+    "abbreviation": "JVST",
+    "primary_color": {
+      "r": 181,
+      "g": 5,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 357,
+    "location": "Texas A&M-CC",
+    "name": "Islanders",
+    "display_name": "Tex A&M CC",
+    "abbreviation": "AMCC",
+    "primary_color": {
+      "r": 0,
+      "g": 99,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 24,
+    "location": "Stanford",
+    "name": "Cardinal",
+    "display_name": "Stanford",
+    "abbreviation": "STAN",
+    "primary_color": {
+      "r": 168,
+      "g": 5,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 160,
+    "location": "New Hampshire",
+    "name": "Wildcats",
+    "display_name": "New Hamp",
+    "abbreviation": "UNH",
+    "primary_color": {
+      "r": 0,
+      "g": 73,
+      "b": 144
+    },
+    "secondary_color": {
+      "r": 195,
+      "g": 196,
+      "b": 198
+    }
+  },
+  {
+    "id": 2168,
+    "location": "Dayton",
+    "name": "Flyers",
+    "display_name": "Dayton",
+    "abbreviation": "DAY",
+    "primary_color": {
+      "r": 0,
+      "g": 75,
+      "b": 141
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2116,
+    "location": "UCF",
+    "name": "Knights",
+    "display_name": "UCF",
+    "abbreviation": "UCF",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2348,
+    "location": "Louisiana Tech",
+    "name": "Bulldogs",
+    "display_name": "L Tech",
+    "abbreviation": "LT",
+    "primary_color": {
+      "r": 0,
+      "g": 45,
+      "b": 101
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 171,
+    "location": "Columbia",
+    "name": "Lions",
+    "display_name": "Columbia",
+    "abbreviation": "CLMB",
+    "primary_color": {
+      "r": 23,
+      "g": 71,
+      "b": 133
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2046,
+    "location": "Austin Peay",
+    "name": "Governors",
+    "display_name": "Austin Peay",
+    "abbreviation": "APSU",
+    "primary_color": {
+      "r": 142,
+      "g": 11,
+      "b": 11
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 201,
+    "location": "Oklahoma",
+    "name": "Sooners",
+    "display_name": "Oklahoma",
+    "abbreviation": "OU",
+    "primary_color": {
+      "r": 123,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 204,
+      "g": 204,
+      "b": 204
+    }
+  },
+  {
+    "id": 2197,
+    "location": "Eastern Illinois",
+    "name": "Panthers",
+    "display_name": "E Illinois",
+    "abbreviation": "EIU",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 190,
+      "g": 186,
+      "b": 185
+    }
+  },
+  {
+    "id": 46,
+    "location": "Georgetown",
+    "name": "Hoyas",
+    "display_name": "Georgetown",
+    "abbreviation": "GTWN",
+    "primary_color": {
+      "r": 17,
+      "g": 14,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 167,
+    "location": "New Mexico",
+    "name": "Lobos",
+    "display_name": "New Mexico",
+    "abbreviation": "UNM",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 322,
+    "location": "Lafayette",
+    "name": "Leopards",
+    "display_name": "Lafayette",
+    "abbreviation": "LAF",
+    "primary_color": {
+      "r": 121,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 165,
+      "g": 148,
+      "b": 116
+    }
+  },
+  {
+    "id": 399,
+    "location": "Albany",
+    "name": "Great Danes",
+    "display_name": "Albany",
+    "abbreviation": "ALB",
+    "primary_color": {
+      "r": 61,
+      "g": 39,
+      "b": 119
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2306,
+    "location": "Kansas State",
+    "name": "Wildcats",
+    "display_name": "Kansas St",
+    "abbreviation": "KSU",
+    "primary_color": {
+      "r": 99,
+      "g": 49,
+      "b": 148
+    },
+    "secondary_color": {
+      "r": 231,
+      "g": 210,
+      "b": 173
+    }
+  },
+  {
+    "id": 61,
+    "location": "Georgia",
+    "name": "Bulldogs",
+    "display_name": "Georgia",
+    "abbreviation": "UGA",
+    "primary_color": {
+      "r": 204,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2182,
+    "location": "Drexel",
+    "name": "Dragons",
+    "display_name": "Drexel",
+    "abbreviation": "DREX",
+    "primary_color": {
+      "r": 2,
+      "g": 2,
+      "b": 96
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 214,
+      "b": 90
+    }
+  },
+  {
+    "id": 56,
+    "location": "Stetson",
+    "name": "Hatters",
+    "display_name": "Stetson",
+    "abbreviation": "STET",
+    "primary_color": {
+      "r": 10,
+      "g": 86,
+      "b": 64
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2509,
+    "location": "Purdue",
+    "name": "Boilermakers",
+    "display_name": "Purdue",
+    "abbreviation": "PUR",
+    "primary_color": {
+      "r": 206,
+      "g": 184,
+      "b": 136
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 163,
+    "location": "Princeton",
+    "name": "Tigers",
+    "display_name": "Princeton",
+    "abbreviation": "PRIN",
+    "primary_color": {
+      "r": 255,
+      "g": 148,
+      "b": 8
+    },
+    "secondary_color": {
+      "r": 8,
+      "g": 8,
+      "b": 8
+    }
+  },
+  {
+    "id": 2250,
+    "location": "Gonzaga",
+    "name": "Bulldogs",
+    "display_name": "Gonzaga",
+    "abbreviation": "GONZ",
+    "primary_color": {
+      "r": 0,
+      "g": 41,
+      "b": 103
+    },
+    "secondary_color": {
+      "r": 207,
+      "g": 212,
+      "b": 216
+    }
+  },
+  {
+    "id": 179,
+    "location": "St. Bonaventure",
+    "name": "Bonnies",
+    "display_name": "St. Bon",
+    "abbreviation": "SBU",
+    "primary_color": {
+      "r": 112,
+      "g": 38,
+      "b": 29
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 66,
+    "location": "Iowa State",
+    "name": "Cyclones",
+    "display_name": "Iowa State",
+    "abbreviation": "ISU",
+    "primary_color": {
+      "r": 102,
+      "g": 0,
+      "b": 21
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2253,
+    "location": "Grand Canyon",
+    "name": "Antelopes",
+    "display_name": "G Canyon",
+    "abbreviation": "GCU",
+    "primary_color": {
+      "r": 82,
+      "g": 35,
+      "b": 152
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 96,
+    "location": "Kentucky",
+    "name": "Wildcats",
+    "display_name": "Kentucky",
+    "abbreviation": "UK",
+    "primary_color": {
+      "r": 0,
+      "g": 93,
+      "b": 170
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2130,
+    "location": "Chicago State",
+    "name": "Cougars",
+    "display_name": "Chicago St",
+    "abbreviation": "CHIC",
+    "primary_color": {
+      "r": 0,
+      "g": 103,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 294,
+    "location": "Jacksonville",
+    "name": "Dolphins",
+    "display_name": "Jack",
+    "abbreviation": "JAX",
+    "primary_color": {
+      "r": 0,
+      "g": 82,
+      "b": 62
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 299,
+    "location": "Long Beach State",
+    "name": "Beach",
+    "display_name": "LB State",
+    "abbreviation": "LBSU",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 2344,
+    "location": "Longwood",
+    "name": "Lancers",
+    "display_name": "Longwood",
+    "abbreviation": "LONG",
+    "primary_color": {
+      "r": 0,
+      "g": 50,
+      "b": 115
+    },
+    "secondary_color": {
+      "r": 158,
+      "g": 162,
+      "b": 163
+    }
+  },
+  {
+    "id": 183,
+    "location": "Syracuse",
+    "name": "Orange",
+    "display_name": "Syracuse",
+    "abbreviation": "SYR",
+    "primary_color": {
+      "r": 243,
+      "g": 115,
+      "b": 33
+    },
+    "secondary_color": {
+      "r": 13,
+      "g": 29,
+      "b": 55
+    }
+  },
+  {
+    "id": 222,
+    "location": "Villanova",
+    "name": "Wildcats",
+    "display_name": "Villanova",
+    "abbreviation": "VILL",
+    "primary_color": {
+      "r": 18,
+      "g": 61,
+      "b": 124
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 94,
+    "location": "Northern Kentucky",
+    "name": "Norse",
+    "display_name": "N Kentucky",
+    "abbreviation": "NKU",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 234,
+      "g": 182,
+      "b": 33
+    }
+  },
+  {
+    "id": 13,
+    "location": "Cal Poly",
+    "name": "Mustangs",
+    "display_name": "Cal Poly",
+    "abbreviation": "CP",
+    "primary_color": {
+      "r": 30,
+      "g": 77,
+      "b": 43
+    },
+    "secondary_color": {
+      "r": 238,
+      "g": 216,
+      "b": 151
+    }
+  },
+  {
+    "id": 91,
+    "location": "Bellarmine",
+    "name": "Knights",
+    "display_name": "Bellarmine",
+    "abbreviation": "BELL",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 158,
+    "location": "Nebraska",
+    "name": "Cornhuskers",
+    "display_name": "Nebraska",
+    "abbreviation": "NEB",
+    "primary_color": {
+      "r": 242,
+      "g": 0,
+      "b": 23
+    },
+    "secondary_color": {
+      "r": 245,
+      "g": 241,
+      "b": 231
+    }
+  },
+  {
+    "id": 2050,
+    "location": "Ball State",
+    "name": "Cardinals",
+    "display_name": "Ball State",
+    "abbreviation": "BALL",
+    "primary_color": {
+      "r": 218,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 43,
+    "location": "Yale",
+    "name": "Bulldogs",
+    "display_name": "Yale",
+    "abbreviation": "YALE",
+    "primary_color": {
+      "r": 0,
+      "g": 74,
+      "b": 129
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 26,
+    "location": "UCLA",
+    "name": "Bruins",
+    "display_name": "UCLA",
+    "abbreviation": "UCLA",
+    "primary_color": {
+      "r": 0,
+      "g": 92,
+      "b": 142
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 199,
+      "b": 44
+    }
+  },
+  {
+    "id": 113,
+    "location": "UMass",
+    "name": "Minutemen",
+    "display_name": "UMass",
+    "abbreviation": "MASS",
+    "primary_color": {
+      "r": 136,
+      "g": 0,
+      "b": 7
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2350,
+    "location": "Loyola Chicago",
+    "name": "Ramblers",
+    "display_name": "Loyola C",
+    "abbreviation": "LUC",
+    "primary_color": {
+      "r": 157,
+      "g": 18,
+      "b": 68
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 227,
+    "location": "Rhode Island",
+    "name": "Rams",
+    "display_name": "Rhode Isl",
+    "abbreviation": "URI",
+    "primary_color": {
+      "r": 9,
+      "g": 31,
+      "b": 63
+    },
+    "secondary_color": {
+      "r": 90,
+      "g": 179,
+      "b": 232
+    }
+  },
+  {
+    "id": 6,
+    "location": "South Alabama",
+    "name": "Jaguars",
+    "display_name": "S Alabama",
+    "abbreviation": "USA",
+    "primary_color": {
+      "r": 0,
+      "g": 62,
+      "b": 126
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 252,
+    "location": "BYU",
+    "name": "Cougars",
+    "display_name": "BYU",
+    "abbreviation": "BYU",
+    "primary_color": {
+      "r": 0,
+      "g": 30,
+      "b": 76
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 5,
+    "location": "UAB",
+    "name": "Blazers",
+    "display_name": "UAB",
+    "abbreviation": "UAB",
+    "primary_color": {
+      "r": 5,
+      "g": 67,
+      "b": 56
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 200,
+      "b": 69
+    }
+  },
+  {
+    "id": 140,
+    "location": "UM Kansas City",
+    "name": "Roos",
+    "display_name": "UM KC",
+    "abbreviation": "UMKC",
+    "primary_color": {
+      "r": 0,
+      "g": 75,
+      "b": 135
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 199,
+      "b": 44
+    }
+  },
+  {
+    "id": 45,
+    "location": "George Washington",
+    "name": "Colonials",
+    "display_name": "G Wash",
+    "abbreviation": "GW",
+    "primary_color": {
+      "r": 0,
+      "g": 40,
+      "b": 67
+    },
+    "secondary_color": {
+      "r": 232,
+      "g": 210,
+      "b": 161
+    }
+  },
+  {
+    "id": 349,
+    "location": "Army",
+    "name": "Black Knights",
+    "display_name": "Army",
+    "abbreviation": "ARMY",
+    "primary_color": {
+      "r": 206,
+      "g": 156,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 35,
+      "g": 31,
+      "b": 32
+    }
+  },
+  {
+    "id": 2272,
+    "location": "High Point",
+    "name": "Panthers",
+    "display_name": "High Point",
+    "abbreviation": "HP",
+    "primary_color": {
+      "r": 176,
+      "g": 183,
+      "b": 188
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 213,
+    "location": "Penn State",
+    "name": "Nittany Lions",
+    "display_name": "Penn State",
+    "abbreviation": "PSU",
+    "primary_color": {
+      "r": 0,
+      "g": 38,
+      "b": 93
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 302,
+    "location": "UC Davis",
+    "name": "Aggies",
+    "display_name": "UC Davis",
+    "abbreviation": "UCD",
+    "primary_color": {
+      "r": 24,
+      "g": 53,
+      "b": 99
+    },
+    "secondary_color": {
+      "r": 188,
+      "g": 147,
+      "b": 5
+    }
+  },
+  {
+    "id": 2199,
+    "location": "Eastern Michigan",
+    "name": "Eagles",
+    "display_name": "E Michigan",
+    "abbreviation": "EMU",
+    "primary_color": {
+      "r": 0,
+      "g": 51,
+      "b": 27
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 2674,
+    "location": "Valparaiso",
+    "name": "Crusaders",
+    "display_name": "Valparaiso",
+    "abbreviation": "VAL",
+    "primary_color": {
+      "r": 121,
+      "g": 69,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 147,
+    "location": "Montana State",
+    "name": "Bobcats",
+    "display_name": "Montana St",
+    "abbreviation": "MTST",
+    "primary_color": {
+      "r": 0,
+      "g": 56,
+      "b": 117
+    },
+    "secondary_color": {
+      "r": 191,
+      "g": 150,
+      "b": 92
+    }
+  },
+  {
+    "id": 98,
+    "location": "Western Kentucky",
+    "name": "Hilltoppers",
+    "display_name": "Western KY",
+    "abbreviation": "WKU",
+    "primary_color": {
+      "r": 243,
+      "g": 32,
+      "b": 38
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 97,
+    "location": "Louisville",
+    "name": "Cardinals",
+    "display_name": "Louisville",
+    "abbreviation": "LOU",
+    "primary_color": {
+      "r": 173,
+      "g": 0,
+      "b": 10
+    },
+    "secondary_color": {
+      "r": 204,
+      "g": 204,
+      "b": 204
+    }
+  },
+  {
+    "id": 333,
+    "location": "Alabama",
+    "name": "Crimson Tide",
+    "display_name": "Alabama",
+    "abbreviation": "ALA",
+    "primary_color": {
+      "r": 105,
+      "g": 0,
+      "b": 20
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 156,
+    "location": "Creighton",
+    "name": "Bluejays",
+    "display_name": "Creighton",
+    "abbreviation": "CREI",
+    "primary_color": {
+      "r": 19,
+      "g": 41,
+      "b": 158
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 155,
+    "location": "North Dakota",
+    "name": "Fighting Hawks",
+    "display_name": "N Dakota",
+    "abbreviation": "UND",
+    "primary_color": {
+      "r": 0,
+      "g": 162,
+      "b": 107
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 254,
+    "location": "Utah",
+    "name": "Utes",
+    "display_name": "Utah",
+    "abbreviation": "UTAH",
+    "primary_color": {
+      "r": 137,
+      "g": 0,
+      "b": 18
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 256,
+    "location": "James Madison",
+    "name": "Dukes",
+    "display_name": "James M",
+    "abbreviation": "JMU",
+    "primary_color": {
+      "r": 69,
+      "g": 0,
+      "b": 132
+    },
+    "secondary_color": {
+      "r": 203,
+      "g": 183,
+      "b": 120
+    }
+  },
+  {
+    "id": 2026,
+    "location": "Appalachian State",
+    "name": "Mountaineers",
+    "display_name": "App St",
+    "abbreviation": "APP",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 205,
+      "b": 0
+    }
+  },
+  {
+    "id": 239,
+    "location": "Baylor",
+    "name": "Bears",
+    "display_name": "Baylor",
+    "abbreviation": "BAY",
+    "primary_color": {
+      "r": 0,
+      "g": 72,
+      "b": 52
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 184,
+      "b": 28
+    }
+  },
+  {
+    "id": 276,
+    "location": "Marshall",
+    "name": "Thundering Herd",
+    "display_name": "Marshall",
+    "abbreviation": "MRSH",
+    "primary_color": {
+      "r": 24,
+      "g": 99,
+      "b": 41
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 149,
+    "location": "Montana",
+    "name": "Grizzlies",
+    "display_name": "Montana",
+    "abbreviation": "MONT",
+    "primary_color": {
+      "r": 117,
+      "g": 29,
+      "b": 74
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 221,
+    "location": "Pittsburgh",
+    "name": "Panthers",
+    "display_name": "Pittsburgh",
+    "abbreviation": "PITT",
+    "primary_color": {
+      "r": 0,
+      "g": 50,
+      "b": 99
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 218,
+    "location": "Temple",
+    "name": "Owls",
+    "display_name": "Temple",
+    "abbreviation": "TEM",
+    "primary_color": {
+      "r": 168,
+      "g": 5,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 120,
+    "location": "Maryland",
+    "name": "Terrapins",
+    "display_name": "Maryland",
+    "abbreviation": "MD",
+    "primary_color": {
+      "r": 213,
+      "g": 0,
+      "b": 43
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 205,
+      "b": 0
+    }
+  },
+  {
+    "id": 232,
+    "location": "Charleston",
+    "name": "Cougars",
+    "display_name": "Charleston",
+    "abbreviation": "COFC",
+    "primary_color": {
+      "r": 156,
+      "g": 132,
+      "b": 86
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 344,
+    "location": "Mississippi State",
+    "name": "Bulldogs",
+    "display_name": "Miss St",
+    "abbreviation": "MSST",
+    "primary_color": {
+      "r": 118,
+      "g": 33,
+      "b": 35
+    },
+    "secondary_color": {
+      "r": 200,
+      "g": 200,
+      "b": 200
+    }
+  },
+  {
+    "id": 261,
+    "location": "Vermont",
+    "name": "Catamounts",
+    "display_name": "Vermont",
+    "abbreviation": "UVM",
+    "primary_color": {
+      "r": 1,
+      "g": 60,
+      "b": 36
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 199,
+      "b": 44
+    }
+  },
+  {
+    "id": 258,
+    "location": "Virginia",
+    "name": "Cavaliers",
+    "display_name": "Virginia",
+    "abbreviation": "UVA",
+    "primary_color": {
+      "r": 248,
+      "g": 76,
+      "b": 30
+    },
+    "secondary_color": {
+      "r": 36,
+      "g": 46,
+      "b": 74
+    }
+  },
+  {
+    "id": 2142,
+    "location": "Colgate",
+    "name": "Raiders",
+    "display_name": "Colgate",
+    "abbreviation": "COLG",
+    "primary_color": {
+      "r": 139,
+      "g": 1,
+      "b": 29
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2329,
+    "location": "Lehigh",
+    "name": "Mountain Hawks",
+    "display_name": "Lehigh",
+    "abbreviation": "LEH",
+    "primary_color": {
+      "r": 108,
+      "g": 43,
+      "b": 42
+    },
+    "secondary_color": {
+      "r": 182,
+      "g": 158,
+      "b": 112
+    }
+  },
+  {
+    "id": 295,
+    "location": "Old Dominion",
+    "name": "Monarchs",
+    "display_name": "Old D",
+    "abbreviation": "ODU",
+    "primary_color": {
+      "r": 0,
+      "g": 80,
+      "b": 125
+    },
+    "secondary_color": {
+      "r": 161,
+      "g": 210,
+      "b": 241
+    }
+  },
+  {
+    "id": 236,
+    "location": "Chattanooga",
+    "name": "Mocs",
+    "display_name": "Chattanooga",
+    "abbreviation": "UTC",
+    "primary_color": {
+      "r": 0,
+      "g": 56,
+      "b": 107
+    },
+    "secondary_color": {
+      "r": 220,
+      "g": 167,
+      "b": 29
+    }
+  },
+  {
+    "id": 304,
+    "location": "Idaho State",
+    "name": "Bengals",
+    "display_name": "Idaho State",
+    "abbreviation": "IDST",
+    "primary_color": {
+      "r": 239,
+      "g": 140,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2247,
+    "location": "Georgia State",
+    "name": "Panthers",
+    "display_name": "Georgia St",
+    "abbreviation": "GAST",
+    "primary_color": {
+      "r": 30,
+      "g": 83,
+      "b": 154
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 338,
+    "location": "Kennesaw State",
+    "name": "Owls",
+    "display_name": "Kennesaw St",
+    "abbreviation": "KENN",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 253,
+      "g": 187,
+      "b": 48
+    }
+  },
+  {
+    "id": 164,
+    "location": "Rutgers",
+    "name": "Scarlet Knights",
+    "display_name": "Rutgers",
+    "abbreviation": "RUTG",
+    "primary_color": {
+      "r": 210,
+      "g": 16,
+      "b": 52
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2351,
+    "location": "Loyola Marymount",
+    "name": "Lions",
+    "display_name": "Loyola M",
+    "abbreviation": "LMU",
+    "primary_color": {
+      "r": 136,
+      "g": 0,
+      "b": 41
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2032,
+    "location": "Arkansas State",
+    "name": "Red Wolves",
+    "display_name": "Arkansas St",
+    "abbreviation": "ARST",
+    "primary_color": {
+      "r": 232,
+      "g": 16,
+      "b": 24
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 135,
+    "location": "Minnesota",
+    "name": "Golden Gophers",
+    "display_name": "Minnesota",
+    "abbreviation": "MINN",
+    "primary_color": {
+      "r": 152,
+      "g": 26,
+      "b": 49
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 87,
+    "location": "Notre Dame",
+    "name": "Fighting Irish",
+    "display_name": "Notre Dame",
+    "abbreviation": "ND",
+    "primary_color": {
+      "r": 0,
+      "g": 18,
+      "b": 43
+    },
+    "secondary_color": {
+      "r": 174,
+      "g": 145,
+      "b": 66
+    }
+  },
+  {
+    "id": 2057,
+    "location": "Belmont",
+    "name": "Bruins",
+    "display_name": "Belmont",
+    "abbreviation": "BEL",
+    "primary_color": {
+      "r": 24,
+      "g": 33,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 228,
+    "location": "Clemson",
+    "name": "Tigers",
+    "display_name": "Clemson",
+    "abbreviation": "CLEM",
+    "primary_color": {
+      "r": 246,
+      "g": 103,
+      "b": 51
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2,
+    "location": "Auburn",
+    "name": "Tigers",
+    "display_name": "Auburn",
+    "abbreviation": "AUB",
+    "primary_color": {
+      "r": 3,
+      "g": 36,
+      "b": 77
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 159,
+    "location": "Dartmouth",
+    "name": "Big Green",
+    "display_name": "Dartmouth",
+    "abbreviation": "DART",
+    "primary_color": {
+      "r": 0,
+      "g": 87,
+      "b": 48
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 42,
+    "location": "Hartford",
+    "name": "Hawks",
+    "display_name": "Hartford",
+    "abbreviation": "HART",
+    "primary_color": {
+      "r": 214,
+      "g": 0,
+      "b": 8
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 315,
+    "location": "Niagara",
+    "name": "Purple Eagles",
+    "display_name": "Niagara",
+    "abbreviation": "NIAG",
+    "primary_color": {
+      "r": 105,
+      "g": 32,
+      "b": 126
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 79,
+    "location": "Southern Illinois",
+    "name": "Salukis",
+    "display_name": "So Illinois",
+    "abbreviation": "SIU",
+    "primary_color": {
+      "r": 133,
+      "g": 40,
+      "b": 61
+    },
+    "secondary_color": {
+      "r": 194,
+      "g": 195,
+      "b": 192
+    }
+  },
+  {
+    "id": 151,
+    "location": "East Carolina",
+    "name": "Pirates",
+    "display_name": "E Carolina",
+    "abbreviation": "ECU",
+    "primary_color": {
+      "r": 75,
+      "g": 24,
+      "b": 105
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 144,
+      "b": 123
+    }
+  },
+  {
+    "id": 2287,
+    "location": "Illinois State",
+    "name": "Redbirds",
+    "display_name": "Illinois St",
+    "abbreviation": "ILST",
+    "primary_color": {
+      "r": 206,
+      "g": 17,
+      "b": 38
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 231,
+      "b": 22
+    }
+  },
+  {
+    "id": 331,
+    "location": "Eastern Washington",
+    "name": "Eagles",
+    "display_name": "E Wash",
+    "abbreviation": "EWU",
+    "primary_color": {
+      "r": 161,
+      "g": 0,
+      "b": 34
+    },
+    "secondary_color": {
+      "r": 171,
+      "g": 180,
+      "b": 188
+    }
+  },
+  {
+    "id": 2099,
+    "location": "Canisius",
+    "name": "Golden Griffins",
+    "display_name": "Canisius",
+    "abbreviation": "CAN",
+    "primary_color": {
+      "r": 0,
+      "g": 74,
+      "b": 129
+    },
+    "secondary_color": {
+      "r": 221,
+      "g": 165,
+      "b": 15
+    }
+  },
+  {
+    "id": 2277,
+    "location": "Houston Baptist",
+    "name": "Huskies",
+    "display_name": "H Baptist",
+    "abbreviation": "HBU",
+    "primary_color": {
+      "r": 0,
+      "g": 83,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 23,
+    "location": "San José St",
+    "name": "Spartans",
+    "display_name": "San José St",
+    "abbreviation": "SJSU",
+    "primary_color": {
+      "r": 0,
+      "g": 88,
+      "b": 147
+    },
+    "secondary_color": {
+      "r": 253,
+      "g": 186,
+      "b": 49
+    }
+  },
+  {
+    "id": 152,
+    "location": "NC State",
+    "name": "Wolfpack",
+    "display_name": "NC State",
+    "abbreviation": "NCST",
+    "primary_color": {
+      "r": 239,
+      "g": 18,
+      "b": 22
+    },
+    "secondary_color": {
+      "r": 35,
+      "g": 31,
+      "b": 32
+    }
+  },
+  {
+    "id": 154,
+    "location": "Wake Forest",
+    "name": "Demon Deacons",
+    "display_name": "Wake Forest",
+    "abbreviation": "WAKE",
+    "primary_color": {
+      "r": 158,
+      "g": 126,
+      "b": 56
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 233,
+    "location": "South Dakota",
+    "name": "Coyotes",
+    "display_name": "S Dakota",
+    "abbreviation": "SDAK",
+    "primary_color": {
+      "r": 205,
+      "g": 18,
+      "b": 65
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 2309,
+    "location": "Kent State",
+    "name": "Golden Flashes",
+    "display_name": "Kent State",
+    "abbreviation": "KENT",
+    "primary_color": {
+      "r": 0,
+      "g": 36,
+      "b": 69
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 181,
+      "b": 16
+    }
+  },
+  {
+    "id": 2638,
+    "location": "UTEP",
+    "name": "Miners",
+    "display_name": "Texas EP",
+    "abbreviation": "UTEP",
+    "primary_color": {
+      "r": 255,
+      "g": 130,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    }
+  },
+  {
+    "id": 249,
+    "location": "North Texas",
+    "name": "Mean Green",
+    "display_name": "North Texas",
+    "abbreviation": "UNT",
+    "primary_color": {
+      "r": 0,
+      "g": 133,
+      "b": 61
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 36,
+    "location": "Colorado State",
+    "name": "Rams",
+    "display_name": "Colorado St",
+    "abbreviation": "CSU",
+    "primary_color": {
+      "r": 0,
+      "g": 69,
+      "b": 55
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 196,
+      "b": 37
+    }
+  },
+  {
+    "id": 219,
+    "location": "Pennsylvania",
+    "name": "Quakers",
+    "display_name": "Penn",
+    "abbreviation": "PENN",
+    "primary_color": {
+      "r": 8,
+      "g": 42,
+      "b": 116
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 62,
+    "location": "Hawai'i",
+    "name": "Rainbow Warriors",
+    "display_name": "Hawai'i",
+    "abbreviation": "HAW",
+    "primary_color": {
+      "r": 0,
+      "g": 52,
+      "b": 32
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2174,
+    "location": "Detroit Mercy",
+    "name": "Titans",
+    "display_name": "Detroit M",
+    "abbreviation": "DET",
+    "primary_color": {
+      "r": 22,
+      "g": 91,
+      "b": 158
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2335,
+    "location": "Liberty",
+    "name": "Flames",
+    "display_name": "Liberty",
+    "abbreviation": "LIB",
+    "primary_color": {
+      "r": 7,
+      "g": 23,
+      "b": 64
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 142,
+    "location": "Missouri",
+    "name": "Tigers",
+    "display_name": "Missouri",
+    "abbreviation": "MIZ",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 301,
+    "location": "San Diego",
+    "name": "Toreros",
+    "display_name": "San Diego",
+    "abbreviation": "USD",
+    "primary_color": {
+      "r": 47,
+      "g": 153,
+      "b": 212
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2115,
+    "location": "Central Connecticut",
+    "name": "Blue Devils",
+    "display_name": "Cent Conn",
+    "abbreviation": "CCSU",
+    "primary_color": {
+      "r": 27,
+      "g": 73,
+      "b": 162
+    },
+    "secondary_color": {
+      "r": 209,
+      "g": 213,
+      "b": 216
+    }
+  },
+  {
+    "id": 2117,
+    "location": "Central Michigan",
+    "name": "Chippewas",
+    "display_name": "Cent Mich",
+    "abbreviation": "CMU",
+    "primary_color": {
+      "r": 106,
+      "g": 0,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 59,
+    "location": "Georgia Tech",
+    "name": "Yellow Jackets",
+    "display_name": "G Tech",
+    "abbreviation": "GT",
+    "primary_color": {
+      "r": 0,
+      "g": 34,
+      "b": 62
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 119,
+    "location": "Towson",
+    "name": "Tigers",
+    "display_name": "Towson",
+    "abbreviation": "TOW",
+    "primary_color": {
+      "r": 255,
+      "g": 194,
+      "b": 41
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2000,
+    "location": "Abilene Christian",
+    "name": "Wildcats",
+    "display_name": "Abil Christ",
+    "abbreviation": "ACU",
+    "primary_color": {
+      "r": 78,
+      "g": 38,
+      "b": 131
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 2230,
+    "location": "Fordham",
+    "name": "Rams",
+    "display_name": "Fordham",
+    "abbreviation": "FOR",
+    "primary_color": {
+      "r": 131,
+      "g": 0,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 277,
+    "location": "West Virginia",
+    "name": "Mountaineers",
+    "display_name": "W Virginia",
+    "abbreviation": "WVU",
+    "primary_color": {
+      "r": 255,
+      "g": 198,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 259,
+    "location": "Virginia Tech",
+    "name": "Hokies",
+    "display_name": "V Tech",
+    "abbreviation": "VT",
+    "primary_color": {
+      "r": 116,
+      "g": 35,
+      "b": 45
+    },
+    "secondary_color": {
+      "r": 194,
+      "g": 193,
+      "b": 186
+    }
+  },
+  {
+    "id": 172,
+    "location": "Cornell",
+    "name": "Big Red",
+    "display_name": "Cornell",
+    "abbreviation": "COR",
+    "primary_color": {
+      "r": 214,
+      "g": 0,
+      "b": 39
+    },
+    "secondary_color": {
+      "r": 16,
+      "g": 16,
+      "b": 16
+    }
+  },
+  {
+    "id": 526,
+    "location": "Florida Gulf Coast",
+    "name": "Eagles",
+    "display_name": "FGCU",
+    "abbreviation": "FGCU",
+    "primary_color": {
+      "r": 0,
+      "g": 136,
+      "b": 90
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 193,
+    "location": "Miami (OH)",
+    "name": "Redhawks",
+    "display_name": "Miami (OH)",
+    "abbreviation": "M-OH",
+    "primary_color": {
+      "r": 164,
+      "g": 0,
+      "b": 12
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 93,
+    "location": "Murray State",
+    "name": "Racers",
+    "display_name": "Murray St",
+    "abbreviation": "MUR",
+    "primary_color": {
+      "r": 0,
+      "g": 33,
+      "b": 72
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 153,
+    "location": "North Carolina",
+    "name": "Tar Heels",
+    "display_name": "N Carolina",
+    "abbreviation": "UNC",
+    "primary_color": {
+      "r": 153,
+      "g": 191,
+      "b": 229
+    },
+    "secondary_color": {
+      "r": 19,
+      "g": 41,
+      "b": 75
+    }
+  },
+  {
+    "id": 204,
+    "location": "Oregon State",
+    "name": "Beavers",
+    "display_name": "Oregon St",
+    "abbreviation": "ORST",
+    "primary_color": {
+      "r": 195,
+      "g": 69,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2031,
+    "location": "Little Rock",
+    "name": "Trojans",
+    "display_name": "Little Rock",
+    "abbreviation": "UALR",
+    "primary_color": {
+      "r": 173,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 85,
+    "location": "IUPUI",
+    "name": "Jaguars",
+    "display_name": "IUPUI",
+    "abbreviation": "IUPU",
+    "primary_color": {
+      "r": 168,
+      "g": 31,
+      "b": 48
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 25,
+    "location": "California",
+    "name": "Golden Bears",
+    "display_name": "California",
+    "abbreviation": "CAL",
+    "primary_color": {
+      "r": 3,
+      "g": 21,
+      "b": 34
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 196,
+      "b": 35
+    }
+  },
+  {
+    "id": 127,
+    "location": "Michigan State",
+    "name": "Spartans",
+    "display_name": "Michigan St",
+    "abbreviation": "MSU",
+    "primary_color": {
+      "r": 24,
+      "g": 69,
+      "b": 59
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 84,
+    "location": "Indiana",
+    "name": "Hoosiers",
+    "display_name": "Indiana",
+    "abbreviation": "IU",
+    "primary_color": {
+      "r": 125,
+      "g": 17,
+      "b": 12
+    },
+    "secondary_color": {
+      "r": 238,
+      "g": 237,
+      "b": 235
+    }
+  },
+  {
+    "id": 150,
+    "location": "Duke",
+    "name": "Blue Devils",
+    "display_name": "Duke",
+    "abbreviation": "DUKE",
+    "primary_color": {
+      "r": 0,
+      "g": 26,
+      "b": 87
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 2166,
+    "location": "Davidson",
+    "name": "Wildcats",
+    "display_name": "Davidson",
+    "abbreviation": "DAV",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 229,
+      "g": 24,
+      "b": 55
+    }
+  },
+  {
+    "id": 28,
+    "location": "UC San Diego",
+    "name": "Tritons",
+    "display_name": "UC SD",
+    "abbreviation": "UCSD",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 265,
+    "location": "Washington State",
+    "name": "Cougars",
+    "display_name": "Wash St",
+    "abbreviation": "WSU",
+    "primary_color": {
+      "r": 148,
+      "g": 2,
+      "b": 42
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 130,
+    "location": "Michigan",
+    "name": "Wolverines",
+    "display_name": "Michigan",
+    "abbreviation": "MICH",
+    "primary_color": {
+      "r": 0,
+      "g": 39,
+      "b": 76
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 203,
+      "b": 5
+    }
+  },
+  {
+    "id": 9,
+    "location": "Arizona State",
+    "name": "Sun Devils",
+    "display_name": "Arizona St",
+    "abbreviation": "ASU",
+    "primary_color": {
+      "r": 148,
+      "g": 33,
+      "b": 57
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 2084,
+    "location": "Buffalo",
+    "name": "Bulls",
+    "display_name": "Buffalo",
+    "abbreviation": "BUFF",
+    "primary_color": {
+      "r": 4,
+      "g": 26,
+      "b": 155
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 2011,
+    "location": "Alabama State",
+    "name": "Hornets",
+    "display_name": "Alabama St",
+    "abbreviation": "ALST",
+    "primary_color": {
+      "r": 233,
+      "g": 169,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 10,
+      "g": 10,
+      "b": 10
+    }
+  },
+  {
+    "id": 103,
+    "location": "Boston College",
+    "name": "Eagles",
+    "display_name": "Boston C",
+    "abbreviation": "BC",
+    "primary_color": {
+      "r": 136,
+      "g": 0,
+      "b": 26
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 8,
+    "location": "Arkansas",
+    "name": "Razorbacks",
+    "display_name": "Arkansas",
+    "abbreviation": "ARK",
+    "primary_color": {
+      "r": 156,
+      "g": 24,
+      "b": 49
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 288,
+    "location": "Lipscomb",
+    "name": "Bisons",
+    "display_name": "Lipscomb",
+    "abbreviation": "LIP",
+    "primary_color": {
+      "r": 32,
+      "g": 54,
+      "b": 108
+    },
+    "secondary_color": {
+      "r": 246,
+      "g": 183,
+      "b": 52
+    }
+  },
+  {
+    "id": 50,
+    "location": "Florida A&M",
+    "name": "Rattlers",
+    "display_name": "Florida A&M",
+    "abbreviation": "FAMU",
+    "primary_color": {
+      "r": 248,
+      "g": 151,
+      "b": 40
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2325,
+    "location": "La Salle",
+    "name": "Explorers",
+    "display_name": "La Salle",
+    "abbreviation": "LAS",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 99
+    },
+    "secondary_color": {
+      "r": 254,
+      "g": 202,
+      "b": 38
+    }
+  },
+  {
+    "id": 145,
+    "location": "Ole Miss",
+    "name": "Rebels",
+    "display_name": "Ole Miss",
+    "abbreviation": "MISS",
+    "primary_color": {
+      "r": 0,
+      "g": 17,
+      "b": 72
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2390,
+    "location": "Miami",
+    "name": "Hurricanes",
+    "display_name": "Miami",
+    "abbreviation": "MIA",
+    "primary_color": {
+      "r": 0,
+      "g": 67,
+      "b": 37
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 240,
+      "b": 240
+    }
+  },
+  {
+    "id": 2110,
+    "location": "Central Arkansas",
+    "name": "Bears",
+    "display_name": "Cent Ark",
+    "abbreviation": "UCA",
+    "primary_color": {
+      "r": 167,
+      "g": 169,
+      "b": 172
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 278,
+    "location": "Fresno State",
+    "name": "Bulldogs",
+    "display_name": "Fresno St",
+    "abbreviation": "FRES",
+    "primary_color": {
+      "r": 196,
+      "g": 18,
+      "b": 48
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 245,
+    "location": "Texas A&M",
+    "name": "Aggies",
+    "display_name": "Texas A&M",
+    "abbreviation": "TA&M",
+    "primary_color": {
+      "r": 92,
+      "g": 0,
+      "b": 37
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 253,
+    "location": "Southern Utah",
+    "name": "Thunderbirds",
+    "display_name": "S Utah",
+    "abbreviation": "SUU",
+    "primary_color": {
+      "r": 209,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 194,
+    "location": "Ohio State",
+    "name": "Buckeyes",
+    "display_name": "Ohio State",
+    "abbreviation": "OSU",
+    "primary_color": {
+      "r": 187,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 30,
+    "location": "USC",
+    "name": "Trojans",
+    "display_name": "USC",
+    "abbreviation": "USC",
+    "primary_color": {
+      "r": 174,
+      "g": 37,
+      "b": 49
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 199,
+      "b": 44
+    }
+  },
+  {
+    "id": 68,
+    "location": "Boise State",
+    "name": "Broncos",
+    "display_name": "Boise State",
+    "abbreviation": "BSU",
+    "primary_color": {
+      "r": 9,
+      "g": 52,
+      "b": 122
+    },
+    "secondary_color": {
+      "r": 216,
+      "g": 217,
+      "b": 218
+    }
+  },
+  {
+    "id": 2217,
+    "location": "Fairfield",
+    "name": "Stags",
+    "display_name": "Fairfield",
+    "abbreviation": "FAIR",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 235,
+      "b": 235
+    }
+  },
+  {
+    "id": 16,
+    "location": "Sacramento State",
+    "name": "Hornets",
+    "display_name": "Sac St",
+    "abbreviation": "SAC",
+    "primary_color": {
+      "r": 0,
+      "g": 87,
+      "b": 60
+    },
+    "secondary_color": {
+      "r": 205,
+      "g": 185,
+      "b": 125
+    }
+  },
+  {
+    "id": 2226,
+    "location": "Florida Atlantic",
+    "name": "Owls",
+    "display_name": "FAU",
+    "abbreviation": "FAU",
+    "primary_color": {
+      "r": 0,
+      "g": 75,
+      "b": 133
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 225,
+    "location": "Brown",
+    "name": "Bears",
+    "display_name": "Brown",
+    "abbreviation": "BRWN",
+    "primary_color": {
+      "r": 65,
+      "g": 30,
+      "b": 9
+    },
+    "secondary_color": {
+      "r": 148,
+      "g": 147,
+      "b": 0
+    }
+  },
+  {
+    "id": 104,
+    "location": "Boston Univ.",
+    "name": "Terriers",
+    "display_name": "Boston U",
+    "abbreviation": "BU",
+    "primary_color": {
+      "r": 204,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  }
+]

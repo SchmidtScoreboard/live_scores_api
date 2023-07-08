@@ -1,0 +1,512 @@
+[
+  {
+    "id": 27,
+    "location": "Colorado",
+    "name": "Rockies",
+    "display_name": "Rockies",
+    "abbreviation": "COL",
+    "primary_color": {
+      "r": 34,
+      "g": 13,
+      "b": 72
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 26,
+    "location": "San Francisco",
+    "name": "Giants",
+    "display_name": "Giants",
+    "abbreviation": "SF",
+    "primary_color": {
+      "r": 22,
+      "g": 20,
+      "b": 21
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 30,
+    "location": "Tampa Bay",
+    "name": "Rays",
+    "display_name": "Rays",
+    "abbreviation": "TB",
+    "primary_color": {
+      "r": 0,
+      "g": 36,
+      "b": 84
+    },
+    "secondary_color": {
+      "r": 143,
+      "g": 188,
+      "b": 230
+    }
+  },
+  {
+    "id": 6,
+    "location": "Detroit",
+    "name": "Tigers",
+    "display_name": "Tigers",
+    "abbreviation": "DET",
+    "primary_color": {
+      "r": 0,
+      "g": 45,
+      "b": 92
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 102,
+      "b": 0
+    }
+  },
+  {
+    "id": 8,
+    "location": "Milwaukee",
+    "name": "Brewers",
+    "display_name": "Brewers",
+    "abbreviation": "MIL",
+    "primary_color": {
+      "r": 5,
+      "g": 12,
+      "b": 51
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 21,
+    "location": "New York",
+    "name": "Mets",
+    "display_name": "Mets",
+    "abbreviation": "NYM",
+    "primary_color": {
+      "r": 0,
+      "g": 64,
+      "b": 123
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 18,
+    "location": "Houston",
+    "name": "Astros",
+    "display_name": "Astros",
+    "abbreviation": "HOU",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 235,
+      "g": 110,
+      "b": 31
+    }
+  },
+  {
+    "id": 20,
+    "location": "Washington",
+    "name": "Nationals",
+    "display_name": "Nationals",
+    "abbreviation": "WSH",
+    "primary_color": {
+      "r": 10,
+      "g": 41,
+      "b": 93
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 11,
+    "location": "Oakland",
+    "name": "Athletics",
+    "display_name": "Athletics",
+    "abbreviation": "OAK",
+    "primary_color": {
+      "r": 1,
+      "g": 67,
+      "b": 38
+    },
+    "secondary_color": {
+      "r": 239,
+      "g": 178,
+      "b": 30
+    }
+  },
+  {
+    "id": 3,
+    "location": "Los Angeles",
+    "name": "Angels",
+    "display_name": "Angels",
+    "abbreviation": "LAA",
+    "primary_color": {
+      "r": 165,
+      "g": 0,
+      "b": 23
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 17,
+    "location": "Cincinnati",
+    "name": "Reds",
+    "display_name": "Reds",
+    "abbreviation": "CIN",
+    "primary_color": {
+      "r": 196,
+      "g": 20,
+      "b": 34
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 5,
+    "location": "Cleveland",
+    "name": "Indians",
+    "display_name": "Indians",
+    "abbreviation": "CLE",
+    "primary_color": {
+      "r": 0,
+      "g": 38,
+      "b": 78
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 9,
+    "location": "Minnesota",
+    "name": "Twins",
+    "display_name": "Twins",
+    "abbreviation": "MIN",
+    "primary_color": {
+      "r": 1,
+      "g": 39,
+      "b": 86
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 23,
+    "location": "Pittsburgh",
+    "name": "Pirates",
+    "display_name": "Pirates",
+    "abbreviation": "PIT",
+    "primary_color": {
+      "r": 17,
+      "g": 17,
+      "b": 17
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 19,
+    "location": "Los Angeles",
+    "name": "Dodgers",
+    "display_name": "Dodgers",
+    "abbreviation": "LAD",
+    "primary_color": {
+      "r": 0,
+      "g": 51,
+      "b": 127
+    },
+    "secondary_color": {
+      "r": 162,
+      "g": 170,
+      "b": 173
+    }
+  },
+  {
+    "id": 13,
+    "location": "Texas",
+    "name": "Rangers",
+    "display_name": "Rangers",
+    "abbreviation": "TEX",
+    "primary_color": {
+      "r": 0,
+      "g": 56,
+      "b": 121
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 16,
+    "location": "Chicago",
+    "name": "Cubs",
+    "display_name": "Cubs",
+    "abbreviation": "CHC",
+    "primary_color": {
+      "r": 0,
+      "g": 65,
+      "b": 125
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 4,
+    "location": "Chicago",
+    "name": "White Sox",
+    "display_name": "White Sox",
+    "abbreviation": "CHW",
+    "primary_color": {
+      "r": 27,
+      "g": 21,
+      "b": 22
+    },
+    "secondary_color": {
+      "r": 196,
+      "g": 206,
+      "b": 212
+    }
+  },
+  {
+    "id": 7,
+    "location": "Kansas City",
+    "name": "Royals",
+    "display_name": "Royals",
+    "abbreviation": "KC",
+    "primary_color": {
+      "r": 0,
+      "g": 59,
+      "b": 114
+    },
+    "secondary_color": {
+      "r": 122,
+      "g": 178,
+      "b": 221
+    }
+  },
+  {
+    "id": 24,
+    "location": "St. Louis",
+    "name": "Cardinals",
+    "display_name": "Cardinals",
+    "abbreviation": "STL",
+    "primary_color": {
+      "r": 184,
+      "g": 2,
+      "b": 32
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 1,
+    "location": "Baltimore",
+    "name": "Orioles",
+    "display_name": "Orioles",
+    "abbreviation": "BAL",
+    "primary_color": {
+      "r": 32,
+      "g": 27,
+      "b": 27
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 29,
+    "location": "Arizona",
+    "name": "Diamondbacks",
+    "display_name": "D-backs",
+    "abbreviation": "ARI",
+    "primary_color": {
+      "r": 164,
+      "g": 0,
+      "b": 19
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 22,
+    "location": "Philadelphia",
+    "name": "Phillies",
+    "display_name": "Phillies",
+    "abbreviation": "PHI",
+    "primary_color": {
+      "r": 190,
+      "g": 0,
+      "b": 17
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 25,
+    "location": "San Diego",
+    "name": "Padres",
+    "display_name": "Padres",
+    "abbreviation": "SD",
+    "primary_color": {
+      "r": 47,
+      "g": 36,
+      "b": 29
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 196,
+      "b": 37
+    }
+  },
+  {
+    "id": 15,
+    "location": "Atlanta",
+    "name": "Braves",
+    "display_name": "Braves",
+    "abbreviation": "ATL",
+    "primary_color": {
+      "r": 0,
+      "g": 34,
+      "b": 72
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 28,
+    "location": "Miami",
+    "name": "Marlins",
+    "display_name": "Marlins",
+    "abbreviation": "MIA",
+    "primary_color": {
+      "r": 0,
+      "g": 129,
+      "b": 199
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 12,
+    "location": "Seattle",
+    "name": "Mariners",
+    "display_name": "Mariners",
+    "abbreviation": "SEA",
+    "primary_color": {
+      "r": 1,
+      "g": 42,
+      "b": 91
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2,
+    "location": "Boston",
+    "name": "Red Sox",
+    "display_name": "Red Sox",
+    "abbreviation": "BOS",
+    "primary_color": {
+      "r": 0,
+      "g": 34,
+      "b": 75
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 10,
+    "location": "New York",
+    "name": "Yankees",
+    "display_name": "Yankees",
+    "abbreviation": "NYY",
+    "primary_color": {
+      "r": 1,
+      "g": 23,
+      "b": 57
+    },
+    "secondary_color": {
+      "r": 196,
+      "g": 206,
+      "b": 212
+    }
+  },
+  {
+    "id": 14,
+    "location": "Toronto",
+    "name": "Blue Jays",
+    "display_name": "Blue Jays",
+    "abbreviation": "TOR",
+    "primary_color": {
+      "r": 0,
+      "g": 105,
+      "b": 172
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  }
+]

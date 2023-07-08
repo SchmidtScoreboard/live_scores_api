@@ -1,0 +1,512 @@
+[
+  {
+    "id": 18,
+    "location": "New York",
+    "name": "Knicks",
+    "display_name": "Knicks",
+    "abbreviation": "NY",
+    "primary_color": {
+      "r": 34,
+      "g": 94,
+      "b": 168
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 15,
+    "location": "Milwaukee",
+    "name": "Bucks",
+    "display_name": "Bucks",
+    "abbreviation": "MIL",
+    "primary_color": {
+      "r": 0,
+      "g": 56,
+      "b": 19
+    },
+    "secondary_color": {
+      "r": 240,
+      "g": 235,
+      "b": 210
+    }
+  },
+  {
+    "id": 26,
+    "location": "Utah",
+    "name": "Jazz",
+    "display_name": "Jazz",
+    "abbreviation": "UTAH",
+    "primary_color": {
+      "r": 6,
+      "g": 20,
+      "b": 63
+    },
+    "secondary_color": {
+      "r": 249,
+      "g": 160,
+      "b": 27
+    }
+  },
+  {
+    "id": 30,
+    "location": "Charlotte",
+    "name": "Hornets",
+    "display_name": "Hornets",
+    "abbreviation": "CHA",
+    "primary_color": {
+      "r": 29,
+      "g": 16,
+      "b": 96
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 140,
+      "b": 168
+    }
+  },
+  {
+    "id": 19,
+    "location": "Orlando",
+    "name": "Magic",
+    "display_name": "Magic",
+    "abbreviation": "ORL",
+    "primary_color": {
+      "r": 8,
+      "g": 96,
+      "b": 168
+    },
+    "secondary_color": {
+      "r": 196,
+      "g": 206,
+      "b": 211
+    }
+  },
+  {
+    "id": 23,
+    "location": "Sacramento",
+    "name": "Kings",
+    "display_name": "Kings",
+    "abbreviation": "SAC",
+    "primary_color": {
+      "r": 57,
+      "g": 57,
+      "b": 150
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 6,
+    "location": "Dallas",
+    "name": "Mavericks",
+    "display_name": "Mavericks",
+    "abbreviation": "DAL",
+    "primary_color": {
+      "r": 12,
+      "g": 71,
+      "b": 157
+    },
+    "secondary_color": {
+      "r": 196,
+      "g": 206,
+      "b": 211
+    }
+  },
+  {
+    "id": 20,
+    "location": "Philadelphia",
+    "name": "76ers",
+    "display_name": "76ers",
+    "abbreviation": "PHI",
+    "primary_color": {
+      "r": 0,
+      "g": 107,
+      "b": 182
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 8,
+    "location": "Detroit",
+    "name": "Pistons",
+    "display_name": "Pistons",
+    "abbreviation": "DET",
+    "primary_color": {
+      "r": 250,
+      "g": 0,
+      "b": 44
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 4,
+    "location": "Chicago",
+    "name": "Bulls",
+    "display_name": "Bulls",
+    "abbreviation": "CHI",
+    "primary_color": {
+      "r": 206,
+      "g": 17,
+      "b": 65
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 17,
+    "location": "Brooklyn",
+    "name": "Nets",
+    "display_name": "Nets",
+    "abbreviation": "BKN",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 22,
+    "location": "Portland",
+    "name": "Trail Blazers",
+    "display_name": "T Blazers",
+    "abbreviation": "POR",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 186,
+      "g": 195,
+      "b": 201
+    }
+  },
+  {
+    "id": 16,
+    "location": "Minnesota",
+    "name": "Timberwolves",
+    "display_name": "T Wolves",
+    "abbreviation": "MIN",
+    "primary_color": {
+      "r": 14,
+      "g": 55,
+      "b": 100
+    },
+    "secondary_color": {
+      "r": 196,
+      "g": 206,
+      "b": 211
+    }
+  },
+  {
+    "id": 7,
+    "location": "Denver",
+    "name": "Nuggets",
+    "display_name": "Nuggets",
+    "abbreviation": "DEN",
+    "primary_color": {
+      "r": 8,
+      "g": 96,
+      "b": 168
+    },
+    "secondary_color": {
+      "r": 253,
+      "g": 185,
+      "b": 39
+    }
+  },
+  {
+    "id": 9,
+    "location": "Golden State",
+    "name": "Warriors",
+    "display_name": "Warriors",
+    "abbreviation": "GS",
+    "primary_color": {
+      "r": 0,
+      "g": 61,
+      "b": 165
+    },
+    "secondary_color": {
+      "r": 253,
+      "g": 185,
+      "b": 39
+    }
+  },
+  {
+    "id": 29,
+    "location": "Memphis",
+    "name": "Grizzlies",
+    "display_name": "Grizzlies",
+    "abbreviation": "MEM",
+    "primary_color": {
+      "r": 93,
+      "g": 118,
+      "b": 168
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 25,
+    "location": "Oklahoma City",
+    "name": "Thunder",
+    "display_name": "Thunder",
+    "abbreviation": "OKC",
+    "primary_color": {
+      "r": 198,
+      "g": 124,
+      "b": 3
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 21,
+    "location": "Phoenix",
+    "name": "Suns",
+    "display_name": "Suns",
+    "abbreviation": "PHX",
+    "primary_color": {
+      "r": 35,
+      "g": 0,
+      "b": 106
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 24,
+    "location": "San Antonio",
+    "name": "Spurs",
+    "display_name": "Spurs",
+    "abbreviation": "SA",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2,
+    "location": "Boston",
+    "name": "Celtics",
+    "display_name": "Celtics",
+    "abbreviation": "BOS",
+    "primary_color": {
+      "r": 0,
+      "g": 101,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 14,
+    "location": "Miami",
+    "name": "Heat",
+    "display_name": "Heat",
+    "abbreviation": "MIA",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 10,
+    "location": "Houston",
+    "name": "Rockets",
+    "display_name": "Rockets",
+    "abbreviation": "HOU",
+    "primary_color": {
+      "r": 212,
+      "g": 0,
+      "b": 38
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 27,
+    "location": "Washington",
+    "name": "Wizards",
+    "display_name": "Wizards",
+    "abbreviation": "WSH",
+    "primary_color": {
+      "r": 14,
+      "g": 55,
+      "b": 100
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 5,
+    "location": "Cleveland",
+    "name": "Cavaliers",
+    "display_name": "Cavaliers",
+    "abbreviation": "CLE",
+    "primary_color": {
+      "r": 6,
+      "g": 22,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 253,
+      "g": 187,
+      "b": 48
+    }
+  },
+  {
+    "id": 11,
+    "location": "Indiana",
+    "name": "Pacers",
+    "display_name": "Pacers",
+    "abbreviation": "IND",
+    "primary_color": {
+      "r": 6,
+      "g": 22,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 28,
+    "location": "Toronto",
+    "name": "Raptors",
+    "display_name": "Raptors",
+    "abbreviation": "TOR",
+    "primary_color": {
+      "r": 206,
+      "g": 15,
+      "b": 65
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 13,
+    "location": "Los Angeles",
+    "name": "Lakers",
+    "display_name": "Lakers",
+    "abbreviation": "LAL",
+    "primary_color": {
+      "r": 84,
+      "g": 37,
+      "b": 130
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 12,
+    "location": "LA",
+    "name": "Clippers",
+    "display_name": "Clippers",
+    "abbreviation": "LAC",
+    "primary_color": {
+      "r": 250,
+      "g": 0,
+      "b": 40
+    },
+    "secondary_color": {
+      "r": 241,
+      "g": 242,
+      "b": 243
+    }
+  },
+  {
+    "id": 3,
+    "location": "New Orleans",
+    "name": "Pelicans",
+    "display_name": "Pelicans",
+    "abbreviation": "NO",
+    "primary_color": {
+      "r": 0,
+      "g": 42,
+      "b": 92
+    },
+    "secondary_color": {
+      "r": 180,
+      "g": 151,
+      "b": 90
+    }
+  },
+  {
+    "id": 1,
+    "location": "Atlanta",
+    "name": "Hawks",
+    "display_name": "Hawks",
+    "abbreviation": "ATL",
+    "primary_color": {
+      "r": 0,
+      "g": 43,
+      "b": 92
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  }
+]

@@ -1,0 +1,546 @@
+[
+  {
+    "id": 4,
+    "location": "Cincinnati",
+    "name": "Bengals",
+    "display_name": "Bengals",
+    "abbreviation": "CIN",
+    "primary_color": {
+      "r": 255,
+      "g": 39,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 7,
+    "location": "Denver",
+    "name": "Broncos",
+    "display_name": "Broncos",
+    "abbreviation": "DEN",
+    "primary_color": {
+      "r": 0,
+      "g": 46,
+      "b": 77
+    },
+    "secondary_color": {
+      "r": 251,
+      "g": 79,
+      "b": 20
+    }
+  },
+  {
+    "id": 8,
+    "location": "Detroit",
+    "name": "Lions",
+    "display_name": "Lions",
+    "abbreviation": "DET",
+    "primary_color": {
+      "r": 3,
+      "g": 92,
+      "b": 152
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 16,
+    "location": "Minnesota",
+    "name": "Vikings",
+    "display_name": "Vikings",
+    "abbreviation": "MIN",
+    "primary_color": {
+      "r": 36,
+      "g": 10,
+      "b": 103
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 198,
+      "b": 47
+    }
+  },
+  {
+    "id": 23,
+    "location": "Pittsburgh",
+    "name": "Steelers",
+    "display_name": "Steelers",
+    "abbreviation": "PIT",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 182,
+      "b": 18
+    }
+  },
+  {
+    "id": 27,
+    "location": "Tampa Bay",
+    "name": "Buccaneers",
+    "display_name": "Buccaneers",
+    "abbreviation": "TB",
+    "primary_color": {
+      "r": 168,
+      "g": 13,
+      "b": 8
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 1,
+    "location": "Atlanta",
+    "name": "Falcons",
+    "display_name": "Falcons",
+    "abbreviation": "ATL",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 2,
+    "location": "Buffalo",
+    "name": "Bills",
+    "display_name": "Bills",
+    "abbreviation": "BUF",
+    "primary_color": {
+      "r": 4,
+      "g": 64,
+      "b": 127
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 26,
+    "location": "Seattle",
+    "name": "Seahawks",
+    "display_name": "Seahawks",
+    "abbreviation": "SEA",
+    "primary_color": {
+      "r": 34,
+      "g": 73,
+      "b": 112
+    },
+    "secondary_color": {
+      "r": 105,
+      "g": 190,
+      "b": 40
+    }
+  },
+  {
+    "id": 14,
+    "location": "Los Angeles",
+    "name": "Rams",
+    "display_name": "Rams",
+    "abbreviation": "LAR",
+    "primary_color": {
+      "r": 0,
+      "g": 41,
+      "b": 91
+    },
+    "secondary_color": {
+      "r": 179,
+      "g": 153,
+      "b": 93
+    }
+  },
+  {
+    "id": 33,
+    "location": "Baltimore",
+    "name": "Ravens",
+    "display_name": "Ravens",
+    "abbreviation": "BAL",
+    "primary_color": {
+      "r": 43,
+      "g": 2,
+      "b": 91
+    },
+    "secondary_color": {
+      "r": 158,
+      "g": 124,
+      "b": 12
+    }
+  },
+  {
+    "id": 34,
+    "location": "Houston",
+    "name": "Texans",
+    "display_name": "Texans",
+    "abbreviation": "HOU",
+    "primary_color": {
+      "r": 0,
+      "g": 19,
+      "b": 63
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 18,
+    "location": "New Orleans",
+    "name": "Saints",
+    "display_name": "Saints",
+    "abbreviation": "NO",
+    "primary_color": {
+      "r": 2,
+      "g": 2,
+      "b": 2
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 25,
+    "location": "San Francisco",
+    "name": "49ers",
+    "display_name": "49ers",
+    "abbreviation": "SF",
+    "primary_color": {
+      "r": 152,
+      "g": 19,
+      "b": 36
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 6,
+    "location": "Dallas",
+    "name": "Cowboys",
+    "display_name": "Cowboys",
+    "abbreviation": "DAL",
+    "primary_color": {
+      "r": 0,
+      "g": 46,
+      "b": 77
+    },
+    "secondary_color": {
+      "r": 176,
+      "g": 183,
+      "b": 188
+    }
+  },
+  {
+    "id": 30,
+    "location": "Jacksonville",
+    "name": "Jaguars",
+    "display_name": "Jaguars",
+    "abbreviation": "JAX",
+    "primary_color": {
+      "r": 0,
+      "g": 131,
+      "b": 156
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 22,
+    "location": "Arizona",
+    "name": "Cardinals",
+    "display_name": "Cardinals",
+    "abbreviation": "ARI",
+    "primary_color": {
+      "r": 164,
+      "g": 2,
+      "b": 39
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 12,
+    "location": "Kansas City",
+    "name": "Chiefs",
+    "display_name": "Chiefs",
+    "abbreviation": "KC",
+    "primary_color": {
+      "r": 190,
+      "g": 20,
+      "b": 21
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 3,
+    "location": "Chicago",
+    "name": "Bears",
+    "display_name": "Bears",
+    "abbreviation": "CHI",
+    "primary_color": {
+      "r": 11,
+      "g": 22,
+      "b": 42
+    },
+    "secondary_color": {
+      "r": 200,
+      "g": 56,
+      "b": 3
+    }
+  },
+  {
+    "id": 15,
+    "location": "Miami",
+    "name": "Dolphins",
+    "display_name": "Dolphins",
+    "abbreviation": "MIA",
+    "primary_color": {
+      "r": 0,
+      "g": 107,
+      "b": 121
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 17,
+    "location": "New England",
+    "name": "Patriots",
+    "display_name": "Patriots",
+    "abbreviation": "NE",
+    "primary_color": {
+      "r": 2,
+      "g": 36,
+      "b": 74
+    },
+    "secondary_color": {
+      "r": 176,
+      "g": 183,
+      "b": 188
+    }
+  },
+  {
+    "id": 28,
+    "location": "Washington",
+    "name": "Washington",
+    "display_name": "Washington",
+    "abbreviation": "WSH",
+    "primary_color": {
+      "r": 101,
+      "g": 4,
+      "b": 21
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 9,
+    "location": "Green Bay",
+    "name": "Packers",
+    "display_name": "Packers",
+    "abbreviation": "GB",
+    "primary_color": {
+      "r": 32,
+      "g": 78,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 182,
+      "b": 18
+    }
+  },
+  {
+    "id": 5,
+    "location": "Cleveland",
+    "name": "Browns",
+    "display_name": "Browns",
+    "abbreviation": "CLE",
+    "primary_color": {
+      "r": 76,
+      "g": 35,
+      "b": 14
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 20,
+    "location": "New York",
+    "name": "Jets",
+    "display_name": "Jets",
+    "abbreviation": "NYJ",
+    "primary_color": {
+      "r": 23,
+      "g": 64,
+      "b": 50
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 13,
+    "location": "Las Vegas",
+    "name": "Raiders",
+    "display_name": "Raiders",
+    "abbreviation": "LV",
+    "primary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 165,
+      "g": 172,
+      "b": 175
+    }
+  },
+  {
+    "id": 19,
+    "location": "New York",
+    "name": "Giants",
+    "display_name": "Giants",
+    "abbreviation": "NYG",
+    "primary_color": {
+      "r": 5,
+      "g": 37,
+      "b": 112
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 21,
+    "location": "Philadelphia",
+    "name": "Eagles",
+    "display_name": "Eagles",
+    "abbreviation": "PHI",
+    "primary_color": {
+      "r": 6,
+      "g": 66,
+      "b": 77
+    },
+    "secondary_color": {
+      "r": 165,
+      "g": 172,
+      "b": 175
+    }
+  },
+  {
+    "id": 10,
+    "location": "Tennessee",
+    "name": "Titans",
+    "display_name": "Titans",
+    "abbreviation": "TEN",
+    "primary_color": {
+      "r": 47,
+      "g": 149,
+      "b": 221
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 29,
+    "location": "Carolina",
+    "name": "Panthers",
+    "display_name": "Panthers",
+    "abbreviation": "CAR",
+    "primary_color": {
+      "r": 33,
+      "g": 119,
+      "b": 176
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 11,
+    "location": "Indianapolis",
+    "name": "Colts",
+    "display_name": "Colts",
+    "abbreviation": "IND",
+    "primary_color": {
+      "r": 0,
+      "g": 65,
+      "b": 126
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 24,
+    "location": "Los Angeles",
+    "name": "Chargers",
+    "display_name": "Chargers",
+    "abbreviation": "LAC",
+    "primary_color": {
+      "r": 4,
+      "g": 36,
+      "b": 83
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  }
+]

@@ -1,0 +1,648 @@
+[
+  {
+    "id": 5,
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "display_name": "Penguins",
+    "abbreviation": "PIT",
+    "primary_color": {
+      "r": 255,
+      "g": 184,
+      "b": 28
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 6,
+    "location": "Boston",
+    "name": "Bruins",
+    "display_name": "Bruins",
+    "abbreviation": "BOS",
+    "primary_color": {
+      "r": 252,
+      "g": 181,
+      "b": 20
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 52,
+    "location": "Winnipeg",
+    "name": "Jets",
+    "display_name": "Jets",
+    "abbreviation": "WPG",
+    "primary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 162,
+      "g": 170,
+      "b": 173
+    }
+  },
+  {
+    "id": 25,
+    "location": "Dallas",
+    "name": "Stars",
+    "display_name": "Stars",
+    "abbreviation": "DAL",
+    "primary_color": {
+      "r": 0,
+      "g": 99,
+      "b": 65
+    },
+    "secondary_color": {
+      "r": 162,
+      "g": 170,
+      "b": 173
+    }
+  },
+  {
+    "id": 15,
+    "location": "Washington",
+    "name": "Capitals",
+    "display_name": "Capitals",
+    "abbreviation": "WSH",
+    "primary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 200,
+      "g": 16,
+      "b": 46
+    }
+  },
+  {
+    "id": 22,
+    "location": "Edmonton",
+    "name": "Oilers",
+    "display_name": "Oilers",
+    "abbreviation": "EDM",
+    "primary_color": {
+      "r": 252,
+      "g": 76,
+      "b": 2
+    },
+    "secondary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    }
+  },
+  {
+    "id": 3,
+    "location": "New York",
+    "name": "Rangers",
+    "display_name": "Rangers",
+    "abbreviation": "NYR",
+    "primary_color": {
+      "r": 0,
+      "g": 51,
+      "b": 160
+    },
+    "secondary_color": {
+      "r": 200,
+      "g": 16,
+      "b": 46
+    }
+  },
+  {
+    "id": 17,
+    "location": "Detroit",
+    "name": "Red Wings",
+    "display_name": "Red Wings",
+    "abbreviation": "DET",
+    "primary_color": {
+      "r": 200,
+      "g": 16,
+      "b": 46
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 89,
+    "location": "Central",
+    "name": "Central All Stars",
+    "display_name": "Central",
+    "abbreviation": "CEN",
+    "primary_color": {
+      "r": 20,
+      "g": 17,
+      "b": 189
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 90,
+    "location": "Pacific",
+    "name": "Pacific All Stars",
+    "display_name": "Pacific",
+    "abbreviation": "PAC",
+    "primary_color": {
+      "r": 17,
+      "g": 189,
+      "b": 54
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 2,
+    "location": "New York",
+    "name": "Islanders",
+    "display_name": "Islanders",
+    "abbreviation": "NYI",
+    "primary_color": {
+      "r": 0,
+      "g": 48,
+      "b": 135
+    },
+    "secondary_color": {
+      "r": 252,
+      "g": 76,
+      "b": 2
+    }
+  },
+  {
+    "id": 9,
+    "location": "Ottawa",
+    "name": "Senators",
+    "display_name": "Senators",
+    "abbreviation": "OTT",
+    "primary_color": {
+      "r": 200,
+      "g": 16,
+      "b": 46
+    },
+    "secondary_color": {
+      "r": 198,
+      "g": 146,
+      "b": 20
+    }
+  },
+  {
+    "id": 24,
+    "location": "Anaheim",
+    "name": "Ducks",
+    "display_name": "Ducks",
+    "abbreviation": "ANA",
+    "primary_color": {
+      "r": 181,
+      "g": 152,
+      "b": 90
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 29,
+    "location": "Columbus",
+    "name": "Blue Jackets",
+    "display_name": "B Jackets",
+    "abbreviation": "CBJ",
+    "primary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 200,
+      "g": 16,
+      "b": 46
+    }
+  },
+  {
+    "id": 18,
+    "location": "Nashville",
+    "name": "Predators",
+    "display_name": "Predators",
+    "abbreviation": "NSH",
+    "primary_color": {
+      "r": 255,
+      "g": 184,
+      "b": 28
+    },
+    "secondary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    }
+  },
+  {
+    "id": 19,
+    "location": "St. Louis",
+    "name": "Blues",
+    "display_name": "Blues",
+    "abbreviation": "STL",
+    "primary_color": {
+      "r": 0,
+      "g": 47,
+      "b": 135
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 184,
+      "b": 28
+    }
+  },
+  {
+    "id": 54,
+    "location": "Las Vegas",
+    "name": "Golden Knights",
+    "display_name": "Knights",
+    "abbreviation": "VGK",
+    "primary_color": {
+      "r": 180,
+      "g": 151,
+      "b": 90
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 16,
+    "location": "Chicago",
+    "name": "Blackhawks",
+    "display_name": "B Hawks",
+    "abbreviation": "CHI",
+    "primary_color": {
+      "r": 206,
+      "g": 17,
+      "b": 38
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 23,
+    "location": "Vancouver",
+    "name": "Canucks",
+    "display_name": "Canucks",
+    "abbreviation": "VAN",
+    "primary_color": {
+      "r": 0,
+      "g": 132,
+      "b": 61
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 55,
+    "location": "Seattle",
+    "name": "Kraken",
+    "display_name": "Kraken",
+    "abbreviation": "SEA",
+    "primary_color": {
+      "r": 0,
+      "g": 22,
+      "b": 40
+    },
+    "secondary_color": {
+      "r": 153,
+      "g": 217,
+      "b": 217
+    }
+  },
+  {
+    "id": 7461,
+    "location": "America",
+    "name": "American All Stars",
+    "display_name": "America",
+    "abbreviation": "USA",
+    "primary_color": {
+      "r": 50,
+      "g": 113,
+      "b": 168
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 12,
+    "location": "Carolina",
+    "name": "Hurricanes",
+    "display_name": "Canes",
+    "abbreviation": "CAR",
+    "primary_color": {
+      "r": 204,
+      "g": 0,
+      "b": 0
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 21,
+    "location": "Colorado",
+    "name": "Avalanche",
+    "display_name": "Avalanche",
+    "abbreviation": "COL",
+    "primary_color": {
+      "r": 35,
+      "g": 97,
+      "b": 146
+    },
+    "secondary_color": {
+      "r": 217,
+      "g": 69,
+      "b": 116
+    }
+  },
+  {
+    "id": 53,
+    "location": "Arizona",
+    "name": "Coyotes",
+    "display_name": "Coyotes",
+    "abbreviation": "ARI",
+    "primary_color": {
+      "r": 140,
+      "g": 38,
+      "b": 51
+    },
+    "secondary_color": {
+      "r": 226,
+      "g": 214,
+      "b": 181
+    }
+  },
+  {
+    "id": 87,
+    "location": "Atlantic",
+    "name": "Atlantic All Stars",
+    "display_name": "Atlantic",
+    "abbreviation": "ATL",
+    "primary_color": {
+      "r": 250,
+      "g": 27,
+      "b": 27
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 26,
+    "location": "Los Angeles",
+    "name": "Kings",
+    "display_name": "Kings",
+    "abbreviation": "LAK",
+    "primary_color": {
+      "r": 162,
+      "g": 170,
+      "b": 173
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 28,
+    "location": "San Jose",
+    "name": "Sharks",
+    "display_name": "Sharks",
+    "abbreviation": "SJS",
+    "primary_color": {
+      "r": 0,
+      "g": 98,
+      "b": 114
+    },
+    "secondary_color": {
+      "r": 229,
+      "g": 114,
+      "b": 0
+    }
+  },
+  {
+    "id": 7460,
+    "location": "Canada",
+    "name": "Canadian All Stars",
+    "display_name": "Canada",
+    "abbreviation": "CA",
+    "primary_color": {
+      "r": 209,
+      "g": 23,
+      "b": 23
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 4,
+    "location": "Philadelphia",
+    "name": "Flyers",
+    "display_name": "Flyers",
+    "abbreviation": "PHI",
+    "primary_color": {
+      "r": 250,
+      "g": 70,
+      "b": 22
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 13,
+    "location": "Florida",
+    "name": "Panthers",
+    "display_name": "Panthers",
+    "abbreviation": "FLA",
+    "primary_color": {
+      "r": 4,
+      "g": 30,
+      "b": 66
+    },
+    "secondary_color": {
+      "r": 185,
+      "g": 151,
+      "b": 91
+    }
+  },
+  {
+    "id": 10,
+    "location": "Toronto",
+    "name": "Maple Leafs",
+    "display_name": "Leafs",
+    "abbreviation": "TOR",
+    "primary_color": {
+      "r": 0,
+      "g": 32,
+      "b": 91
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 1,
+    "location": "New Jersey",
+    "name": "Devils",
+    "display_name": "Devils",
+    "abbreviation": "NJD",
+    "primary_color": {
+      "r": 200,
+      "g": 16,
+      "b": 46
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  },
+  {
+    "id": 14,
+    "location": "Tampa Bay",
+    "name": "Lightning",
+    "display_name": "Lightning",
+    "abbreviation": "TBL",
+    "primary_color": {
+      "r": 0,
+      "g": 32,
+      "b": 91
+    },
+    "secondary_color": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    }
+  },
+  {
+    "id": 8,
+    "location": "Montréal",
+    "name": "Canadiens",
+    "display_name": "Canadiens",
+    "abbreviation": "MTL",
+    "primary_color": {
+      "r": 166,
+      "g": 25,
+      "b": 46
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 30,
+      "b": 98
+    }
+  },
+  {
+    "id": 20,
+    "location": "Calgary",
+    "name": "Flames",
+    "display_name": "Flames",
+    "abbreviation": "CGY",
+    "primary_color": {
+      "r": 206,
+      "g": 17,
+      "b": 38
+    },
+    "secondary_color": {
+      "r": 243,
+      "g": 188,
+      "b": 82
+    }
+  },
+  {
+    "id": 30,
+    "location": "Minnesota",
+    "name": "Wild",
+    "display_name": "Wild",
+    "abbreviation": "MIN",
+    "primary_color": {
+      "r": 21,
+      "g": 71,
+      "b": 52
+    },
+    "secondary_color": {
+      "r": 166,
+      "g": 25,
+      "b": 46
+    }
+  },
+  {
+    "id": 7,
+    "location": "Buffalo",
+    "name": "Sabres",
+    "display_name": "Sabres",
+    "abbreviation": "BUF",
+    "primary_color": {
+      "r": 0,
+      "g": 38,
+      "b": 84
+    },
+    "secondary_color": {
+      "r": 252,
+      "g": 181,
+      "b": 20
+    }
+  },
+  {
+    "id": 88,
+    "location": "Metropolitan",
+    "name": "Metropolitan All Stars",
+    "display_name": "Metro",
+    "abbreviation": "MET",
+    "primary_color": {
+      "r": 250,
+      "g": 231,
+      "b": 27
+    },
+    "secondary_color": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    }
+  }
+]

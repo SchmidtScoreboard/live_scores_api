@@ -14,6 +14,7 @@ use crate::common::processors::{
     get_array_from_value, get_object, get_object_from_value, get_str, get_str_from_value, get_u64,
     get_u64_str, get_u64_str_from_value,
 };
+use crate::{new_sport, Level, SportType};
 
 pub fn from_teamstroke(competitor: &Value) -> Result<GolfPlayer, Error> {
     let stats = get_array_from_value(competitor, "statistics")?;
@@ -259,7 +260,7 @@ pub fn process_golf(events: &Vec<Value>) -> Result<Vec<Game>, Error> {
 
         out_games.push(Game {
             game_id,
-            sport: None, // TODO fix
+            sport: Some(new_sport(SportType::Golf, Level::Professional)),
             home_team: None,
             away_team: None,
             home_team_score: 0,

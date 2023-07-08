@@ -7,6 +7,7 @@ use std::collections::{HashMap, HashSet};
 pub use common::data::Error;
 
 pub use common::proto_helpers::{all_sports, new_sport};
+pub use common::team::get_team_map;
 pub use common::types::sport::{Level, SportType};
 pub use common::types::{Game, Sport};
 

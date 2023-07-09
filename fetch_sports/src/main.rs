@@ -1,90 +1,58 @@
-use axum::{extract::Path, http::StatusCode, response::Json, routing::get, Extension, Router};
-use lambda_http::{run, Error};
+use lambda_runtime::{service_fn, LambdaEvent};
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::sync::Arc;
 use tracing::info;
 
 use live_sports::{Game, Sport};
 
 use futures::future::join_all;
-use live_sports::all_sports;
-use live_sports::common::types::Team;
-use live_sports::{common::team::get_team_map, fetch_sport};
-use parking_lot::Mutex;
+use live_sports::fetch_sport;
+use live_sports::Error;
+use serde_json::Value;
+use std::sync::RwLock;
 use std::time::{Duration, Instant};
 
-use itertools::Itertools;
+use lazy_static::lazy_static; // 1.4.0
+use std::str::FromStr;
 
 type Cache = HashMap<String, (Instant, Option<Vec<Game>>)>;
 
 #[derive(Debug, Clone, Deserialize)]
 struct SportsRequest {
-    sport_ids: Vec<Sport>,
+    sport_ids: Vec<String>,
 }
 
-async fn get_sports(
-    state: Extension<Arc<Mutex<Cache>>>,
-    Json(request): Json<SportsRequest>,
-) -> Result<Json<HashMap<String, Vec<Game>>>, StatusCode> {
+async fn get_sports(request: SportsRequest) -> Result<HashMap<String, Vec<Game>>, Error> {
     tracing::info!("Getting sports {:?}", request.sport_ids);
-    let scores = get_scores_for_sports(state, &request.sport_ids).await?;
-    Ok(Json(scores))
+
+    let sports: Result<Vec<_>, _> = request
+        .sport_ids
+        .iter()
+        .map(|s| Sport::from_str(s))
+        .collect();
+    let sports = sports.map_err(|_| Error::InvalidSportType(format!("{:?}", request.sport_ids)))?;
+    get_scores_for_sports(&sports).await
 }
 
-async fn get_all(
-    state: Extension<Arc<Mutex<Cache>>>,
-) -> Result<Json<HashMap<String, Vec<Game>>>, StatusCode> {
-    tracing::info!("Getting all sports");
-    let scores = get_scores_for_sports(state, &all_sports()).await?;
-    tracing::info!("Got all sports");
-    Ok(Json(scores))
+lazy_static! {
+    static ref CACHE: RwLock<Cache> = RwLock::new(Cache::new());
 }
 
-async fn get_sport(
-    state: Extension<Arc<Mutex<Cache>>>,
-    Path(sport_id): Path<String>,
-) -> Result<Json<Vec<Game>>, StatusCode> {
-    tracing::info!("Getting sport data for {}", sport_id);
-    let sport = sport_id
-        .parse::<Sport>()
-        .map_err(|_| StatusCode::NOT_FOUND)?;
-
-    let games = get_scores_for_sports(state, &[sport]).await?;
-    let sport_string = sport.to_string();
-    let (_, games) = games
-        .into_iter()
-        .find(|(s_id, _)| *s_id == sport_string)
-        .ok_or(StatusCode::NOT_FOUND)?;
-    Ok(Json(games))
-}
-
-async fn get_teams(Path(sport_id): Path<String>) -> Result<Json<Vec<Team>>, StatusCode> {
-    tracing::info!("Getting teams for {}", sport_id);
-    let sport = sport_id
-        .parse::<Sport>()
-        .map_err(|_| StatusCode::NOT_FOUND)?;
-    let team_map = get_team_map(&sport);
-    let teams = team_map.iter().map(|(_, team)| team.clone()).collect_vec();
-    Ok(Json(teams))
-}
-
-async fn get_scores_for_sports(
-    Extension(state): Extension<Arc<Mutex<Cache>>>,
-    sports: &[Sport],
-) -> Result<HashMap<String, Vec<Game>>, StatusCode> {
+async fn get_scores_for_sports(sports: &[Sport]) -> Result<HashMap<String, Vec<Game>>, Error> {
     let mut results: HashMap<String, Vec<Game>> = HashMap::new();
     let mut futures = Vec::new();
 
     {
-        let cache = state.lock();
+        let cache = CACHE
+            .read()
+            .map_err(|e| Error::InternalError(e.to_string()))?;
         for sport in sports {
             if let Some((last_updated, result)) = cache.get(&sport.to_string()) {
                 if Instant::now().duration_since(*last_updated) < Duration::from_secs(60) {
                     if let Some(result) = result {
                         results.insert(sport.to_string(), result.clone());
                     } else {
-                        return Err(StatusCode::INTERNAL_SERVER_ERROR);
+                        return Err(Error::InternalError("Some weird error".to_string()));
                     }
                 } else {
                     futures.push(fetch_sport(*sport));
@@ -97,7 +65,10 @@ async fn get_scores_for_sports(
 
     let mut maybe_err = None;
     let new_results = join_all(futures.into_iter()).await;
-    let mut cache = state.lock();
+
+    let mut cache = CACHE
+        .write()
+        .map_err(|e| Error::InternalError(e.to_string()))?;
     for (sport, result) in new_results {
         match result {
             Ok(result) => {
@@ -106,8 +77,8 @@ async fn get_scores_for_sports(
             }
             Err(e) => {
                 cache.insert(sport.to_string(), (Instant::now(), None));
-                maybe_err = Some(StatusCode::INTERNAL_SERVER_ERROR);
                 tracing::error!("Error when fetching sport {:?}: {:?}", sport, e);
+                maybe_err = Some(e);
             }
         }
     }
@@ -117,11 +88,27 @@ async fn get_scores_for_sports(
     Ok(results)
 }
 
+async fn func(event: LambdaEvent<SportsRequest>) -> Result<HashMap<String, Vec<Game>>, Error> {
+    let (event, _context) = event.into_parts();
+    info!("Calling function with event: {:?}", event);
+
+    // let body = event
+    //     .get("body-json")
+    //     .ok_or(Error::InternalError(format!("Missing body {event}")))?;
+    // let body_string = body
+    //     .as_str()
+    //     .ok_or(Error::InternalError(format!("Body is not string {body}")))?;
+
+    // let sports_request = serde_json::from_str(body_string)?;
+
+    get_sports(event).await
+}
+
 #[tokio::main]
-async fn main() -> Result<(), Error> {
+async fn main() -> Result<(), lambda_runtime::Error> {
     // required to enable CloudWatch error logging by the runtime
     tracing_subscriber::fmt()
-        .with_max_level(tracing::Level::TRACE)
+        .with_max_level(tracing::Level::INFO)
         // disable printing the name of the module in every log line.
         .with_target(false)
         // this needs to be set to false, otherwise ANSI color codes will
@@ -131,15 +118,7 @@ async fn main() -> Result<(), Error> {
         .without_time()
         .init();
 
-    info!("Starting app");
-
-    let cache = Arc::new(Mutex::new(Cache::new()));
-    let app = Router::new()
-        .route("/sport/:sport_id", get(get_sport))
-        .route("/all", get(get_all))
-        .route("/sports", get(get_sports))
-        .route("/teams/:sport_id", get(get_teams))
-        .layer(Extension(cache));
-
-    run(app).await
+    let func = service_fn(func);
+    lambda_runtime::run(func).await?;
+    Ok(())
 }

@@ -8,6 +8,7 @@ pub enum Error {
     SerdeError(serde_json::Error),
     ChronoParseError(ParseError),
     ParseIntError(std::num::ParseIntError),
+    InternalError(String),
 }
 
 impl From<reqwest::Error> for Error {
@@ -41,5 +42,11 @@ impl From<ParseError> for Error {
 impl From<std::num::ParseIntError> for Error {
     fn from(pe: std::num::ParseIntError) -> Self {
         Self::ParseIntError(pe)
+    }
+}
+
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
     }
 }

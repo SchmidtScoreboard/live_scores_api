@@ -1,5 +1,11 @@
 {
-	"resource": "/{proxy+}",
-	"path": "/all",
-	"httpMethod": "GET"
+	"sport_ids": [
+		"baseball",
+		"hockey",
+		"golf",
+		"basketball",
+		"college-basketball",
+		"football",
+		"college-football"
+	]
 }

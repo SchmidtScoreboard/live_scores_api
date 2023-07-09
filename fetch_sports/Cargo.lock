@@ -307,6 +307,7 @@ dependencies = [
  "itertools",
  "lambda_http",
  "lambda_runtime",
+ "lazy_static",
  "live_sports",
  "openssl",
  "parking_lot",

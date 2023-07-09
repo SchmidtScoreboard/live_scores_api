@@ -8,7 +8,6 @@ use live_sports::{Game, Sport};
 use futures::future::join_all;
 use live_sports::fetch_sport;
 use live_sports::Error;
-use serde_json::Value;
 use std::sync::RwLock;
 use std::time::{Duration, Instant};
 
@@ -91,16 +90,6 @@ async fn get_scores_for_sports(sports: &[Sport]) -> Result<HashMap<String, Vec<G
 async fn func(event: LambdaEvent<SportsRequest>) -> Result<HashMap<String, Vec<Game>>, Error> {
     let (event, _context) = event.into_parts();
     info!("Calling function with event: {:?}", event);
-
-    // let body = event
-    //     .get("body-json")
-    //     .ok_or(Error::InternalError(format!("Missing body {event}")))?;
-    // let body_string = body
-    //     .as_str()
-    //     .ok_or(Error::InternalError(format!("Body is not string {body}")))?;
-
-    // let sports_request = serde_json::from_str(body_string)?;
-
     get_sports(event).await
 }
 

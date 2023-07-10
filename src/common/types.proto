@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-package common.types;
-
 message Sport {
     enum Level {
         PROFESSIONAL = 0;
